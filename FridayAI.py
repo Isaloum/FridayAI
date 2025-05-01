@@ -1,246 +1,225 @@
 # =====================================
-# FridayAI.py - Core AI Brain Module
+# FridayAI - Consolidated Core System
 # =====================================
 import os
 import re
+import json
 import logging
-from datetime import datetime
-from typing import Dict, Optional, List
+from datetime import datetime, timedelta
 from difflib import get_close_matches
-
-import pyttsx3
-import requests
-from dotenv import load_dotenv
+from typing import Dict, Optional, List
+from collections import deque
 from cryptography.fernet import Fernet
+import pyttsx3
+from dotenv import load_dotenv
 
-from MemoryCore import MemoryCore
-from EmotionCore import EmotionCore
-from KnowledgeCore import KnowledgeCore
-from AutoLearningCore import AutoLearningCore
-from SelfQueryingCore import SelfQueryingCore
-from PersonalDataCore import PersonalDataCore
+# Install required packages:
+# pip install pyttsx3 python-dotenv cryptography
 
 # ========================
-# KNOWLEDGE ROUTING SYSTEM
+# MEMORY CORE IMPLEMENTATION
 # ========================
-class KnowledgeRouter:
-    """Determines which knowledge domain a query belongs to"""
+class MemoryCore:
+    """Advanced memory management with version control and encryption"""
     
-    def __init__(self):
-        self.domain_patterns = {
-            'transport': [
-                r'\b(ride|transport|airport|yul|laval|bus|taxi|metro)\b',
-                r'\b(get|go|travel) to\b',
-                r'\bhow to (get|reach)\b'
-            ],
-            'medical': [
-                r'\b(pain|hospital|medicine|doctor|symptom)\b',
-                r'\bhealth (issue|problem)\b'
-            ]
-        }
+    def __init__(self, memory_file='memory.json', key_file='memory.key'):
+        self.memory_file = memory_file
+        self.key_file = key_file
+        self.cipher = self._init_cipher()
+        self.memory = self._load_memory()
+        self.context_stack = deque(maxlen=7)
+        self.conflict_log = []
 
-    def detect_domain(self, text: str) -> Optional[str]:
-        """Identify the most relevant knowledge domain"""
-        text = text.lower()
-        domain_scores = {}
+    def _init_cipher(self):
+        """Initialize encryption system"""
+        if os.path.exists(self.key_file):
+            with open(self.key_file, 'rb') as f:
+                return Fernet(f.read())
+        key = Fernet.generate_key()
+        with open(self.key_file, 'wb') as f:
+            f.write(key)
+        return Fernet(key)
 
-        for domain, patterns in self.domain_patterns.items():
-            match_count = sum(1 for pattern in patterns if re.search(pattern, text))
-            domain_scores[domain] = match_count / len(patterns)
-
-        max_domain = max(domain_scores, key=domain_scores.get)
-        return max_domain if domain_scores[max_domain] > 0.65 else None
-
-# =====================
-# TRANSPORT KNOWLEDGE
-# =====================
-class TransportCore:
-    """Handles transportation-related queries"""
-    
-    def __init__(self):
-        self.knowledge_base = {
-            'yul_transport': {
-                'response': (
-                    "From Laval to YUL Airport:\n"
-                    "1. Taxi/Uber: 40-60$ CAD (35-50 mins)\n"
-                    "2. 747 Bus: Lionel-Groulx metro (2.75$)\n"
-                    "3. Airport Shuttle: 1-800-123-4567 (65$+)\n"
-                    "4. Car Rental: Available at YUL"
-                ),
-                'keywords': ['yul', 'airport', 'transport', 'laval', 'bus']
-            }
-        }
-
-    def handle_query(self, query: str) -> Dict[str, object]:
-        """Process transportation requests"""
-        best_match = {
-            'domain': 'transport',
-            'confidence': 0.0,
-            'content': None,
-            'sources': []
-        }
-        
-        for entry in self.knowledge_base.values():
-            matches = sum(1 for kw in entry['keywords'] if kw in query.lower())
-            confidence = matches / len(entry['keywords'])
-            
-            if confidence > best_match['confidence']:
-                best_match.update({
-                    'confidence': confidence,
-                    'content': entry['response'],
-                    'sources': entry['keywords']
-                })
-        
-        return best_match
-
-# ====================
-# MAIN AI CORE CLASS
-# ====================
-class FridayAI:
-    """Central AI processing unit with modular capabilities"""
-    
-    def __init__(self, memory_core: MemoryCore = None):
-        # Initialize core systems
-        self._configure_logging()
-        self._load_environment()
-        self._init_components(memory_core)
-        self._init_speech()
-        
-        # Knowledge systems
-        self.domain_handlers = {
-            'transport': TransportCore()
-        }
-        self.router = KnowledgeRouter()
-
-    def _configure_logging(self):
-        """Set up error tracking system"""
-        self.logger = logging.getLogger("FridayAI")
-        self.logger.setLevel(logging.INFO)
-        
-        handler = logging.FileHandler('friday_activity.log')
-        handler.setFormatter(logging.Formatter(
-            '%(asctime)s - %(levelname)s - %(module)s - %(message)s'
-        ))
-        self.logger.addHandler(handler)
-
-    def _load_environment(self):
-        """Load configuration from environment"""
-        if not load_dotenv():
-            self.logger.warning("No .env file found")
-        self.api_key = os.getenv("OPENAI_API_KEY")
-
-    def _init_components(self, memory_core):
-        """Initialize cognitive subsystems"""
-        self.memory = memory_core or MemoryCore()
-        self.emotion = EmotionCore()
-        self.auto_learner = AutoLearningCore(self.memory)
-        self.self_query = SelfQueryingCore(self.memory)
-
-    def _init_speech(self):
-        """Set up text-to-speech engine"""
-        try:
-            self.voice = pyttsx3.init()
-            self.voice.setProperty('rate', 150)
-            self.voice.setProperty('voice', 'english')
-        except Exception as e:
-            self.logger.error(f"Voice init failed: {str(e)}")
-            self.voice = None
-
-    def _check_memory(self, query: str) -> Optional[Dict]:
-        """Search memory for relevant information"""
-        try:
-            # Clean and search
-            clean_query = query.strip().lower().replace(' ', '_')
-            
-            # Direct match
-            if memory := self.memory.get_fact(clean_query):
-                return {
-                    'domain': 'memory',
-                    'confidence': 1.0,
-                    'content': f"I remember: {clean_query.replace('_', ' ')} = {memory}",
-                    'sources': ['direct_memory']
-                }
-            
-            # Fuzzy match
-            matches = get_close_matches(clean_query, self.memory.memory.keys(), n=1, cutoff=0.6)
-            if matches:
-                return {
-                    'domain': 'memory',
-                    'confidence': 0.7,
-                    'content': f"Related memory: {matches[0].replace('_', ' ')} = {self.memory.get_fact(matches[0])}",
-                    'sources': ['fuzzy_memory']
-                }
-                
-            return None
-            
-        except Exception as e:
-            self.logger.error(f"Memory check error: {str(e)}")
-            return None
-
-    def respond_to(self, user_input: str) -> Dict[str, object]:
-        """Main interface for processing user queries"""
-        try:
-            # First check memory
-            if memory_response := self._check_memory(user_input):
-                return self._enhance_response(memory_response, user_input)
-
-            # Then check domain knowledge
-            domain = self.router.detect_domain(user_input)
-            if domain in self.domain_handlers:
-                domain_response = self.domain_handlers[domain].handle_query(user_input)
-                return self._enhance_response(domain_response, user_input)
-
-            # Fallback to general response
-            return self._enhance_response({
-                'domain': 'general',
-                'confidence': 0.0,
-                'content': "I'm still learning about that. Can you explain more?",
-                'sources': []
-            }, user_input)
-
-        except Exception as e:
-            self.logger.error(f"Processing error: {str(e)}")
-            return {
-                'status': 'error',
-                'content': "System temporarily unavailable",
-                'error_code': 500
-            }
-
-    def _enhance_response(self, response: Dict, query: str) -> Dict:
-        """Add contextual metadata to responses"""
-        return {
-            **response,
-            'emotional_tone': self.emotion.analyze(query),
-            'processing_time': datetime.now().isoformat(),
-            'query_type': response['domain'],
-            'source_confidence': response['confidence']
-        }
-
-    def speak(self, text: str):
-        """Convert text to speech"""
-        if self.voice:
+    def _load_memory(self):
+        """Load and decrypt memory"""
+        if os.path.exists(self.memory_file):
             try:
-                self.voice.say(text)
-                self.voice.runAndWait()
-            except Exception as e:
-                self.logger.error(f"Speech failed: {str(e)}")
+                with open(self.memory_file, 'rb') as f:
+                    return json.loads(self.cipher.decrypt(f.read()).decode())
+            except:
+                return {}
+        return {}
+
+    def save_memory(self):
+        """Encrypt and save memory state"""
+        with open(self.memory_file, 'wb') as f:
+            f.write(self.cipher.encrypt(json.dumps(self.memory).encode()))
+
+    def store(self, key: str, value: object, source: str = 'user') -> dict:
+        """Version-controlled memory storage"""
+        key = key.lower().replace(' ', '_')
+        entry = {
+            'value': value,
+            'timestamp': datetime.now().isoformat(),
+            'source': source,
+            'versions': []
+        }
+        
+        if key in self.memory:
+            entry['versions'] = self.memory[key]['versions'] + [self.memory[key]['value']]
+            self._detect_conflict(key, value)
+            
+        self.memory[key] = entry
+        self.save_memory()
+        return entry
+
+    def _detect_conflict(self, key: str, new_value: str):
+        """Conflict detection system"""
+        old_value = self.memory[key]['value']
+        if old_value != new_value:
+            self.conflict_log.append({
+                'key': key,
+                'old': old_value,
+                'new': new_value,
+                'timestamp': datetime.now().isoformat()
+            })
+
+    def recall(self, key: str, version: int = -1) -> Optional[dict]:
+        """Context-aware memory retrieval"""
+        key = key.lower().replace(' ', '_')
+        self.context_stack.append(key)
+        
+        if entry := self.memory.get(key):
+            if version < 0 or version >= len(entry['versions']):
+                return entry['value']
+            return entry['versions'][version]
+            
+        # Fuzzy search with context weighting
+        matches = get_close_matches(key, self.memory.keys(), n=3, cutoff=0.6)
+        for match in matches:
+            if match in self.context_stack:
+                return self.memory[match]['value']
+        return matches[0] if matches else None
+
+# ======================
+# AUTOLEARNING CORE
+# ======================
+class AutoLearningCore:
+    """Pattern-based autonomous knowledge acquisition"""
+    
+    def __init__(self, memory: MemoryCore):
+        self.memory = memory
+        self.patterns = [
+            (re.compile(r'my (name|identifier) (?:is|am) (.+)', re.I), 'identity/name'),
+            (re.compile(r'(?:live in|located in|based in) (.+)', re.I), 'geo/location'),
+            (re.compile(r'(?:born on|birthdate) (\d{4}-\d{2}-\d{2})', re.I), 'bio/birthdate'),
+            (re.compile(r'work at|employed at (.+)', re.I), 'employment/company')
+        ]
+
+    def process(self, text: str) -> dict:
+        """Main learning interface"""
+        for pattern, key in self.patterns:
+            if match := pattern.search(text):
+                self.memory.store(key, match.group(1).strip(), 'auto_learned')
+                return {'learned': True, 'key': key}
+        return {'learned': False}
+
+# =====================
+# MAIN AI PROCESSOR
+# =====================
+class FridayAI:
+    """Central cognitive processing unit"""
+    
+    def __init__(self):
+        self.memory = MemoryCore()
+        self.learner = AutoLearningCore(self.memory)
+        self.voice = self._init_voice()
+        self.log = self._init_logging()
+
+    def _init_voice(self):
+        """Initialize text-to-speech"""
+        try:
+            engine = pyttsx3.init()
+            engine.setProperty('rate', 160)
+            return engine
+        except:
+            return None
+
+    def _init_logging(self):
+        """Set up activity tracking"""
+        logger = logging.getLogger('FridayAI')
+        logger.setLevel(logging.INFO)
+        handler = logging.FileHandler('activity.log')
+        handler.setFormatter(logging.Formatter(
+            '%(asctime)s | %(levelname)s | %(message)s'
+        ))
+        logger.addHandler(handler)
+        return logger
+
+    def process(self, text: str) -> dict:
+        """Main processing pipeline"""
+        result = {'input': text, 'timestamp': datetime.now().isoformat()}
+        
+        # Learning phase
+        learn_result = self.learner.process(text)
+        
+        # Response generation
+        response = self._generate_response(text, learn_result)
+        
+        # Voice output
+        if self.voice and response.get('speech'):
+            self.voice.say(response['speech'])
+            self.voice.runAndWait()
+            
+        result.update(response)
+        return result
+
+    def _generate_response(self, text: str, learning: dict) -> dict:
+        """Response generation logic"""
+        if learning['learned']:
+            return {
+                'response': f"Learned: {learning['key']}",
+                'speech': "I'll remember that!",
+                'type': 'learning'
+            }
+            
+        # Add your custom response logic here
+        return {
+            'response': "Interesting, tell me more!",
+            'speech': "Fascinating input, please continue.",
+            'type': 'engagement'
+        }
+
+# ====================
+# INTERFACE SYSTEM
+# ====================
+class FridayInterface:
+    """User interaction handler"""
+    
+    def __init__(self):
+        self.ai = FridayAI()
+        
+    def chat(self):
+        """Start interactive chat session"""
+        print("Friday AI System [v2.4]")
+        print("Type 'exit' to end session\n")
+        
+        while True:
+            try:
+                user_input = input("You: ").strip()
+                if user_input.lower() in ('exit', 'quit'):
+                    break
+                    
+                response = self.ai.process(user_input)
+                print(f"\nFriday: {response['response']}\n")
+                
+            except KeyboardInterrupt:
+                print("\nSession terminated")
+                break
 
 # ================
-# COMMAND LINE UI
+# SYSTEM BOOTSTRAP
 # ================
 if __name__ == "__main__":
-    ai = FridayAI()
-    print("Friday AI Console - Type 'exit' to quit")
-    
-    while True:
-        try:
-            query = input("\nYou: ").strip()
-            if query.lower() in ['exit', 'quit']:
-                break
-                
-            response = ai.respond_to(query)
-            print(f"\nFriday: {response['content']}")
-            
-        except KeyboardInterrupt:
-            print("\nSession ended")
-            break
+    interface = FridayInterface()
+    interface.chat()

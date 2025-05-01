@@ -6,3 +6,6 @@
 2025-04-30 22:13:04,250 - ERROR - FridayAI - Processing error: 'EmotionCore' object has no attribute 'analyze'
 2025-04-30 22:13:06,434 - ERROR - FridayAI - Memory check error: 'MemoryCore' object has no attribute 'find_closest_fact'
 2025-04-30 22:13:06,434 - ERROR - FridayAI - Processing error: 'EmotionCore' object has no attribute 'analyze'
+2025-04-30 22:43:34,849 - ERROR - FridayAI - Memory check error: 'MemoryCore' object has no attribute 'find_closest_fact'
+2025-04-30 22:43:47,473 - ERROR - FridayAI - Memory check error: 'MemoryCore' object has no attribute 'find_closest_fact'
+2025-04-30 22:43:57,657 - ERROR - FridayAI - Memory check error: 'MemoryCore' object has no attribute 'find_closest_fact'
