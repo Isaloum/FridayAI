@@ -2,30 +2,31 @@
 from FridayAI import FridayAI
 
 def main():
+    print("Friday AI Activated. Type 'exit' to quit.")
     friday = FridayAI()
     
-    while True:
-        try:
-            user_input = input("\nYou: ")
+    try:
+        while True:
+            user_input = input("\nYou: ").strip()
+            if not user_input:
+                continue
+                
             if user_input.lower() in ['exit', 'quit']:
-                print("Friday: Goodbye!")
+                print("Friday: Goodbye! Have a great day!")
                 break
-                
-            response = friday.respond_to(user_input)
 
-            if isinstance(response, dict) and response.get("requires_followup"):
-                data_type = response["requires_followup"]
-                user_data = input(f"Friday: {response['response']}\nYou: ")
-                friday.memory.save_fact(f"user_{data_type}", user_data)
-                print(f"Friday: Thanks! I'll remember your {data_type}.")
+            # Process the query
+            response = friday.respond_to(user_input)
+            
+            # Handle response
+            if response.get('status') == 'error':
+                print(f"Friday: ⚠️ Error {response.get('error_code', '')} - {response.get('content', 'Unknown error')}")
             else:
-                output = response if isinstance(response, str) else response.get('response', '...')
-                print(f"Friday: {output}")
-                friday.speak(output)
+                print(f"Friday: {response.get('content', 'Hmm, let me think about that...')}")
+                friday.speak(response.get('content', ''))
                 
-        except KeyboardInterrupt:
-            print("\nFriday: Goodbye!")
-            break
+    except KeyboardInterrupt:
+        print("\nFriday: Session terminated unexpectedly")
 
 if __name__ == "__main__":
     main()

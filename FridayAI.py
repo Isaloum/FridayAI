@@ -1,24 +1,18 @@
-"""
-FridayAI - Modular Artificial Intelligence Framework
-Version: 1.2.0
-Author: [Your Name]
-License: MIT
-"""
-
-# === Standard Library Imports ===
+# =====================================
+# FridayAI.py - Core AI Brain Module
+# =====================================
 import os
 import re
-import time
 import logging
 from datetime import datetime
-from typing import Dict, Optional
+from typing import Dict, Optional, List
+from difflib import get_close_matches
 
-# === Third-Party Imports ===
 import pyttsx3
 import requests
 from dotenv import load_dotenv
+from cryptography.fernet import Fernet
 
-# === Local Core Modules ===
 from MemoryCore import MemoryCore
 from EmotionCore import EmotionCore
 from KnowledgeCore import KnowledgeCore
@@ -26,8 +20,12 @@ from AutoLearningCore import AutoLearningCore
 from SelfQueryingCore import SelfQueryingCore
 from PersonalDataCore import PersonalDataCore
 
-# === Routing for Domains ===
+# ========================
+# KNOWLEDGE ROUTING SYSTEM
+# ========================
 class KnowledgeRouter:
+    """Determines which knowledge domain a query belongs to"""
+    
     def __init__(self):
         self.domain_patterns = {
             'transport': [
@@ -42,6 +40,7 @@ class KnowledgeRouter:
         }
 
     def detect_domain(self, text: str) -> Optional[str]:
+        """Identify the most relevant knowledge domain"""
         text = text.lower()
         domain_scores = {}
 
@@ -52,141 +51,196 @@ class KnowledgeRouter:
         max_domain = max(domain_scores, key=domain_scores.get)
         return max_domain if domain_scores[max_domain] > 0.65 else None
 
-
-# === Transport Domain Knowledge Handler ===
+# =====================
+# TRANSPORT KNOWLEDGE
+# =====================
 class TransportCore:
+    """Handles transportation-related queries"""
+    
     def __init__(self):
         self.knowledge_base = {
             'yul_transport': {
                 'response': (
                     "From Laval to YUL Airport:\n"
-                    "1. Taxi/Uber: 40-60$ CAD\n"
-                    "2. 747 Bus: Lionel-Groulx metro\n"
-                    "3. Airport Shuttle: 1-800-123-4567\n"
+                    "1. Taxi/Uber: 40-60$ CAD (35-50 mins)\n"
+                    "2. 747 Bus: Lionel-Groulx metro (2.75$)\n"
+                    "3. Airport Shuttle: 1-800-123-4567 (65$+)\n"
                     "4. Car Rental: Available at YUL"
                 ),
-                'keywords': ['yul', 'airport', 'transport', 'laval']
+                'keywords': ['yul', 'airport', 'transport', 'laval', 'bus']
             }
         }
 
     def handle_query(self, query: str) -> Dict[str, object]:
-        response = {
+        """Process transportation requests"""
+        best_match = {
             'domain': 'transport',
             'confidence': 0.0,
             'content': None,
             'sources': []
         }
-
+        
         for entry in self.knowledge_base.values():
-            keyword_matches = sum(1 for kw in entry['keywords'] if kw in query.lower())
-            confidence = keyword_matches / len(entry['keywords'])
-
-            if confidence > response['confidence']:
-                response.update({
+            matches = sum(1 for kw in entry['keywords'] if kw in query.lower())
+            confidence = matches / len(entry['keywords'])
+            
+            if confidence > best_match['confidence']:
+                best_match.update({
                     'confidence': confidence,
                     'content': entry['response'],
                     'sources': entry['keywords']
                 })
+        
+        return best_match
 
-        return response
-
-
-# === FridayAI Master Brain ===
+# ====================
+# MAIN AI CORE CLASS
+# ====================
 class FridayAI:
-    def __init__(self, memory_core: Optional[MemoryCore] = None):
-        self._init_logging()
+    """Central AI processing unit with modular capabilities"""
+    
+    def __init__(self, memory_core: MemoryCore = None):
+        # Initialize core systems
+        self._configure_logging()
         self._load_environment()
-        self._init_subcomponents(memory_core)
-        self._init_speech_engine()
-
-        self.domain_cores = {
+        self._init_components(memory_core)
+        self._init_speech()
+        
+        # Knowledge systems
+        self.domain_handlers = {
             'transport': TransportCore()
         }
-        self.knowledge_router = KnowledgeRouter()
-        self.api_endpoint = os.getenv("API_ENDPOINT", "https://api.openai.com/v1/chat/completions")
+        self.router = KnowledgeRouter()
 
-    def _init_logging(self):
+    def _configure_logging(self):
+        """Set up error tracking system"""
         self.logger = logging.getLogger("FridayAI")
         self.logger.setLevel(logging.INFO)
-        handler = logging.FileHandler('friday_operations.log')
-        handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(module)s - %(message)s'))
+        
+        handler = logging.FileHandler('friday_activity.log')
+        handler.setFormatter(logging.Formatter(
+            '%(asctime)s - %(levelname)s - %(module)s - %(message)s'
+        ))
         self.logger.addHandler(handler)
 
     def _load_environment(self):
+        """Load configuration from environment"""
         if not load_dotenv():
-            self.logger.warning("No .env file found, using system environment")
+            self.logger.warning("No .env file found")
+        self.api_key = os.getenv("OPENAI_API_KEY")
 
-    def _init_subcomponents(self, memory_core):
+    def _init_components(self, memory_core):
+        """Initialize cognitive subsystems"""
         self.memory = memory_core or MemoryCore()
-        self.emotion_core = EmotionCore()
-        self.auto_learning_core = AutoLearningCore(self.memory)
-        self.self_querying_core = SelfQueryingCore(self.memory)
-        self.personal_data_core = PersonalDataCore(self.memory)
+        self.emotion = EmotionCore()
+        self.auto_learner = AutoLearningCore(self.memory)
+        self.self_query = SelfQueryingCore(self.memory)
 
-    def _init_speech_engine(self):
+    def _init_speech(self):
+        """Set up text-to-speech engine"""
         try:
-            self.speech_engine = pyttsx3.init()
-            self.speech_engine.setProperty('rate', 150)
-            self.speech_engine.setProperty('voice', 'english')
-        except RuntimeError as e:
-            self.logger.error(f"Speech engine initialization failed: {str(e)}")
-            self.speech_engine = None
+            self.voice = pyttsx3.init()
+            self.voice.setProperty('rate', 150)
+            self.voice.setProperty('voice', 'english')
+        except Exception as e:
+            self.logger.error(f"Voice init failed: {str(e)}")
+            self.voice = None
 
-    def process_query(self, user_input: str) -> Dict[str, object]:
+    def _check_memory(self, query: str) -> Optional[Dict]:
+        """Search memory for relevant information"""
         try:
-            detected_domain = self.knowledge_router.detect_domain(user_input)
-            if detected_domain in self.domain_cores:
-                domain_response = self.domain_cores[detected_domain].handle_query(user_input)
-            else:
-                domain_response = self._handle_general_query(user_input)
+            # Clean and search
+            clean_query = query.strip().lower().replace(' ', '_')
+            
+            # Direct match
+            if memory := self.memory.get_fact(clean_query):
+                return {
+                    'domain': 'memory',
+                    'confidence': 1.0,
+                    'content': f"I remember: {clean_query.replace('_', ' ')} = {memory}",
+                    'sources': ['direct_memory']
+                }
+            
+            # Fuzzy match
+            matches = get_close_matches(clean_query, self.memory.memory.keys(), n=1, cutoff=0.6)
+            if matches:
+                return {
+                    'domain': 'memory',
+                    'confidence': 0.7,
+                    'content': f"Related memory: {matches[0].replace('_', ' ')} = {self.memory.get_fact(matches[0])}",
+                    'sources': ['fuzzy_memory']
+                }
+                
+            return None
+            
+        except Exception as e:
+            self.logger.error(f"Memory check error: {str(e)}")
+            return None
 
-            return self._apply_postprocessing(domain_response, user_input)
+    def respond_to(self, user_input: str) -> Dict[str, object]:
+        """Main interface for processing user queries"""
+        try:
+            # First check memory
+            if memory_response := self._check_memory(user_input):
+                return self._enhance_response(memory_response, user_input)
+
+            # Then check domain knowledge
+            domain = self.router.detect_domain(user_input)
+            if domain in self.domain_handlers:
+                domain_response = self.domain_handlers[domain].handle_query(user_input)
+                return self._enhance_response(domain_response, user_input)
+
+            # Fallback to general response
+            return self._enhance_response({
+                'domain': 'general',
+                'confidence': 0.0,
+                'content': "I'm still learning about that. Can you explain more?",
+                'sources': []
+            }, user_input)
 
         except Exception as e:
-            self.logger.error(f"Query processing failed: {str(e)}")
+            self.logger.error(f"Processing error: {str(e)}")
             return {
                 'status': 'error',
-                'message': 'System processing error',
+                'content': "System temporarily unavailable",
                 'error_code': 500
             }
 
-    def _handle_general_query(self, query: str) -> Dict[str, object]:
+    def _enhance_response(self, response: Dict, query: str) -> Dict:
+        """Add contextual metadata to responses"""
         return {
-            'domain': 'general',
-            'confidence': 0.0,
-            'content': "I need more context to answer that.",
-            'sources': []
+            **response,
+            'emotional_tone': self.emotion.analyze(query),
+            'processing_time': datetime.now().isoformat(),
+            'query_type': response['domain'],
+            'source_confidence': response['confidence']
         }
 
-    def _apply_postprocessing(self, response: Dict, original_query: str) -> Dict:
-        enhanced = {
-            'metadata': {
-                'processing_steps': ['domain_detection', 'knowledge_retrieval'],
-                'temporal_context': {
-                    'received_at': datetime.now().isoformat(),
-                    'processing_time': None
-                }
-            },
-            'original_query': original_query,
-            'domain': response['domain'],
-            'confidence': round(response['confidence'], 2),
-            'content': response['content'],
-            'sources': response['sources']
-        }
-        enhanced['emotional_context'] = self.emotion_core.analyze(original_query)
-        return enhanced
-
-    def vocalize_response(self, text: str):
-        if self.speech_engine:
+    def speak(self, text: str):
+        """Convert text to speech"""
+        if self.voice:
             try:
-                self.speech_engine.say(text)
-                self.speech_engine.runAndWait()
+                self.voice.say(text)
+                self.voice.runAndWait()
             except Exception as e:
-                self.logger.error(f"Speech synthesis failed: {str(e)}")
+                self.logger.error(f"Speech failed: {str(e)}")
 
-# === Test Block ===
+# ================
+# COMMAND LINE UI
+# ================
 if __name__ == "__main__":
     ai = FridayAI()
-    query = "How do I get to the airport from Laval?"
-    result = ai.process_query(query)
-    print(f"Response: {result['content']}")
+    print("Friday AI Console - Type 'exit' to quit")
+    
+    while True:
+        try:
+            query = input("\nYou: ").strip()
+            if query.lower() in ['exit', 'quit']:
+                break
+                
+            response = ai.respond_to(query)
+            print(f"\nFriday: {response['content']}")
+            
+        except KeyboardInterrupt:
+            print("\nSession ended")
+            break
