@@ -1,90 +1,80 @@
-# =====================================
-# NLUProcessor.py
-# Natural Language Understanding Processor for Friday
-# =====================================
+"""
+NLUProcessor.py
+-------------------
+This module adds Natural Language Understanding to FridayAI.
+It tries to detect what the user is trying to say,
+even when the sentence is unclear, short, or coded.
+
+It supports:
+- Intent classification (e.g., "calorie_calc", "emotion_check")
+- Entity extraction (e.g., grams of food, keywords)
+"""
 
 import re
-from difflib import get_close_matches
 
 class NLUProcessor:
-    """Processes natural input and manages memory updates."""
+    def __init__(self):
+        # Define known food calories per gram (simple example)
+        self.calorie_map = {
+            "egg": 1.55,     # per gram
+            "pb": 5.9,       # peanut butter
+            "banana": 0.89,
+            "rice": 1.3,
+        }
 
-    def __init__(self, memory_core):
-        self.memory = memory_core
+    def parse(self, text: str) -> dict:
+        """
+        Main method to detect intent and extract meaning.
+        Returns a dictionary with:
+        - intent
+        - entities (e.g., food items, emotions)
+        """
+        lowered = text.lower().strip()
 
-    def parse(self, user_input):
-        """Main entry to understand user input."""
-        lower = user_input.lower()
+        # 1. Emotion check intent
+        if lowered in ["r u okay", "are you okay", "you good", "what's up"]:
+            return {"intent": "emotion_check", "entities": {}}
 
-        # Explicit memory commands
-        if lower.startswith("remember "):
-            return self._handle_remember(lower)
-        if lower.startswith("update "):
-            return self._handle_update(lower)
-        if lower.startswith("delete "):
-            return self._handle_delete(lower)
-        if lower.startswith("list facts"):
-            return self.memory.list_facts()
-        if lower.startswith("what is my"):
-            return self._handle_query(lower)
+        # 2. Calorie calculation intent
+        food_matches = re.findall(r'(\d+)g\s*(\w+)', lowered)
+        if food_matches:
+            total_calories = 0
+            foods = {}
+            for grams, food in food_matches:
+                food_key = food.lower()
+                g = int(grams)
+                if food_key in self.calorie_map:
+                    cal = g * self.calorie_map[food_key]
+                    foods[food_key] = {"grams": g, "calories": cal}
+                    total_calories += cal
 
-        # If casual conversation — sniff for facts
-        sniffed_fact = self._sniff_fact(user_input)
-        if sniffed_fact:
-            return sniffed_fact
+            return {
+                "intent": "calorie_calc",
+                "entities": {
+                    "foods": foods,
+                    "total_calories": round(total_calories, 2)
+                }
+            }
 
-        return None  # fallback to GPT if nothing recognized
+        # 3. Unknown input → fallback
+        return {"intent": "unknown", "entities": {}}
 
-    def _handle_remember(self, text):
-        try:
-            key_value = text[9:].split(" is ")
-            key, value = key_value[0].strip(), key_value[1].strip()
-            return self.memory.save_fact(key, value)
-        except:
-            return "⚠️ Use format: remember [thing] is [value]."
 
-    def _handle_update(self, text):
-        try:
-            key_value = text[7:].split(" to ")
-            key, value = key_value[0].strip(), key_value[1].strip()
-            return self.memory.update_fact(key, value)
-        except:
-            return "⚠️ Use format: update [thing] to [new value]."
+# -------------------
+# TEST (run this file directly)
+# -------------------
+if __name__ == "__main__":
+    nlu = NLUProcessor()
 
-    def _handle_delete(self, text):
-        fact = text[7:].strip()
-        return self.memory.delete_fact(fact)
+    examples = [
+        "R U okay",
+        "4g egg + 5g PB = Cal?",
+        "10g rice and 15g banana",
+        "who is Elon"
+    ]
 
-    def _handle_query(self, text):
-        fact_key = text.split("what is my")[1].strip().replace("?", "")
-        fact = self.memory.get_fact(fact_key)
-        if not fact:
-            closest = self.memory.find_closest_fact(fact_key)
-            if closest:
-                fact = self.memory.get_fact(closest)
-                return f"Your {closest} is {fact}."
-            else:
-                return f"⚠️ I don't know your {fact_key} yet."
-        return f"Your {fact_key} is {fact}."
-
-    def _sniff_fact(self, text):
-        """Auto extract facts from casual sentences."""
-        patterns = [
-            (r"my favorite (.+?) is (.+)", "favorite {}"),
-            (r"i live in (.+)", "location"),
-            (r"my hobby is (.+)", "hobby"),
-            (r"i work as (.+)", "occupation")
-        ]
-
-        for pattern, template in patterns:
-            match = re.search(pattern, text, re.IGNORECASE)
-            if match:
-                if '{}' in template:
-                    field = template.format(match.group(1).strip())
-                    value = match.group(2).strip()
-                else:
-                    field = template
-                    value = match.group(1).strip()
-                return self.memory.save_fact(field, value)
-
-        return None
+    for text in examples:
+        print(f"\nUser said: {text}")
+        result = nlu.parse(text)
+        print("Intent:", result["intent"])
+        print("Entities:", result["entities"])

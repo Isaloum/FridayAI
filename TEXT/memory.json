@@ -1,0 +1,17 @@
+[
+    {
+        "timestamp": "2025-05-10T14:22:00",
+        "value": "Talked about CNESST and chronic pain in left shoulder.",
+        "tags": ["cnesst", "pain", "sad"]
+    },
+    {
+        "timestamp": "2025-05-09T11:00:00",
+        "value": "Feeling anxious about the doctor's report.",
+        "tags": ["anxious", "doctor", "health"]
+    },
+    {
+        "timestamp": "2025-05-08T18:45:00",
+        "value": "Workout helped reduce my stress today.",
+        "tags": ["gym", "happy", "relief"]
+    }
+]

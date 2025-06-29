@@ -54,7 +54,8 @@ spell = SpellChecker()
 
 
 # --- Initialize OpenAI Client (Insert your real API Key) ---
-client = OpenAI(api_key="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")  # <<< Replace this with your OpenAI key
+print("🚨 USING KEY:", os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # --- Define Friday Class ---
 class Friday:

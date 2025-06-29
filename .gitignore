@@ -6,3 +6,6 @@
 
 # Ignore memory files (optional)
 *.dat
+
+*.py
+.env 

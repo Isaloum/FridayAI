@@ -1,4 +1,8 @@
 @echo off
-cd /d C:\Users\ihabs\Friday
-python friday_chatbot_memory.py
+echo Launching FridayAI...
+call .\venv\Scripts\activate
+python FridayAI.py
+if %errorlevel% neq 0 (
+    echo FridayAI exited with error code %errorlevel%.
+)
 pause

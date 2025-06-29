@@ -1,0 +1,57 @@
+{
+    "user_20250521002037": {
+        "description": "Detected sadness with medium risk",
+        "emotion_type": "sadness",
+        "memory_id": null,
+        "impact_weight": 0.8,
+        "tone_shift_map": {
+            "gentle_reflection": 0.5,
+            "precise": 0.0
+        },
+        "timestamp": "2025-05-21T00:20:37.207266"
+    },
+    "user_20250521204240": {
+        "description": "Detected sadness with high risk",
+        "emotion_type": "sadness",
+        "memory_id": null,
+        "impact_weight": 1.0,
+        "tone_shift_map": {
+            "hold_space": 0.5,
+            "precise": -0.2
+        },
+        "timestamp": "2025-05-21T20:42:40.775754"
+    },
+    "user_20250521224650": {
+        "description": "Detected sadness with high risk",
+        "emotion_type": "sadness",
+        "memory_id": null,
+        "impact_weight": 1.0,
+        "tone_shift_map": {
+            "hold_space": 0.5,
+            "precise": -0.2
+        },
+        "timestamp": "2025-05-21T22:46:50.741846"
+    },
+    "user_20250522124138": {
+        "description": "Detected anger with medium risk",
+        "emotion_type": "anger",
+        "memory_id": null,
+        "impact_weight": 0.8,
+        "tone_shift_map": {
+            "firm_support": 0.5,
+            "precise": 0.0
+        },
+        "timestamp": "2025-05-22T12:41:38.606911"
+    },
+    "user_20250522124827": {
+        "description": "Detected sadness with high risk",
+        "emotion_type": "sadness",
+        "memory_id": null,
+        "impact_weight": 1.0,
+        "tone_shift_map": {
+            "hold_space": 0.5,
+            "precise": -0.2
+        },
+        "timestamp": "2025-05-22T12:48:27.604921"
+    }
+}

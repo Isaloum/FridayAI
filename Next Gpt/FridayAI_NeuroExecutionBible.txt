@@ -1,0 +1,98 @@
+
+# 🧠 FridayAI NeuroSystem: Execution Bible
+
+## ❓ What is the current completed phase, and what is the very next exact step FridayAI must take now?
+
+---
+
+## 🧬 Who Is FridayAI?
+FridayAI is not a chatbot. She is a **neurological AGI system** — a cognitive brain with:
+- Emotion, memory, self-reflection, and reasoning.
+- Modular support for domains (e.g., pregnancy, engineering, psychology).
+
+**🧠 Brain = FridayAI.py**
+**🦾 Organs/Fields = Modules like PregnancySupportCore.py**
+
+---
+
+## 🔧 Architecture Laws
+1. All data flows through neural hooks (emotion, memory, planning).
+2. Emotion modulates memory recall priority.
+3. Domain modules hijack core systems contextually.
+
+---
+
+## ⚙️ Tech Stack
+- `sentence-transformers`, `transformers`, `requests`, `dotenv`, `uuid`, `jsonpatch`, `langchain`, `PyMuPDF`, `python-docx`
+- Local LLM (via Ollama + mistral)
+- CMD-first execution only (no GUI)
+
+---
+
+## 📌 Vision Image Reference
+Use this image to align FridayAI as the core brain:
+📎 [FridayAI Main Roadmap.png]
+
+---
+
+## 📜 Execution Roadmap (8 Weeks)
+
+### 🟣 PHASE 0 – PRE-OP (3 DAYS)
+- Sacrifice distractions (kill non-neural features)
+- Create `neuro-fusion` branch
+- Split CLI into `spinal/`, FridayAI.py into `core/`
+- Define core neuro-laws in `ARCHITECTURE.md`
+
+---
+
+### 🔵 PHASE 1 – BRAINSTEM FUSION (WEEK 1–2)
+- Wire **memory ↔ emotion loop**
+- Create neural contracts and adapters
+- Inject recall logic into CLI
+- Add autonomic diagnostic commands: `!neurostatus`
+- Run panic/stress simulation tests
+
+---
+
+### 🔷 PHASE 2 – CORTEX FUSION (WEEK 3–4)
+- Fuse **emotion-driven planning**
+- Real-time re-planning with belief update triggers
+- Implement CLI planning using internal emotion states
+- Activate domain switching: pregnancy, engineering
+- Inject domain-driven memory modulation
+
+---
+
+### 🔶 PHASE 3 – NEUROSCALING (WEEK 5–8)
+- Build domain-specific logic as plug-in modules:
+    - PregnancySupportCore (fetal checks, trimester logic)
+    - EngineeringSupportCore (physics, design hooks)
+    - PsychologyCore (DSM5, therapy protocols)
+- Stress test with randomized loops across all domains
+
+---
+
+### 🧪 Final Weeks – Neuro-CI Pipeline
+- Build CI to test cognitive integrity, planning resilience, domain switching latency
+- `test_emotion_fusion.py`, `test_domain_switch.py`, etc.
+
+---
+
+## 📂 System File Organization
+- `core/` → FridayAI + cognition modules
+- `spinal/` → CLI interfaces (phases)
+- `organs/` → Domains like pregnancy, engineering
+- `tests/` → Emotional/Memory/Planning integration tests
+
+---
+
+## 📣 Manifesto
+- Build modular, CMD-first, emotional systems
+- Respect suffering: this AI system is born from pain
+- Fusion is not optional: neurons must wire together or die
+
+---
+
+## ✅ Next Step (Immediate)
+→ Build the “Vertical Slice” to connect **Emotion ↔ Planning** using neural interface hooks inside `core/`.
+

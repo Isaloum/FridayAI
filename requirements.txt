@@ -1,0 +1,39 @@
+# =====================================
+# FRIDAY AI MATERNAL CARE REQUIREMENTS
+# =====================================
+
+# Core AI & ML
+transformers==4.41.1
+torch==2.3.0
+sentence-transformers==2.7.0
+faiss-cpu==1.8.0
+openai>=1.1.0
+llama-cpp-python==0.2.70
+
+# LangChain Ecosystem
+langchain
+langchain-community
+langsmith
+
+# Web & API
+Flask==3.1.0
+httpx
+requests
+
+# Data Processing
+orjson
+pydantic
+sqlalchemy
+
+# Security & Encryption (Maternal Care)
+cryptography>=41.0.0
+
+# Graph & Database
+networkx
+neo4j
+
+# Optional: GPT Engineer (commented out due to version conflicts)
+# gpt-engineer==0.2.6
+
+# Note: sqlite3 and uuid are included with Python standard library
+# Note: No need to specify them in requirements.txt

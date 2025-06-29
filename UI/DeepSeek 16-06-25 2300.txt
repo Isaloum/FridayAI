@@ -1,0 +1,1580 @@
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { 
+  Heart, Brain, Shield, Activity, AlertCircle, Moon, Sun, Settings, 
+  TrendingUp, Calendar, Target, Sparkles, ChevronRight, X, Send, 
+  Mic, Bell, User, Home, BarChart3, BookOpen, Phone, MessageCircle, 
+  Zap, Star, Baby, Stethoscope, Apple, Dumbbell, Music, Camera, 
+  Share2, Download, Lock, Smile, Frown, Meh, ThumbsUp, Coffee, 
+  Droplets, Pill, Wind, HeartHandshake, Users, Gift, ShoppingBag, 
+  FileText, Video, HelpCircle, Award, Palette, Volume2, ChevronLeft, 
+  Plus, Minus, Check, Clock, MapPin, Thermometer, Weight, Ruler, 
+  Calculator, BookMarked, Headphones, Wifi, WifiOff, Battery, 
+  BatteryLow, Cloud, CloudOff, Eye, EyeOff, Edit3, Trash2, Copy, 
+  Share, Filter, Search, Menu, MoreVertical, Info, AlertTriangle, 
+  CheckCircle, XCircle, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, 
+  RotateCw, RefreshCw, Loader, Pause, Play, Square, Circle, Triangle 
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const FridayAI = () => {
+  // Enhanced state management with predictive analytics
+  const [messages, setMessages] = useState([
+    {
+      id: Date.now(),
+      role: 'assistant',
+      content: "Hello! I'm Friday, your AI pregnancy companion. I'm here to support you through every moment of your journey. How are you feeling today? 💜",
+      mood: 'friendly',
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false,
+      insights: []
+    }
+  ]);
+  
+  const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [currentMood, setCurrentMood] = useState('friendly');
+  const [selectedTone, setSelectedTone] = useState('supportive');
+  const [showEmergencyButton, setShowEmergencyButton] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [activeTab, setActiveTab] = useState('chat');
+  const [goals, setGoals] = useState([
+    {
+      id: 1,
+      text: "Complete daily water intake",
+      category: "wellness",
+      createdAt: new Date(),
+      progress: 65,
+      milestones: [
+        { text: "Drink 4 glasses before noon", completed: true },
+        { text: "Finish 8 glasses by evening", completed: false }
+      ]
+    },
+    {
+      id: 2,
+      text: "Prepare birth plan",
+      category: "preparation",
+      createdAt: new Date(),
+      progress: 30,
+      milestones: [
+        { text: "Research pain management options", completed: true },
+        { text: "Discuss preferences with doctor", completed: false }
+      ]
+    }
+  ]);
+  const [healthRecords, setHealthRecords] = useState([
+    { id: 1, type: 'blood-pressure', value: '120/80', date: new Date() },
+    { id: 2, type: 'weight', value: '68 kg', date: new Date() }
+  ]);
+  const [showGoalModal, setShowGoalModal] = useState(false);
+  const [pregnancyWeek, setPregnancyWeek] = useState(20);
+  const [theme, setTheme] = useState('light');
+  const [notifications, setNotifications] = useState([
+    {
+      id: 1,
+      type: 'tip',
+      message: "Your next prenatal appointment is in 3 days",
+      timestamp: new Date(),
+      read: false
+    }
+  ]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [dailyTips, setDailyTips] = useState([
+    "💧 Remember to stay hydrated! Aim for 8-10 glasses of water daily.",
+    "🚶‍♀️ A 20-minute walk can boost your mood and energy levels.",
+    "🥑 Avocados are rich in folate - perfect for baby's development!",
+    "😴 Side sleeping with a pillow between your knees can improve comfort.",
+    "🧘‍♀️ Deep breathing exercises can help reduce pregnancy anxiety."
+  ]);
+  const [moodHistory, setMoodHistory] = useState([
+    { date: new Date('2025-06-10'), mood: 'happy' },
+    { date: new Date('2025-06-11'), mood: 'anxious' },
+    { date: new Date('2025-06-12'), mood: 'calm' },
+    { date: new Date('2025-06-13'), mood: 'excited' },
+    { date: new Date('2025-06-14'), mood: 'happy' },
+    { date: new Date('2025-06-15'), mood: 'calm' },
+    { date: new Date('2025-06-16'), mood: 'anxious' },
+    { date: new Date('2025-06-17'), mood: 'friendly' }
+  ]);
+  const [waterIntake, setWaterIntake] = useState(5);
+  const [sleepHours, setSleepHours] = useState(7);
+  const [exerciseMinutes, setExerciseMinutes] = useState(25);
+  const [symptoms, setSymptoms] = useState([
+    { id: 1, name: 'Morning sickness', severity: 'mild', date: new Date() },
+    { id: 2, name: 'Back pain', severity: 'moderate', date: new Date() }
+  ]);
+  const [appointments, setAppointments] = useState([
+    { id: 1, type: 'Prenatal', date: new Date('2025-06-20'), location: 'City Medical Center' },
+    { id: 2, type: 'Ultrasound', date: new Date('2025-06-25'), location: 'Imaging Center' }
+  ]);
+  const [medications, setMedications] = useState([
+    { id: 1, name: 'Prenatal Vitamins', dosage: '1 daily', time: 'Morning' },
+    { id: 2, name: 'Iron Supplement', dosage: '1 daily', time: 'Afternoon' }
+  ]);
+  const [kickCounter, setKickCounter] = useState(8);
+  const [contractionTimer, setContractionTimer] = useState(null);
+  const [birthPlan, setBirthPlan] = useState({
+    painManagement: 'Epidural',
+    deliveryPosition: 'Semi-reclined',
+    supportPeople: ['Partner', 'Doula'],
+    musicPreference: 'Calming instrumentals'
+  });
+  const [partnerMode, setPartnerMode] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    name: 'Sarah',
+    dueDate: new Date('2025-03-15'),
+    doctorName: 'Dr. Johnson',
+    hospital: 'City Medical Center',
+    emergencyContact: '555-0123',
+    bloodType: 'A+',
+    height: '165 cm',
+    prePregnancyWeight: '62 kg'
+  });
+  const [aiInsights, setAiInsights] = useState([
+    "Based on your mood patterns, I recommend trying gentle yoga this week",
+    "Your hydration levels are improving - great job! Keep it up for better amniotic fluid levels"
+  ]);
+  const [weeklyReport, setWeeklyReport] = useState({
+    avgMood: 'calm',
+    waterIntakeAvg: 6.2,
+    exerciseMinutesAvg: 22,
+    symptomFrequency: {
+      nausea: 3,
+      backPain: 5,
+      fatigue: 7
+    }
+  });
+  const [showMeditationModal, setShowMeditationModal] = useState(false);
+  const [showSymptomModal, setShowSymptomModal] = useState(false);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [quickActions, setQuickActions] = useState([
+    { id: 1, icon: Droplets, label: 'Log Water', action: 'water' },
+    { id: 2, icon: Baby, label: 'Kick Count', action: 'kicks' },
+    { id: 3, icon: Heart, label: 'Mood Check', action: 'mood' },
+    { id: 4, icon: Apple, label: 'Nutrition', action: 'nutrition' }
+  ]);
+  const [showContractionTimer, setShowContractionTimer] = useState(false);
+  const [contractionHistory, setContractionHistory] = useState([]);
+  const [activeContraction, setActiveContraction] = useState(null);
+
+  const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  // Enhanced mood configuration with predictive patterns
+  const moodConfig = {
+    happy: { 
+      bg: 'bg-gradient-to-br from-yellow-100 to-orange-100', 
+      border: 'border-yellow-400', 
+      text: 'text-yellow-800',
+      icon: Smile,
+      gradient: 'from-yellow-400 to-orange-400',
+      animation: 'animate-bounce',
+      recommendations: ['Take a walk in nature', 'Journal about positive feelings', 'Share your joy with loved ones']
+    },
+    anxious: { 
+      bg: 'bg-gradient-to-br from-purple-100 to-pink-100', 
+      border: 'border-purple-400', 
+      text: 'text-purple-800',
+      icon: AlertCircle,
+      gradient: 'from-purple-400 to-pink-400',
+      animation: 'animate-pulse',
+      recommendations: ['Practice box breathing', 'Listen to guided meditation', 'Write down your concerns']
+    },
+    calm: { 
+      bg: 'bg-gradient-to-br from-blue-100 to-cyan-100', 
+      border: 'border-blue-400', 
+      text: 'text-blue-800',
+      icon: Coffee,
+      gradient: 'from-blue-400 to-cyan-400',
+      animation: 'animate-pulse',
+      recommendations: ['Savor this peaceful moment', 'Practice mindfulness', 'Engage in gentle stretching']
+    },
+    excited: { 
+      bg: 'bg-gradient-to-br from-pink-100 to-rose-100', 
+      border: 'border-pink-400', 
+      text: 'text-pink-800',
+      icon: Sparkles,
+      gradient: 'from-pink-400 to-rose-400',
+      animation: 'animate-spin',
+      recommendations: ['Channel energy into nesting', 'Share your excitement with partner', 'Capture this moment in your journal']
+    },
+    neutral: { 
+      bg: 'bg-gradient-to-br from-gray-100 to-slate-100', 
+      border: 'border-gray-400', 
+      text: 'text-gray-800',
+      icon: Meh,
+      gradient: 'from-gray-400 to-slate-400',
+      animation: '',
+      recommendations: ['Check in with your body', 'Try a new relaxation technique', 'Plan something special for yourself']
+    },
+    supportive: { 
+      bg: 'bg-gradient-to-br from-green-100 to-emerald-100', 
+      border: 'border-green-400', 
+      text: 'text-green-800',
+      icon: HeartHandshake,
+      gradient: 'from-green-400 to-emerald-400',
+      animation: 'animate-pulse',
+      recommendations: ['Reach out to support network', 'Practice self-compassion', 'Acknowledge your strength']
+    },
+    friendly: { 
+      bg: 'bg-gradient-to-br from-indigo-100 to-purple-100', 
+      border: 'border-indigo-400', 
+      text: 'text-indigo-800',
+      icon: Heart,
+      gradient: 'from-indigo-400 to-purple-400',
+      animation: 'animate-pulse',
+      recommendations: ['Connect with other expectant parents', 'Share your experience', 'Express gratitude']
+    }
+  };
+
+  // Predictive tone system with contextual awareness
+  const toneSystem = {
+    supportive: {
+      description: "Warm, empathetic, and caring",
+      emoji: "🤗",
+      responses: {
+        greeting: "Hello beautiful mama! How's your day going? 💜",
+        concern: "I hear you, and your feelings are completely valid. Let's work through this together.",
+        celebration: "That's absolutely wonderful! I'm so happy for you! 🎉",
+        symptom: "I understand that can be uncomfortable. Let me help you track this symptom and provide some evidence-based relief strategies."
+      },
+      triggers: ['worried', 'scared', 'nervous', 'stressed']
+    },
+    sassy: {
+      description: "Fun, confident, and personality-filled",
+      emoji: "💁‍♀️",
+      responses: {
+        greeting: "Hey gorgeous! Ready to slay this pregnancy thing? ✨",
+        concern: "Girl, I see those worries trying to steal your crown. Not today! Let's handle this.",
+        celebration: "YASSS QUEEN! You're absolutely crushing it! 👑",
+        symptom: "Okay honey, let's tackle this symptom head-on! What's giving you trouble?"
+      },
+      triggers: ['frustrated', 'annoyed', 'bored', 'fed up']
+    },
+    clinical: {
+      description: "Medical, professional, and precise",
+      emoji: "👩‍⚕️",
+      responses: {
+        greeting: "Good day. I'm ready to assist with your pregnancy-related medical inquiries.",
+        concern: "I understand your concern. Let's review the medical facts and evidence-based recommendations.",
+        celebration: "Excellent progress. This is a positive indicator for your pregnancy health.",
+        symptom: "Thank you for reporting this symptom. Based on current medical guidelines, I recommend:"
+      },
+      triggers: ['pain', 'bleeding', 'medical', 'doctor']
+    },
+    friendly: {
+      description: "Casual, conversational, and approachable",
+      emoji: "😊",
+      responses: {
+        greeting: "Hi there! So nice to chat with you today! How's everything?",
+        concern: "Oh, I totally get that. It's super normal to feel this way. Want to talk about it?",
+        celebration: "Wow, that's amazing news! I'm doing a happy dance for you! 🎉",
+        symptom: "Oof, that sounds rough. Want me to help track this and find some solutions?"
+      },
+      triggers: ['chat', 'talk', 'friend', 'update']
+    },
+    motivational: {
+      description: "Inspiring, energetic, and empowering",
+      emoji: "💪",
+      responses: {
+        greeting: "Rise and shine, warrior mama! Today is YOUR day to conquer! 🌟",
+        concern: "Every challenge is an opportunity to show how strong you are. You've got this!",
+        celebration: "YES! This is the power of a determined mama! Keep shining bright! ⭐",
+        symptom: "Your body is doing incredible work! Let's find ways to support it through this challenge."
+      },
+      triggers: ['tired', 'exhausted', 'hard', 'difficult']
+    }
+  };
+
+  // Predictive analytics for pregnancy progression
+  const predictiveAnalytics = {
+    week20: {
+      babySize: "Cantaloupe",
+      milestones: ["Baby can hear your voice", "Vernix caseosa forms on skin"],
+      tips: ["Start talking to baby daily", "Consider prenatal massage for back pain"]
+    },
+    week25: {
+      babySize: "Cauliflower",
+      milestones: ["Rapid brain development", "Baby responds to light"],
+      tips: ["Use flashlight on belly at night", "Practice kick counting daily"]
+    },
+    week30: {
+      babySize: "Cabbage",
+      milestones: ["Baby opens eyes", "Lanugo starts shedding"],
+      tips: ["Practice relaxation techniques", "Pack hospital bag"]
+    }
+  };
+
+  // Auto-scroll to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 200) + 'px';
+    }
+  }, [input]);
+
+  // Initialize daily tips
+  useEffect(() => {
+    const tips = [
+      "💧 Remember to stay hydrated! Aim for 8-10 glasses of water daily.",
+      "🚶‍♀️ A 20-minute walk can boost your mood and energy levels.",
+      "🥑 Avocados are rich in folate - perfect for baby's development!",
+      "😴 Side sleeping with a pillow between your knees can improve comfort.",
+      "🧘‍♀️ Deep breathing exercises can help reduce pregnancy anxiety."
+    ];
+    setDailyTips(tips);
+  }, []);
+
+  // Enhanced emergency detection with contextual analysis
+  const checkForEmergency = (text) => {
+    const emergencyKeywords = [
+      'bleeding', 'severe pain', 'cramping', 'emergency', 'help me', 
+      'urgent', 'hospital', 'dizzy', 'faint', 'vision problems',
+      'headache severe', 'chest pain', 'difficulty breathing', 'fluid leak',
+      'decreased movement', 'contractions regular'
+    ];
+    const lowerText = text.toLowerCase();
+    return emergencyKeywords.some(keyword => lowerText.includes(keyword));
+  };
+
+  // Advanced mood detection with predictive patterns
+  const detectMood = (text) => {
+    const moodPatterns = {
+      anxious: {
+        keywords: ['worried', 'scared', 'anxious', 'nervous', 'fear', 'panic', 'stress'],
+        emojis: ['😰', '😟', '😨', '😱'],
+        weight: 1.5
+      },
+      happy: {
+        keywords: ['happy', 'excited', 'joy', 'wonderful', 'great', 'amazing', 'love'],
+        emojis: ['😊', '😄', '🥰', '💕', '🎉'],
+        weight: 1.2
+      },
+      calm: {
+        keywords: ['calm', 'peaceful', 'relaxed', 'serene', 'comfortable'],
+        emojis: ['😌', '🧘‍♀️', '☺️'],
+        weight: 1.0
+      },
+      excited: {
+        keywords: ['excited', 'amazing', 'thrilled', 'can\'t wait', 'awesome'],
+        emojis: ['🤗', '✨', '🎊', '💃'],
+        weight: 1.3
+      }
+    };
+
+    let detectedMood = 'neutral';
+    let highestScore = 0;
+
+    for (const [mood, pattern] of Object.entries(moodPatterns)) {
+      let score = 0;
+      
+      // Check keywords
+      pattern.keywords.forEach(keyword => {
+        if (text.toLowerCase().includes(keyword)) {
+          score += pattern.weight;
+        }
+      });
+      
+      // Check emojis
+      pattern.emojis.forEach(emoji => {
+        if (text.includes(emoji)) {
+          score += pattern.weight * 1.5;
+        }
+      });
+      
+      if (score > highestScore) {
+        highestScore = score;
+        detectedMood = mood;
+      }
+    }
+
+    // Mood prediction based on history
+    if (moodHistory.length >= 3) {
+      const recentMoods = moodHistory.slice(-3).map(m => m.mood);
+      const calmPattern = recentMoods.filter(m => m === 'calm').length === 3;
+      const anxiousPattern = recentMoods.filter(m => m === 'anxious').length >= 2;
+      
+      if (calmPattern && detectedMood === 'neutral') {
+        return 'calm';
+      }
+      if (anxiousPattern && (detectedMood === 'neutral' || detectedMood === 'calm')) {
+        return 'anxious';
+      }
+    }
+
+    return detectedMood;
+  };
+
+  // Predictive response generation with AI insights
+  const generateResponse = (userMessage, detectedMood) => {
+    // Contextual tone adjustment
+    const toneTriggers = Object.entries(toneSystem).find(([tone, config]) => 
+      config.triggers.some(trigger => userMessage.toLowerCase().includes(trigger))
+    );
+    
+    if (toneTriggers) {
+      setSelectedTone(toneTriggers[0]);
+    }
+
+    const contextualResponses = {
+      supportive: {
+        anxious: [
+          `I understand you're feeling worried ${userProfile.name}. That's completely normal during pregnancy. Based on your history, I recommend trying a 5-minute breathing exercise. Would you like me to guide you through it? 💜`,
+          "Your feelings are so valid. Many mamas experience similar worries around week 20. I'm here to support you through this. Would you like to try a quick relaxation exercise?",
+          `I hear you ${userProfile.name}, and I'm here for you. Anxiety during pregnancy is more common than you might think. Since you've been feeling this way for a few days, let's discuss coping strategies that work for you.`
+        ],
+        happy: [
+          `Your joy is absolutely beautiful ${userProfile.name}! ✨ At 20 weeks, many moms experience this happiness as they feel more movement. What's making your heart so full today?`,
+          "I'm beaming with happiness for you! This positive energy is wonderful for both you and baby. Tell me more about what's bringing you such joy!",
+          "What a beautiful mood! Your happiness is literally making me smile. Since you're feeling so positive today, would you like to record a voice message for your baby? 🎉"
+        ],
+        symptom: [
+          `I understand ${userMessage.toLowerCase().includes('back') ? 'back pain' : 'that discomfort'}. At week 20, this is common but worth monitoring. Let me help you track this and provide evidence-based relief strategies. How long have you been experiencing this?`,
+          "Thank you for sharing this with me. Tracking symptoms is so important. I've noticed this is your third report of this symptom this week - would you like me to prepare a summary for your doctor?",
+          "I hear you. Pregnancy symptoms can be challenging. Since you mentioned this yesterday too, let's explore some new approaches. On a scale of 1-10, how would you rate your discomfort today?"
+        ]
+      },
+      sassy: {
+        anxious: [
+          "Okay honey, I see anxiety trying to crash your party! 🙅‍♀️ But guess what? You're stronger than any worry. Let's kick those fears to the curb! What's got you stressed?",
+          "Girl, those pregnancy hormones are NOT playing fair today! But we're gonna show them who's boss. What's trying to steal your peace?",
+          "Listen babe, worry is just your brain being overprotective. But you? You're a warrior mama! Let's tackle these fears together! 💪"
+        ],
+        happy: [
+          "YASSS MAMA! 👑 That glow isn't just pregnancy - that's pure happiness radiating! Okay, dish - what's got you feeling so fabulous?",
+          "Okay, I NEED to know what's got you shining brighter than a diamond today! This energy is EVERYTHING! ✨",
+          "Stop it right now - you're literally glowing! 🌟 This is the vibe we love to see! Tell me everything!"
+        ]
+      },
+      clinical: {
+        symptom: [
+          "Thank you for reporting this symptom. Based on current medical guidelines for week 20 of pregnancy, I recommend: 1) Rest with elevation, 2) Warm compress, 3) Gentle stretching. Would you like me to log this for your medical records?",
+          "I've documented this symptom in your health tracker. The American Pregnancy Association suggests monitoring frequency and duration. Would you like me to set up a symptom diary?",
+          "This symptom aligns with common experiences at 20 weeks. However, if it persists beyond 48 hours or intensifies, please contact your healthcare provider immediately."
+        ]
+      }
+    };
+
+    const tone = toneSystem[selectedTone];
+    const responses = contextualResponses[selectedTone] || contextualResponses.supportive;
+    
+    // Check for symptom-related keywords
+    const symptomKeywords = ['pain', 'ache', 'cramp', 'nausea', 'tired', 'exhausted', 'swollen'];
+    const isSymptomRelated = symptomKeywords.some(keyword => userMessage.toLowerCase().includes(keyword));
+    
+    if (isSymptomRelated && responses.symptom) {
+      return responses.symptom[Math.floor(Math.random() * responses.symptom.length)];
+    }
+    
+    // Predictive response based on mood patterns
+    if (detectedMood === 'anxious' && moodHistory.filter(m => m.mood === 'anxious').length >= 3) {
+      return `I've noticed you've been feeling anxious several days this week ${userProfile.name}. This is completely normal, but let's explore some new coping strategies. Would you like to try a guided meditation specifically for pregnancy anxiety?`;
+    }
+    
+    const moodResponses = responses[detectedMood] || responses.general || responses.anxious;
+    return moodResponses[Math.floor(Math.random() * moodResponses.length)];
+  };
+
+  // Contraction timer functions
+  const startContractionTimer = () => {
+    if (!activeContraction) {
+      setActiveContraction({
+        startTime: new Date(),
+        endTime: null,
+        duration: null
+      });
+    } else {
+      const endTime = new Date();
+      const duration = (endTime - activeContraction.startTime) / 1000;
+      const newContraction = {
+        startTime: activeContraction.startTime,
+        endTime,
+        duration
+      };
+      setContractionHistory([...contractionHistory, newContraction]);
+      setActiveContraction(null);
+      
+      // Analyze contraction pattern
+      if (contractionHistory.length >= 2) {
+        const lastContraction = contractionHistory[contractionHistory.length - 1];
+        const timeBetween = (newContraction.startTime - lastContraction.endTime) / 60000; // in minutes
+        
+        if (timeBetween < 5 && duration > 45) {
+          setShowEmergencyButton(true);
+          addNotification('emergency', 'Regular contractions detected. Contact your healthcare provider!');
+        }
+      }
+    }
+  };
+
+  // Message reactions
+  const addReaction = (messageId, reaction) => {
+    setMessages(prev => prev.map(msg => {
+      if (msg.id === messageId) {
+        const reactions = [...msg.reactions];
+        const existingIndex = reactions.findIndex(r => r.emoji === reaction);
+        
+        if (existingIndex >= 0) {
+          reactions[existingIndex].count += 1;
+        } else {
+          reactions.push({ emoji: reaction, count: 1 });
+        }
+        
+        return { ...msg, reactions };
+      }
+      return msg;
+    }));
+  };
+
+  // Bookmark message
+  const toggleBookmark = (messageId) => {
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId ? { ...msg, isBookmarked: !msg.isBookmarked } : msg
+    ));
+  };
+
+  // Voice message simulation
+  const handleVoiceMessage = () => {
+    setIsListening(!isListening);
+    if (!isListening) {
+      // Simulate voice recording
+      setTimeout(() => {
+        setIsListening(false);
+        setInput("I've been feeling some movement today, is that normal?");
+      }, 3000);
+    }
+  };
+
+  // Handle message send
+  const handleSend = () => {
+    if (input.trim() === '') return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: 'user',
+      content: input,
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false,
+      insights: []
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsTyping(true);
+
+    // Check for emergencies
+    if (checkForEmergency(input)) {
+      setShowEmergencyButton(true);
+      
+      // Add emergency notification
+      setNotifications(prev => [{
+        id: Date.now(),
+        type: 'emergency',
+        message: 'Emergency keywords detected. Please contact your healthcare provider if needed.',
+        timestamp: new Date(),
+        read: false
+      }, ...prev]);
+    }
+
+    // Detect and track mood
+    const detectedMood = detectMood(input);
+    setCurrentMood(detectedMood);
+    setMoodHistory(prev => [...prev, { date: new Date(), mood: detectedMood }]);
+
+    // Simulate AI response with typing delay
+    setTimeout(() => {
+      const response = generateResponse(input, detectedMood);
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        role: 'assistant',
+        content: response,
+        mood: detectedMood,
+        timestamp: new Date(),
+        reactions: [],
+        isBookmarked: false,
+        insights: moodConfig[detectedMood].recommendations
+      }]);
+      setIsTyping(false);
+    }, 1500 + Math.random() * 1000); // Variable typing time for realism
+  };
+
+  // Quick action handlers
+  const handleQuickAction = (action) => {
+    switch(action) {
+      case 'water':
+        setWaterIntake(prev => Math.min(prev + 1, 12));
+        addNotification('success', '💧 Water intake logged! Keep it up!');
+        break;
+      case 'kicks':
+        setKickCounter(prev => prev + 1);
+        addNotification('success', '👶 Kick counted! Baby is active!');
+        break;
+      case 'mood':
+        setShowSymptomModal(true);
+        break;
+      case 'nutrition':
+        setActiveTab('health');
+        break;
+    }
+  };
+
+  const addNotification = (type, message) => {
+    const notification = {
+      id: Date.now(),
+      type,
+      message,
+      timestamp: new Date(),
+      read: false
+    };
+    
+    setNotifications(prev => [notification, ...prev].slice(0, 10));
+    
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== notification.id));
+    }, 5000);
+  };
+
+  // Enhanced Mood Ring Component with predictive insights
+  const MoodRing = ({ mood, size = 'medium' }) => {
+    const [isAnimating, setIsAnimating] = useState(false);
+    const config = moodConfig[mood] || moodConfig.neutral;
+    const Icon = config.icon;
+    
+    const sizeClasses = {
+      small: 'w-8 h-8',
+      medium: 'w-12 h-12',
+      large: 'w-16 h-16'
+    };
+
+    useEffect(() => {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 1000);
+      return () => clearTimeout(timer);
+    }, [mood]);
+
+    return (
+      <div className={`
+        ${sizeClasses[size]} rounded-full border-4 transition-all duration-1000
+        ${config.border} ${config.bg} shadow-lg
+        ${isAnimating ? 'scale-110 ' + config.animation : 'scale-100'}
+        flex items-center justify-center relative overflow-hidden
+      `}>
+        <div className={`absolute inset-0 bg-gradient-to-br ${config.gradient} opacity-30`} />
+        <Icon className={`${size === 'small' ? 'w-4 h-4' : size === 'large' ? 'w-8 h-8' : 'w-6 h-6'} ${config.text} relative z-10`} />
+      </div>
+    );
+  };
+
+  // Enhanced Chat Interface with predictive insights
+  const ChatInterface = () => {
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const emojis = ['😊', '😔', '😰', '🤗', '💜', '👶', '🤰', '✨', '💪', '🙏'];
+
+    return (
+      <div className="flex flex-col h-full">
+        {/* Messages Area */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-purple-50 to-white">
+          {messages.map((message, index) => (
+            <motion.div
+              key={message.id}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className={`max-w-[80%] ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
+                <motion.div
+                  className={`rounded-2xl px-5 py-3 shadow-sm transition-colors duration-300 ${
+                    message.role === 'user'
+                      ? 'bg-gradient-to-br from-purple-600 to-purple-700 text-white'
+                      : 'bg-white border border-gray-100 text-gray-800'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                  
+                  {message.mood && message.role === 'assistant' && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <span className={`text-xs px-3 py-1 rounded-full ${moodConfig[message.mood].bg} ${moodConfig[message.mood].text} font-medium`}>
+                        Mood: {message.mood}
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* Predictive Insights */}
+                  {message.insights && message.insights.length > 0 && (
+                    <div className="mt-4 pt-3 border-t border-gray-100">
+                      <p className="text-xs font-medium text-gray-500 mb-2">RECOMMENDED ACTIONS</p>
+                      <div className="space-y-2">
+                        {message.insights.map((insight, idx) => (
+                          <div key={idx} className="flex items-start gap-2">
+                            <Sparkles className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                            <p className="text-sm text-gray-700">{insight}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
+                
+                {/* Message Actions */}
+                <div className="flex items-center gap-2 mt-2 px-2">
+                  <p className="text-xs text-gray-500">
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                  
+                  <button
+                    onClick={() => toggleBookmark(message.id)}
+                    className="p-1 hover:bg-gray-100 rounded transition-colors"
+                  >
+                    <BookMarked className={`w-3 h-3 ${message.isBookmarked ? 'text-purple-600 fill-purple-600' : 'text-gray-400'}`} />
+                  </button>
+                  
+                  {message.role === 'assistant' && (
+                    <div className="flex gap-1">
+                      {['👍', '❤️', '😊'].map(emoji => (
+                        <button
+                          key={emoji}
+                          onClick={() => addReaction(message.id, emoji)}
+                          className="hover:scale-110 transition-transform"
+                        >
+                          {emoji}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Reactions Display */}
+                {message.reactions && message.reactions.length > 0 && (
+                  <div className="flex gap-2 mt-2 px-2">
+                    {message.reactions.map((reaction, idx) => (
+                      <motion.span 
+                        key={idx} 
+                        className="bg-gray-100 px-2 py-1 rounded-full text-xs"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                      >
+                        {reaction.emoji} {reaction.count}
+                      </motion.span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+          
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className="bg-white border border-gray-100 rounded-2xl px-5 py-3 shadow-sm">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" />
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className="border-t border-gray-200 bg-white p-4">
+          <div className="flex items-end gap-2">
+            <div className="flex-1 relative">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Type your message..."
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none transition-all"
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+              />
+              
+              {showEmojiPicker && (
+                <div className="absolute bottom-16 left-0 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-10 grid grid-cols-5 gap-1">
+                  {emojis.map(emoji => (
+                    <button
+                      key={emoji}
+                      onClick={() => setInput(prev => prev + emoji)}
+                      className="p-1 hover:bg-gray-100 rounded text-xl"
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              )}
+              
+              <div className="flex gap-2 mt-2">
+                <button 
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                  className="p-2 text-gray-500 hover:text-purple-600"
+                >
+                  <Smile className="w-5 h-5" />
+                </button>
+                
+                <button 
+                  onClick={handleVoiceMessage}
+                  className={`p-2 rounded-full ${isListening ? 'bg-purple-100 text-purple-600' : 'text-gray-500 hover:text-purple-600'}`}
+                >
+                  {isListening ? (
+                    <div className="relative">
+                      <Mic className="w-5 h-5" />
+                      <div className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                    </div>
+                  ) : (
+                    <Mic className="w-5 h-5" />
+                  )}
+                </button>
+                
+                <button 
+                  onClick={() => setShowPhotoModal(true)}
+                  className="p-2 text-gray-500 hover:text-purple-600"
+                >
+                  <Camera className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+            
+            <button
+              onClick={handleSend}
+              disabled={!input.trim()}
+              className="p-3 bg-gradient-to-br from-purple-600 to-pink-600 text-white rounded-lg hover:shadow-lg disabled:opacity-50 transition-all"
+            >
+              <Send className="w-5 h-5" />
+            </button>
+          </div>
+          
+          {/* Quick Actions */}
+          <div className="flex justify-between mt-3">
+            <div className="flex gap-2">
+              {quickActions.map(action => (
+                <button
+                  key={action.id}
+                  onClick={() => handleQuickAction(action.action)}
+                  className="flex items-center gap-1 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-full hover:bg-purple-100 transition-colors text-sm"
+                >
+                  <action.icon className="w-4 h-4" />
+                  {action.label}
+                </button>
+              ))}
+            </div>
+            
+            <button
+              onClick={() => setSelectedTone(prev => prev === 'supportive' ? 'sassy' : 'supportive')}
+              className="flex items-center gap-1 px-3 py-1.5 bg-pink-50 text-pink-700 rounded-full hover:bg-pink-100 transition-colors text-sm"
+            >
+              <Palette className="w-4 h-4" />
+              {selectedTone === 'supportive' ? 'Sassy Mode' : 'Supportive Mode'}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Enhanced Goal Manager with predictive milestones
+  const GoalManager = () => {
+    const goalCategories = {
+      wellness: { icon: Heart, color: 'text-pink-600', bg: 'bg-pink-50' },
+      fitness: { icon: Dumbbell, color: 'text-green-600', bg: 'bg-green-50' },
+      nutrition: { icon: Apple, color: 'text-orange-600', bg: 'bg-orange-50' },
+      preparation: { icon: BookOpen, color: 'text-blue-600', bg: 'bg-blue-50' },
+      baby: { icon: Baby, color: 'text-purple-600', bg: 'bg-purple-50' }
+    };
+
+    return (
+      <div className="p-4 space-y-4">
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">Your Goals</h2>
+            <p className="text-gray-600 mt-1">Track your pregnancy milestones</p>
+          </div>
+          <button
+            onClick={() => setShowGoalModal(true)}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            New Goal
+          </button>
+        </div>
+
+        {goals.length === 0 ? (
+          <motion.div 
+            className="text-center py-16 bg-gray-50 rounded-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <Target className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No goals yet</h3>
+            <p className="text-gray-500">Create your first pregnancy goal to get started!</p>
+          </motion.div>
+        ) : (
+          <div className="grid gap-4">
+            {goals.map(goal => {
+              const category = goalCategories[goal.category];
+              const Icon = category.icon;
+              
+              return (
+                <motion.div 
+                  key={goal.id}
+                  className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-xl ${category.bg}`}>
+                        <Icon className={`w-6 h-6 ${category.color}`} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-800 text-lg">{goal.text}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{goal.category} • Started {new Date(goal.createdAt).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-600">Progress</span>
+                      <span className="font-bold text-gray-800">{goal.progress}%</span>
+                    </div>
+                    <div className="relative bg-gray-100 rounded-full h-3 overflow-hidden">
+                      <div
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+                        style={{ width: `${goal.progress}%` }}
+                      />
+                    </div>
+                    
+                    {goal.milestones && goal.milestones.length > 0 && (
+                      <div className="mt-4 space-y-2">
+                        <p className="text-sm font-medium text-gray-700">Milestones:</p>
+                        {goal.milestones.map((milestone, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-sm">
+                            <div className={`w-4 h-4 rounded-full ${milestone.completed ? 'bg-green-500' : 'bg-gray-300'}`}>
+                              {milestone.completed && <Check className="w-3 h-3 text-white" />}
+                            </div>
+                            <span className={milestone.completed ? 'text-gray-600 line-through' : 'text-gray-700'}>
+                              {milestone.text}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {/* Predictive milestone suggestions */}
+                    {goal.progress >= 50 && !goal.milestones.some(m => !m.completed) && (
+                      <div className="mt-4 pt-3 border-t border-gray-100">
+                        <p className="text-xs font-medium text-gray-500 mb-2">NEXT STEPS</p>
+                        <div className="space-y-2">
+                          <div className="flex items-start gap-2">
+                            <Sparkles className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                            <p className="text-sm text-gray-700">Consider adding a new milestone to build on your progress</p>
+                          </div>
+                          {goal.category === 'wellness' && (
+                            <div className="flex items-start gap-2">
+                              <Sparkles className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                              <p className="text-sm text-gray-700">Increase your target gradually for continued improvement</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Enhanced Health Tracker with predictive insights
+  const HealthTracker = () => {
+    const [activeHealthTab, setActiveHealthTab] = useState('overview');
+    const [showVitalsModal, setShowVitalsModal] = useState(false);
+    const [newVital, setNewVital] = useState({ type: 'blood-pressure', value: '' });
+    
+    return (
+      <div className="p-4">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Health Tracking</h2>
+          <p className="text-gray-600 mt-1">Monitor your pregnancy health metrics</p>
+        </div>
+
+        {/* Sub-navigation */}
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          {['overview', 'vitals', 'symptoms', 'medications', 'appointments'].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveHealthTab(tab)}
+              className={`px-4 py-2 rounded-lg font-medium capitalize whitespace-nowrap transition-all ${
+                activeHealthTab === tab
+                  ? 'bg-purple-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {activeHealthTab === 'overview' && (
+          <div className="space-y-6">
+            {/* Pregnancy Progress */}
+            <motion.div 
+              className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-800">Pregnancy Progress</h3>
+                <Baby className="w-6 h-6 text-purple-600" />
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-sm text-gray-600">Week {pregnancyWeek} of 40</span>
+                    <span className="text-sm font-medium text-purple-600">{Math.round((pregnancyWeek / 40) * 100)}%</span>
+                  </div>
+                  <div className="bg-white rounded-full h-4 overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-1000"
+                      style={{ width: `${(pregnancyWeek / 40) * 100}%` }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="bg-white rounded-xl p-4">
+                    <Calendar className="w-5 h-5 text-purple-600 mb-2" />
+                    <p className="text-xs text-gray-600">Due Date</p>
+                    <p className="font-semibold text-gray-800">{userProfile.dueDate.toLocaleDateString()}</p>
+                  </div>
+                  <div className="bg-white rounded-xl p-4">
+                    <Baby className="w-5 h-5 text-pink-600 mb-2" />
+                    <p className="text-xs text-gray-600">Baby Size</p>
+                    <p className="font-semibold text-gray-800">
+                      {pregnancyWeek < 25 ? 'Cantaloupe' : pregnancyWeek < 30 ? 'Cauliflower' : 'Cabbage'}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Predictive Milestones */}
+                <div className="mt-4 pt-4 border-t border-purple-100">
+                  <h4 className="font-medium text-gray-800 mb-3">This Week's Milestones</h4>
+                  <ul className="space-y-2 text-sm text-gray-700">
+                    {(predictiveAnalytics.week20.milestones || []).map((milestone, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <Sparkles className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                        <span>{milestone}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Today's Health Summary */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <motion.div 
+                className="bg-white rounded-xl p-4 border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <Droplets className="w-5 h-5 text-blue-500" />
+                  <span className="text-2xl font-bold text-gray-800">{waterIntake}/8</span>
+                </div>
+                <p className="text-sm text-gray-600">Glasses of water</p>
+                <button 
+                  onClick={() => handleQuickAction('water')}
+                  className="mt-2 text-xs text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  + Add glass
+                </button>
+              </motion.div>
+
+              <motion.div 
+                className="bg-white rounded-xl p-4 border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <Moon className="w-5 h-5 text-purple-500" />
+                  <span className="text-2xl font-bold text-gray-800">{sleepHours}</span>
+                </div>
+                <p className="text-sm text-gray-600">Hours of sleep</p>
+                <button className="mt-2 text-xs text-purple-600 hover:text-purple-700 font-medium">
+                  Log sleep
+                </button>
+              </motion.div>
+
+              <motion.div 
+                className="bg-white rounded-xl p-4 border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <Activity className="w-5 h-5 text-green-500" />
+                  <span className="text-2xl font-bold text-gray-800">{exerciseMinutes}</span>
+                </div>
+                <p className="text-sm text-gray-600">Exercise mins</p>
+                <button className="mt-2 text-xs text-green-600 hover:text-green-700 font-medium">
+                  Add activity
+                </button>
+              </motion.div>
+
+              <motion.div 
+                className="bg-white rounded-xl p-4 border border-gray-100"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <Heart className="w-5 h-5 text-red-500" />
+                  <span className="text-2xl font-bold text-gray-800">{kickCounter}</span>
+                </div>
+                <p className="text-sm text-gray-600">Baby kicks</p>
+                <button 
+                  onClick={() => handleQuickAction('kicks')}
+                  className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium"
+                >
+                  + Count kick
+                </button>
+              </motion.div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button 
+                  onClick={() => setShowVitalsModal(true)}
+                  className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all"
+                >
+                  <Stethoscope className="w-6 h-6 text-purple-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Log Vitals</p>
+                </button>
+                <button 
+                  onClick={() => setShowSymptomModal(true)}
+                  className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all"
+                >
+                  <AlertCircle className="w-6 h-6 text-orange-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Track Symptom</p>
+                </button>
+                <button className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all">
+                  <Pill className="w-6 h-6 text-blue-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Medications</p>
+                </button>
+                <button 
+                  onClick={() => setShowContractionTimer(true)}
+                  className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all"
+                >
+                  <Clock className="w-6 h-6 text-green-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Contraction Timer</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeHealthTab === 'vitals' && (
+          <div className="bg-white rounded-2xl p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-lg font-semibold text-gray-800">Vitals History</h3>
+              <button 
+                onClick={() => setShowVitalsModal(true)}
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg flex items-center gap-1"
+              >
+                <Plus className="w-4 h-4" />
+                Add New
+              </button>
+            </div>
+            
+            {healthRecords.length === 0 ? (
+              <div className="text-center py-8">
+                <Stethoscope className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <p className="text-gray-500">No vitals recorded yet</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {healthRecords.map(record => (
+                  <div key={record.id} className="flex items-center justify-between p-4 border-b border-gray-100">
+                    <div>
+                      <p className="font-medium capitalize">{record.type.replace('-', ' ')}</p>
+                      <p className="text-sm text-gray-500">{record.date.toLocaleDateString()}</p>
+                    </div>
+                    <p className="text-lg font-semibold">{record.value}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Contraction Timer Component
+  const ContractionTimer = () => {
+    const formatTime = (milliseconds) => {
+      const totalSeconds = Math.floor(milliseconds / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    };
+
+    return (
+      <motion.div 
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <motion.div 
+          className="bg-white rounded-2xl p-6 w-full max-w-md"
+          initial={{ scale: 0.9, y: 20 }}
+          animate={{ scale: 1, y: 0 }}
+        >
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold">Contraction Timer</h2>
+            <button onClick={() => setShowContractionTimer(false)}>
+              <X className="w-6 h-6 text-gray-500" />
+            </button>
+          </div>
+          
+          <div className="text-center mb-8">
+            <div className="text-5xl font-bold mb-2">
+              {activeContraction ? 
+                formatTime(new Date() - activeContraction.startTime) : 
+                contractionHistory.length > 0 ? 
+                  formatTime(contractionHistory[contractionHistory.length - 1].duration * 1000) : 
+                  "00:00"}
+            </div>
+            <p className="text-gray-500">
+              {activeContraction ? "Current contraction" : contractionHistory.length > 0 ? "Last contraction" : "Press start when contraction begins"}
+            </p>
+          </div>
+          
+          <button
+            onClick={startContractionTimer}
+            className={`w-full py-4 rounded-xl text-white font-bold ${
+              activeContraction 
+                ? "bg-gradient-to-r from-red-600 to-orange-600" 
+                : "bg-gradient-to-r from-purple-600 to-pink-600"
+            }`}
+          >
+            {activeContraction ? "End Contraction" : "Start Timing"}
+          </button>
+          
+          {contractionHistory.length > 0 && (
+            <div className="mt-8">
+              <h3 className="font-medium text-gray-800 mb-3">Contraction History</h3>
+              <div className="space-y-3">
+                {contractionHistory.slice().reverse().map((contraction, idx) => (
+                  <div key={idx} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                    <div>
+                      <p className="font-medium">{contraction.startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                      <p className="text-sm text-gray-500">{contraction.startTime.toLocaleDateString()}</p>
+                    </div>
+                    <p className="text-lg font-semibold">{formatTime(contraction.duration * 1000)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </motion.div>
+      </motion.div>
+    );
+  };
+
+  // Navigation Tabs
+  const NavigationTabs = () => {
+    const tabs = [
+      { id: 'chat', icon: MessageCircle, label: 'Chat' },
+      { id: 'health', icon: Heart, label: 'Health' },
+      { id: 'goals', icon: Target, label: 'Goals' },
+      { id: 'resources', icon: BookOpen, label: 'Resources' },
+      { id: 'profile', icon: User, label: 'Profile' }
+    ];
+
+    return (
+      <div className="flex justify-around border-t border-gray-200 bg-white py-3">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex flex-col items-center px-4 py-2 rounded-xl transition-all ${
+              activeTab === tab.id ? 'text-purple-600' : 'text-gray-500'
+            }`}
+          >
+            <tab.icon className={`w-6 h-6 ${activeTab === tab.id ? 'text-purple-600' : 'text-gray-500'}`} />
+            <span className="text-xs mt-1">{tab.label}</span>
+            {activeTab === tab.id && (
+              <div className="w-1.5 h-1.5 bg-purple-600 rounded-full mt-1"></div>
+            )}
+          </button>
+        ))}
+      </div>
+    );
+  };
+
+  // Main App Header
+  const AppHeader = () => (
+    <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <div className="bg-white/20 p-2 rounded-xl">
+            <Baby className="w-6 h-6" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold">Friday AI</h1>
+            <p className="text-sm text-purple-100">Your Pregnancy Companion</p>
+          </div>
+        </div>
+        
+        <div className="flex gap-3">
+          <button 
+            onClick={() => setShowNotifications(true)}
+            className="relative p-2 rounded-full hover:bg-white/20"
+          >
+            <Bell className="w-5 h-5" />
+            {notifications.filter(n => !n.read).length > 0 && (
+              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+            )}
+          </button>
+          
+          <button 
+            onClick={() => setShowSettingsModal(true)}
+            className="p-2 rounded-full hover:bg-white/20"
+          >
+            <Settings className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+      
+      <div className="mt-4 flex items-center justify-between">
+        <div>
+          <p className="text-sm">Welcome back, {userProfile.name}</p>
+          <p className="text-xs opacity-80">Week {pregnancyWeek} of pregnancy</p>
+        </div>
+        
+        <div className="flex items-center gap-2 bg-white/20 px-3 py-1.5 rounded-full">
+          <MoodRing mood={currentMood} size="small" />
+          <span className="text-sm capitalize">{currentMood}</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Emergency Button
+  const EmergencyButton = () => (
+    <AnimatePresence>
+      {showEmergencyButton && (
+        <motion.button
+          className="fixed bottom-24 right-6 bg-gradient-to-r from-red-600 to-orange-600 text-white px-6 py-4 rounded-full shadow-lg z-10 flex items-center gap-2"
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 100 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            window.location.href = `tel:${userProfile.emergencyContact}`;
+          }}
+        >
+          <AlertCircle className="w-5 h-5" />
+          <span>Emergency Help</span>
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+
+  // Daily Tip Component
+  const DailyTip = () => {
+    const [currentTipIndex, setCurrentTipIndex] = useState(0);
+    
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCurrentTipIndex(prev => (prev + 1) % dailyTips.length);
+      }, 8000);
+      
+      return () => clearInterval(timer);
+    }, [dailyTips.length]);
+    
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentTipIndex}
+          className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-100 rounded-xl p-4 mb-6 mx-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="flex items-start gap-3">
+            <Sparkles className="w-5 h-5 text-purple-600 mt-0.5" />
+            <p className="text-sm text-gray-700">{dailyTips[currentTipIndex]}</p>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    );
+  };
+
+  // Notifications Panel
+  const NotificationsPanel = () => (
+    <motion.div 
+      className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div 
+        className="bg-white w-full max-w-md h-full p-6"
+        initial={{ x: 300 }}
+        animate={{ x: 0 }}
+        exit={{ x: 300 }}
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-bold">Notifications</h2>
+          <button onClick={() => setShowNotifications(false)}>
+            <X className="w-6 h-6 text-gray-500" />
+          </button>
+        </div>
+        
+        <div className="space-y-4">
+          {notifications.length === 0 ? (
+            <div className="text-center py-16">
+              <Bell className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-500">No notifications yet</p>
+            </div>
+          ) : (
+            notifications.map(notification => (
+              <div 
+                key={notification.id} 
+                className={`p-4 rounded-xl border ${
+                  notification.type === 'emergency' 
+                    ? 'border-red-200 bg-red-50' 
+                    : notification.type === 'tip'
+                    ? 'border-purple-200 bg-purple-50'
+                    : 'border-gray-200 bg-gray-50'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  {notification.type === 'emergency' ? (
+                    <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+                  ) : notification.type === 'tip' ? (
+                    <Sparkles className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                  ) : (
+                    <Info className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  )}
+                  <div>
+                    <p className="font-medium">{notification.message}</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {notification.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+
+  // Main App Render
+  return (
+    <div className="flex flex-col h-screen bg-white">
+      <AppHeader />
+      
+      <DailyTip />
+      
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto">
+        {activeTab === 'chat' && <ChatInterface />}
+        {activeTab === 'health' && <HealthTracker />}
+        {activeTab === 'goals' && <GoalManager />}
+        {activeTab === 'resources' && (
+          <div className="p-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Pregnancy Resources</h2>
+            <div className="space-y-4">
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-5">
+                <h3 className="font-semibold text-lg text-gray-800 mb-3">Educational Articles</h3>
+                <div className="space-y-3">
+                  <div className="bg-white p-4 rounded-xl border border-gray-100">
+                    <h4 className="font-medium text-gray-800">Nutrition Guide for Each Trimester</h4>
+                    <p className="text-sm text-gray-600 mt-1">Learn what foods to focus on during your pregnancy journey</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-xl border border-gray-100">
+                    <h4 className="font-medium text-gray-800">Preparing for Labor</h4>
+                    <p className="text-sm text-gray-600 mt-1">Everything you need to know about the final stages</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="bg-gradient-to-r from-pink-50 to-rose-50 rounded-2xl p-5">
+                <h3 className="font-semibold text-lg text-gray-800 mb-3">Relaxation & Wellness</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <button 
+                    onClick={() => setShowMeditationModal(true)}
+                    className="bg-white p-4 rounded-xl border border-gray-100 text-center hover:shadow-md transition-all"
+                  >
+                    <Headphones className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+                    <p className="text-sm font-medium text-gray-700">Guided Meditation</p>
+                  </button>
+                  <button className="bg-white p-4 rounded-xl border border-gray-100 text-center hover:shadow-md transition-all">
+                    <Wind className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+                    <p className="text-sm font-medium text-gray-700">Breathing Exercises</p>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+      
+      <EmergencyButton />
+      <NavigationTabs />
+      
+      {/* Modals */}
+      <AnimatePresence>
+        {showNotifications && <NotificationsPanel />}
+        {showContractionTimer && <ContractionTimer />}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default FridayAI;

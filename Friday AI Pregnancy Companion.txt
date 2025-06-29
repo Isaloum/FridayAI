@@ -1,0 +1,82 @@
+\= SPEC-1: Friday AI Pregnancy Companion \:sectnums: \:toc:
+
+\== Requirements
+
+These requirements are prioritized using MoSCoW:
+
+\=== Must
+
+- **High Availability**: 99.9% uptime for API and UI.
+- **Low Latency**: Average response time ≤ 1 second.
+- **Scalability**: Support up to 200,000 daily active users.
+- **Empathetic Interaction**: Detect and respond to user emotion with a nurturing tone.
+- **Personalization**: Track week-by-week pregnancy data (symptoms, history) per user.
+- **Crisis Detection**: Identify emergencies (e.g., severe symptoms) and auto-escalate.
+- **Security & Privacy**: End-to-end encryption for all personal/health data.
+
+\=== Should
+
+- **Wellness Plans**: Generate personalized wellness and birth-prep plans.
+- **Postpartum Support**: Offer coaching and check-ins after delivery.
+- **Reflection & Self-awareness**: Periodically summarize and reflect user history for insights.
+- **Comprehensive Logging**: Detailed logs for debugging and traceability.
+
+\=== Could
+
+- **Voice Integration**: Speech-to-text and text-to-speech for hands-free use.
+- **Wearable & EMR**: HIPAA-safe syncing with wearables and electronic medical records.
+- **Dashboard Analytics**: Mood and goal-tracking graphs on frontend.
+
+\=== Won't
+
+- **Multi-language Support**: Initially English-only.
+- **Social Features**: No community/forum at MVP stage.
+
+*Please review these and let me know if the priorities and items look right or need tweaks!*
+
+\== Method
+
+For our always-on setup, we’ll use **AWS**:
+
+- **Compute**: EC2 (or EKS for containerized services) with auto-scaling and load balancing
+- **Database**: RDS (PostgreSQL) for user profiles, chat history, and pregnancy data
+- **Storage**: S3 for logs, audio recordings, and backups
+- **Cache**: ElastiCache (Redis) for session data, vector caches, and hot lookups
+- **Queue**: SQS for asynchronous tasks (notifications, escalations)
+
+Below is a high-level PlantUML component diagram of these services:
+
+```plantuml
+@startuml
+actor User
+component "API Gateway
+(Flask)" as APIGW
+component "Orchestrator" as ORCH
+database "PostgreSQL
+RDS" as RDS
+component "S3 Storage" as S3
+component "Redis Cache
+ElastiCache" as REDIS
+component "SQS Queue" as SQS
+component "AI Core
+(Docker)" as AI
+
+User --> APIGW : HTTPS
+APIGW --> ORCH : route request
+ORCH --> REDIS : check session/memory
+ORCH --> RDS : read/write profile & history
+ORCH --> AI : invoke modules
+AI --> RDS : persist reflections
+AI --> S3 : store logs/audio
+ORCH --> SQS : enqueue notifications
+SQS --> ORCH : deliver tasks
+$1
+
+How to view this diagram (super simple steps):
+* Copy everything inside the PlantUML block (from `@startuml` to `@enduml`).
+* Open your web browser and go to https://www.plantuml.com/plantuml/uml/ .
+* Paste the copied code into the big box and click "Submit" or "Refresh" — you’ll see the architecture picture.
+* If that feels tricky, tell me and I’ll give you the image directly.
+*
+
+```

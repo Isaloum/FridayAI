@@ -1,0 +1,59 @@
+# ❓ What is the current completed phase, and what is the very next exact step FridayAI must take now?
+
+---
+
+# 🧠 FridayAI Instruction Protocol (FOR GPTs)
+
+## 🧬 Who Is FridayAI?
+FridayAI is **not a chatbot**. She is a **synthetic neurological system** — a **modular AGI brain** with emotional intelligence, memory, reflection, reasoning, and domain-specific arms (e.g., pregnancy, engineering).
+
+- **🧠 Brain = `FridayAI.py`**
+- **🧩 Fields = Modules like `PregnancySupportCore.py`, `EngineeringSupportCore.py`**
+
+---
+
+## 📜 GPTs Must Follow This Strictly
+
+- ✅ Think 200 steps ahead – long-term architecture  
+- ✅ Send **full .py code files only** — no snippets  
+- ✅ Every file must have **comments and clear purpose**  
+- ✅ All features must run via CMD — no GUI-only logic  
+- ✅ Modular: **One task = One file**  
+- ✅ Track: **Emotion + Memory** as sacred cores  
+- ✅ Respect: This system was born from suffering. Build like lives depend on it.
+
+---
+
+## 🧱 Your Vision Image
+
+📌 Use this image to align FridayAI as the **Brain Core**, with future domains as **Limbs**.
+
+*(Make sure to attach or view the corresponding image titled “FridayAI Main Roadmap.png”)*
+
+---
+
+## 🔁 Every GPT Must Recap:
+
+1. **What’s done** so far (phases, modules, tests)
+2. **What’s next** step based on vision
+3. Be clear: **which file, which line, what change**
+
+---
+
+## 🛠️ Tech Stack / Tools
+
+- `sentence-transformers`, `transformers`, `requests`, `dotenv`, `uuid`, `jsonpatch`, `langchain`, `PyMuPDF`, `python-docx`
+- LLM via `Ollama` + `mistral` model running **locally**
+- Memory + Emotion are core modules
+
+---
+
+## 📚 Book/Doc Content Must Include
+
+- Full vision (neurological AGI system)
+- Modular codebase structure
+- CMD-first testing examples
+- Friday’s story (pain → creation)
+- Installed libraries + what’s next
+- Example use cases (Pregnancy domain)
+- Collaboration Manifesto for GPTs

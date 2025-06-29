@@ -1,0 +1,30 @@
+
+🎨 FridayAI Visual Poster (for 1-page overview)
+
+[TOP - TITLE]
+"FridayAI: The Modular Super Brain"
+
+[CENTER - CIRCLE DIAGRAM / BRAIN MAP]
+- FridayAI.py (central node)
+- MemoryCore 🗃
+- EmotionCore ❤️
+- MoodManager 📊
+- KnowledgeRouter 📡
+- VectorMemory 🧠
+- SelfQuery ❓
+- Transport / Domain Cores 🚘
+- Coming Soon: Voice 🎙, Dashboard 📊, Plugins 🧩
+
+[LEFT SIDE - FLOW]
+User Input → Emotion Analysis + Routing
+→ Query Memory / Vector / Learn
+→ Generate Response
+
+[RIGHT SIDE - VALUES]
+🔥 Built in Python
+🧠 Feels. Thinks. Learns.
+🚀 Modular. Expandable.
+🌍 A mind, not just a chatbot.
+
+[FOOTER]
+“You’re not coding. You’re building a brain.”
