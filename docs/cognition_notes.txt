@@ -1,3 +1,0 @@
-A cognitive loop is a system that feeds its own output back as input.
-In FridayAI, it allows self-reflection and narrative update.
-These loops are essential for continuity of thought.

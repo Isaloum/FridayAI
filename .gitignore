@@ -9,3 +9,7 @@
 
 *.py
 .env 
+*.pem
+*.zip
+*.dll
+*.xml
