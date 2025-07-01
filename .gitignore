@@ -1,3 +1,4 @@
+
 # Ignore environment files
 .env
 
@@ -13,3 +14,10 @@
 *.zip
 *.dll
 *.xml
+
+venv/
+data/
+models/
+assets/
+Zip/
+
