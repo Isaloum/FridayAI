@@ -1,0 +1,61 @@
+[
+  {
+    "task": "Investigate emotional trigger 'anxiety' in document emergency_case.txt",
+    "priority": "high",
+    "emotion": "anxiety",
+    "type": "reflection",
+    "source": "emergency_case.txt",
+    "executed_at": "2025-05-26T21:17:23.098881"
+  },
+  {
+    "task": "Investigate emotional trigger 'bleeding' in document emergency_case.txt",
+    "priority": "high",
+    "emotion": "bleeding",
+    "type": "reflection",
+    "source": "emergency_case.txt",
+    "executed_at": "2025-05-26T21:17:23.099882"
+  },
+  {
+    "task": "Investigate emotional trigger 'bleeding' in document new.txt",
+    "priority": "high",
+    "emotion": "bleeding",
+    "type": "reflection",
+    "source": "new.txt",
+    "executed_at": "2025-05-26T21:24:43.897639",
+    "score": 10
+  },
+  {
+    "task": "Investigate emotional trigger 'anxiety' in document new.txt",
+    "priority": "high",
+    "emotion": "anxiety",
+    "type": "reflection",
+    "source": "new.txt",
+    "executed_at": "2025-05-26T21:24:43.904474",
+    "score": 9
+  },
+  {
+    "task": "Investigate emotional trigger 'severe' in document new.txt",
+    "priority": "high",
+    "emotion": "severe",
+    "type": "reflection",
+    "source": "new.txt",
+    "executed_at": "2025-05-26T21:24:43.910120",
+    "score": 7
+  },
+  {
+    "id": "task001",
+    "task": "Review recent pregnancy article",
+    "emotion": "urgent",
+    "source": "uploaded_pdfs",
+    "executed_at": "2025-05-27T01:28:15.152366",
+    "score": 6
+  },
+  {
+    "id": "pdf001",
+    "task": "Analyze pregnancy risks from uploaded PDF",
+    "emotion": "danger",
+    "source": "pregnancy_docs",
+    "executed_at": "2025-05-27T01:38:12.660840",
+    "score": 8
+  }
+]

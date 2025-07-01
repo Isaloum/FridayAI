@@ -1,0 +1,1139 @@
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import {
+  Heart, Brain, Shield, Activity, AlertCircle, Moon, Sun, Settings, TrendingUp,
+  Calendar, Target, Sparkles, ChevronRight, X, Send, Mic, Bell, User, Home,
+  BarChart3, BookOpen, Phone, MessageCircle, Zap, Star, Baby, Stethoscope,
+  Apple, Dumbbell, Music, Camera, Share2, Download, Lock, Smile, Frown, Meh,
+  ThumbsUp, Coffee, Droplets, Pill, Wind, HeartHandshake, Users, Gift,
+  ShoppingBag, FileText, Video, HelpCircle, Award, Palette, Volume2, ChevronLeft,
+  Plus, Minus, Check, Clock, MapPin, Thermometer, Weight, Ruler, Calculator,
+  BookMarked, Headphones, Wifi, WifiOff, Battery, BatteryLow, Cloud, CloudOff,
+  Eye, EyeOff, Edit3, Trash2, Copy, Share, Filter, Search, Menu, MoreVertical,
+  Info, AlertTriangle, CheckCircle, XCircle, ArrowUp, ArrowDown, ArrowLeft,
+  ArrowRight, RotateCw, RefreshCw, Loader, Pause, Play, Square, Circle, Triangle,
+  Mic2, MicOff, Lightbulb, Rocket, Crown, Gem, Flower,
+  Sunrise, Mountain, Flame, Leaf
+} from "lucide-react";
+import {
+  ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip,
+  BarChart, Bar, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis,
+  PolarRadiusAxis, Radar, ScatterChart, Scatter, LineChart, Line, ComposedChart
+} from "recharts";
+
+// ============ ULTRA BRILLIANT ENHANCEMENTS ============
+
+// Enhanced Mood System with Emotional Intelligence
+const ULTRA_MOOD_CONFIG = {
+  ecstatic: {
+    bg: "bg-gradient-to-br from-yellow-200 via-pink-200 to-purple-200",
+    border: "border-yellow-500",
+    text: "text-yellow-900",
+    icon: Crown,
+    gradient: "from-yellow-400 via-pink-400 to-purple-400",
+    animation: "animate-bounce",
+    vibration: "animate-pulse",
+    energy: 100,
+    description: "Pure joy and excitement!"
+  },
+  radiant: {
+    bg: "bg-gradient-to-br from-rose-200 via-orange-200 to-yellow-200",
+    border: "border-rose-500",
+    text: "text-rose-900",
+    icon: Sunrise,
+    gradient: "from-rose-400 via-orange-400 to-yellow-400",
+    animation: "animate-spin",
+    energy: 95,
+    description: "Glowing with happiness"
+  },
+  happy: {
+    bg: "bg-gradient-to-br from-yellow-100 to-orange-100",
+    border: "border-yellow-400",
+    text: "text-yellow-800",
+    icon: Smile,
+    gradient: "from-yellow-400 to-orange-400",
+    animation: "animate-bounce",
+    energy: 80,
+    description: "Joyful and content"
+  },
+  serene: {
+    bg: "bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100",
+    border: "border-blue-400",
+    text: "text-blue-800",
+    icon: Coffee,
+    gradient: "from-blue-400 via-indigo-400 to-purple-400",
+    animation: "animate-pulse",
+    energy: 60,
+    description: "Peaceful and balanced"
+  },
+  anxious: {
+    bg: "bg-gradient-to-br from-purple-100 to-pink-100",
+    border: "border-purple-400",
+    text: "text-purple-800",
+    icon: AlertCircle,
+    gradient: "from-purple-400 to-pink-400",
+    animation: "animate-pulse",
+    energy: 40,
+    description: "Feeling worried or nervous"
+  },
+  overwhelmed: {
+    bg: "bg-gradient-to-br from-gray-100 to-slate-200",
+    border: "border-gray-500",
+    text: "text-gray-800",
+    icon: Mountain,
+    gradient: "from-gray-500 to-slate-500",
+    animation: "animate-pulse",
+    energy: 25,
+    description: "Feeling like it's too much"
+  },
+  empowered: {
+    bg: "bg-gradient-to-br from-emerald-100 via-teal-100 to-cyan-100",
+    border: "border-emerald-400",
+    text: "text-emerald-800",
+    icon: Rocket,
+    gradient: "from-emerald-400 via-teal-400 to-cyan-400",
+    animation: "animate-bounce",
+    energy: 90,
+    description: "Strong and confident"
+  },
+  grateful: {
+    bg: "bg-gradient-to-br from-pink-100 via-rose-100 to-red-100",
+    border: "border-pink-400",
+    text: "text-pink-800",
+    icon: Heart,
+    gradient: "from-pink-400 via-rose-400 to-red-400",
+    animation: "animate-pulse",
+    energy: 85,
+    description: "Feeling thankful and blessed"
+  }
+};
+
+// Advanced AI Personality Profiles
+const AI_PERSONALITIES = {
+  sage: {
+    name: "Sage Sophia",
+    emoji: "🧘‍♀️",
+    description: "Wise, calm, and deeply empathetic",
+    voice: "Gentle and thoughtful",
+    specialties: ["mindfulness", "emotional balance", "wisdom"],
+    responses: {
+      greeting: "Welcome, beautiful soul. I sense such strength in you today. How may I support your journey? 🌸",
+      support: "Take a deep breath with me. You are exactly where you need to be, and you have everything you need within you.",
+      celebration: "Your joy radiates like sunlight. This moment of happiness is a gift to both you and your precious baby. ✨"
+    }
+  },
+  champion: {
+    name: "Champion Charlie",
+    emoji: "💪",
+    description: "Motivational and empowering",
+    voice: "Energetic and inspiring",
+    specialties: ["motivation", "goal achievement", "confidence"],
+    responses: {
+      greeting: "Hey there, WARRIOR MAMA! 🔥 You're about to conquer another amazing day! What goals are we crushing?",
+      support: "Listen up, champion - every challenge you face is making you stronger! You're not just growing a baby, you're growing into a SUPERHERO!",
+      celebration: "YES! YES! YES! 🎉 That's the power of a determined mama right there! Keep shining, you absolute LEGEND!"
+    }
+  },
+  mystic: {
+    name: "Mystic Luna",
+    emoji: "🌙",
+    description: "Intuitive and spiritually connected",
+    voice: "Ethereal and mysterious",
+    specialties: ["intuition", "spiritual connection", "cosmic wisdom"],
+    responses: {
+      greeting: "Greetings, divine mother. The universe has blessed this moment of our connection. What wisdom do you seek? 🌟",
+      support: "Trust the ancient wisdom flowing through your body. You are part of an eternal cycle of creation, connected to all mothers before you.",
+      celebration: "The cosmos celebrates with you! Your joy creates ripples of light across the universe. ✨🌙"
+    }
+  },
+  genius: {
+    name: "Dr. Genius",
+    emoji: "🧠",
+    description: "Brilliant and scientifically precise",
+    voice: "Intelligent and analytical",
+    specialties: ["medical knowledge", "research", "problem-solving"],
+    responses: {
+      greeting: "Excellent! Let's apply scientific precision to optimize your pregnancy journey. What data shall we analyze today?",
+      support: "Based on comprehensive research, your experience aligns with normal pregnancy patterns. Let's develop an evidence-based strategy.",
+      celebration: "Statistically speaking, this outcome represents optimal progress! Your biological systems are performing exceptionally well. 📊"
+    }
+  },
+  fairy: {
+    name: "Fairy Sparkle",
+    emoji: "🧚‍♀️",
+    description: "Magical and whimsical",
+    voice: "Light and enchanting",
+    specialties: ["joy", "magic", "wonder"],
+    responses: {
+      greeting: "✨ *sprinkles fairy dust* ✨ Hello, magical mama! Your pregnancy glow is absolutely enchanting today! What adventures await?",
+      support: "Even fairy tales have challenging chapters, but they always lead to the most beautiful endings. Your story is being written with love! 🌈",
+      celebration: "🎉✨ The fairy realm is throwing a celebration in your honor! This moment of joy will be remembered in the stars! ✨🎉"
+    }
+  }
+};
+
+// Ultra-Advanced Tone System
+const ULTRA_TONE_SYSTEM = {
+  cosmic: {
+    name: "Cosmic Wisdom",
+    emoji: "🌌",
+    description: "Connected to universal energy and ancient wisdom",
+    modifiers: ["enlightened", "transcendent", "universal"],
+    responseStyle: "Speaks with cosmic perspective and universal truths"
+  },
+  royal: {
+    name: "Royal Treatment",
+    emoji: "👑",
+    description: "Treating you like the queen you are",
+    modifiers: ["majestic", "regal", "honored"],
+    responseStyle: "Dignified, respectful, and empowering"
+  },
+  bestie: {
+    name: "Ultimate Bestie",
+    emoji: "👯‍♀️",
+    description: "Your ride-or-die pregnancy companion",
+    modifiers: ["loyal", "fun", "real"],
+    responseStyle: "Honest, supportive, and genuinely caring"
+  },
+  professor: {
+    name: "Pregnancy Professor",
+    emoji: "🎓",
+    description: "Educational and thoroughly informative",
+    modifiers: ["scholarly", "detailed", "evidence-based"],
+    responseStyle: "Comprehensive explanations with scientific backing"
+  },
+  zen: {
+    name: "Zen Master",
+    emoji: "🧘‍♀️",
+    description: "Mindful, peaceful, and centering",
+    modifiers: ["calm", "balanced", "mindful"],
+    responseStyle: "Meditative and grounding responses"
+  }
+};
+
+// Advanced Health Metrics
+const HEALTH_METRICS = {
+  vitals: {
+    heartRate: { min: 60, max: 100, optimal: [70, 85], unit: "bpm" },
+    bloodPressure: { systolic: [110, 140], diastolic: [70, 90], unit: "mmHg" },
+    weight: { weeklyGain: [0.5, 1], total: [25, 35], unit: "lbs" },
+    temperature: { min: 97.8, max: 99.1, unit: "°F" }
+  },
+  wellness: {
+    energy: { scale: [1, 10], optimal: [7, 9] },
+    mood: { scale: [1, 10], optimal: [7, 10] },
+    sleep: { hours: [7, 9], quality: [1, 10] },
+    stress: { scale: [1, 10], optimal: [1, 3] }
+  },
+  nutrition: {
+    calories: { min: 2200, max: 2500, unit: "kcal" },
+    protein: { min: 75, max: 100, unit: "g" },
+    folate: { min: 600, unit: "mcg" },
+    iron: { min: 27, unit: "mg" },
+    calcium: { min: 1000, unit: "mg" }
+  }
+};
+
+// ============ MAIN COMPONENT ============
+
+const UltraBrilliantFridayAI = () => {
+  // Enhanced State Management
+  const [messages, setMessages] = useState([
+    {
+      id: Date.now(),
+      role: "assistant",
+      content: "✨ Welcome to your Ultra Brilliant pregnancy journey! I'm Friday, your AI companion, evolved and enhanced with cosmic intelligence. I can feel the beautiful energy you're radiating today! How shall we begin this magical adventure together? 💜🌟",
+      mood: "radiant",
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false,
+      personality: "sage",
+      confidence: 0.98,
+      emotionalResonance: 0.95
+    }
+  ]);
+
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [currentMood, setCurrentMood] = useState("radiant");
+  const [selectedPersonality, setSelectedPersonality] = useState("sage");
+  const [selectedTone, setSelectedTone] = useState("cosmic");
+  const [pregnancyWeek, setPregnancyWeek] = useState(20);
+  const [activeTab, setActiveTab] = useState("chat");
+  
+  // Enhanced Analytics State
+  const [emotionalJourney, setEmotionalJourney] = useState([]);
+  const [healthMetrics, setHealthMetrics] = useState({
+    waterIntake: 6,
+    sleepHours: 7.5,
+    exerciseMinutes: 25,
+    kickCounter: 12,
+    energyLevel: 8,
+    stressLevel: 3,
+    happinessLevel: 9
+  });
+
+  const [goals, setGoals] = useState([
+    {
+      id: 1,
+      title: "Daily Mindfulness Practice",
+      category: "wellness",
+      progress: 75,
+      milestones: [
+        { text: "5-minute morning meditation", completed: true },
+        { text: "Gratitude journaling", completed: true },
+        { text: "Evening reflection", completed: false }
+      ],
+      aiInsights: "Your consistency is remarkable! Your stress levels have decreased 40% since starting this practice.",
+      createdAt: new Date()
+    }
+  ]);
+
+  const [notifications, setNotifications] = useState([]);
+  const [aiInsights, setAiInsights] = useState([]);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [showPersonalityModal, setShowPersonalityModal] = useState(false);
+
+  const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  // ============ ULTRA-ADVANCED FUNCTIONS ============
+
+  // Emotional Intelligence Engine
+  const analyzeEmotionalContext = useCallback((text) => {
+    const emotionalMarkers = {
+      ecstatic: ["amazing", "incredible", "best day", "so happy", "elated", "overjoyed"],
+      radiant: ["glowing", "beautiful", "wonderful", "bright", "shining"],
+      happy: ["good", "great", "happy", "pleased", "content", "glad"],
+      serene: ["calm", "peaceful", "relaxed", "zen", "balanced"],
+      anxious: ["worried", "nervous", "scared", "anxious", "concerned"],
+      overwhelmed: ["too much", "can't handle", "overwhelming", "stressed"],
+      empowered: ["strong", "confident", "powerful", "capable", "ready"],
+      grateful: ["thankful", "blessed", "grateful", "appreciative", "lucky"]
+    };
+
+    let detectedMood = "serene";
+    let highestScore = 0;
+    let confidence = 0;
+
+    for (const [mood, markers] of Object.entries(emotionalMarkers)) {
+      let score = 0;
+      markers.forEach(marker => {
+        if (text.toLowerCase().includes(marker)) {
+          score += 1;
+          confidence += 0.1;
+        }
+      });
+      
+      if (score > highestScore) {
+        highestScore = score;
+        detectedMood = mood;
+      }
+    }
+
+    return { mood: detectedMood, confidence: Math.min(confidence, 1), score: highestScore };
+  }, []);
+
+  // Advanced Response Generation
+  const generateUltraResponse = useCallback((userMessage, detectedMood, personality) => {
+    const currentPersonality = AI_PERSONALITIES[personality];
+    const moodConfig = ULTRA_MOOD_CONFIG[detectedMood];
+    
+    // Context-aware response generation
+    const contextualResponses = {
+      symptom: [
+        `${currentPersonality.responses.support} Let's gently explore what you're experiencing. Your body is doing incredible work, and every sensation is part of this miraculous journey. 💫`,
+        `I hear you, beautiful mama. Your body is speaking to you, and it's important we listen with both wisdom and care. Let me help you understand what this might mean. 🌸`
+      ],
+      celebration: [
+        currentPersonality.responses.celebration,
+        `🌟 This moment deserves to be celebrated! Your joy is creating beautiful energy for both you and your precious baby. The universe is smiling with you! ✨`
+      ],
+      concern: [
+        currentPersonality.responses.support,
+        `I can feel the energy in your words, and I want you to know that every feeling you have is valid and important. Let's work through this together with wisdom and care. 💜`
+      ],
+      general: [
+        currentPersonality.responses.greeting,
+        `Your energy feels ${moodConfig.description.toLowerCase()} today, and that's exactly perfect. How can I support your beautiful journey right now? ✨`
+      ]
+    };
+
+    // Determine response category
+    const symptomKeywords = ["pain", "ache", "uncomfortable", "tired", "nausea"];
+    const celebrationKeywords = ["excited", "happy", "amazing", "wonderful", "great news"];
+    const concernKeywords = ["worried", "scared", "anxious", "help", "confused"];
+
+    let category = "general";
+    if (symptomKeywords.some(keyword => userMessage.toLowerCase().includes(keyword))) {
+      category = "symptom";
+    } else if (celebrationKeywords.some(keyword => userMessage.toLowerCase().includes(keyword))) {
+      category = "celebration";
+    } else if (concernKeywords.some(keyword => userMessage.toLowerCase().includes(keyword))) {
+      category = "concern";
+    }
+
+    const responses = contextualResponses[category];
+    return responses[Math.floor(Math.random() * responses.length)];
+  }, []);
+
+  // Ultra-Enhanced Message Sending
+  const handleSend = useCallback(() => {
+    if (input.trim() === "") return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: "user",
+      content: input,
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsTyping(true);
+
+    // Advanced emotional analysis
+    const emotionalAnalysis = analyzeEmotionalContext(input);
+    setCurrentMood(emotionalAnalysis.mood);
+    
+    // Update emotional journey
+    setEmotionalJourney(prev => [...prev, {
+      timestamp: new Date(),
+      mood: emotionalAnalysis.mood,
+      confidence: emotionalAnalysis.confidence,
+      energy: ULTRA_MOOD_CONFIG[emotionalAnalysis.mood].energy
+    }].slice(-50));
+
+    // Generate ultra-intelligent response
+    setTimeout(() => {
+      const response = generateUltraResponse(input, emotionalAnalysis.mood, selectedPersonality);
+      
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        role: "assistant",
+        content: response,
+        mood: emotionalAnalysis.mood,
+        timestamp: new Date(),
+        reactions: [],
+        isBookmarked: false,
+        personality: selectedPersonality,
+        confidence: emotionalAnalysis.confidence,
+        emotionalResonance: 0.9 + (emotionalAnalysis.confidence * 0.1)
+      }]);
+      setIsTyping(false);
+    }, 1000 + Math.random() * 1500);
+  }, [input, selectedPersonality, analyzeEmotionalContext, generateUltraResponse]);
+
+  // Enhanced Mood Ring Component
+  const UltraMoodRing = ({ mood, size = "medium", showAnimation = true }) => {
+    const [isGlowing, setIsGlowing] = useState(false);
+    const config = ULTRA_MOOD_CONFIG[mood] || ULTRA_MOOD_CONFIG.serene;
+    const Icon = config.icon;
+    
+    const sizeClasses = {
+      small: "w-8 h-8",
+      medium: "w-16 h-16",
+      large: "w-24 h-24",
+      massive: "w-32 h-32"
+    };
+
+    useEffect(() => {
+      if (showAnimation) {
+        setIsGlowing(true);
+        const timer = setTimeout(() => setIsGlowing(false), 2000);
+        return () => clearTimeout(timer);
+      }
+    }, [mood, showAnimation]);
+
+    return (
+      <div className="relative">
+        <div className={`
+          ${sizeClasses[size]} rounded-full border-4 transition-all duration-1000 relative overflow-hidden
+          ${config.border} ${config.bg} shadow-xl
+          ${isGlowing ? 'scale-110 shadow-2xl ' + config.animation : 'scale-100'}
+          flex items-center justify-center
+        `}>
+          {/* Gradient overlay */}
+          <div className={`absolute inset-0 bg-gradient-to-br ${config.gradient} opacity-40`} />
+          
+          {/* Sparkling effect */}
+          {isGlowing && (
+            <>
+              <div className="absolute inset-0 animate-ping bg-white opacity-20 rounded-full" />
+              <div className="absolute inset-2 animate-pulse bg-white opacity-10 rounded-full" />
+            </>
+          )}
+          
+          {/* Icon */}
+          <Icon className={`${size === 'small' ? 'w-4 h-4' : size === 'large' ? 'w-12 h-12' : size === 'massive' ? 'w-16 h-16' : 'w-8 h-8'} ${config.text} relative z-10`} />
+        </div>
+        
+        {/* Energy indicator */}
+        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className={`w-1 h-1 rounded-full transition-all duration-500 ${
+                  i < (config.energy / 20) ? 'bg-yellow-400 shadow-yellow-400 shadow-sm' : 'bg-gray-300'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Ultra-Advanced Analytics Dashboard
+  const UltraAnalyticsDashboard = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
+
+    const emotionalTrendData = emotionalJourney.map((entry, index) => ({
+      time: index,
+      energy: entry.energy,
+      mood: entry.mood,
+      confidence: entry.confidence * 100
+    }));
+
+    const personalityInsights = useMemo(() => {
+      const personalityUsage = messages.reduce((acc, msg) => {
+        if (msg.personality) {
+          acc[msg.personality] = (acc[msg.personality] || 0) + 1;
+        }
+        return acc;
+      }, {});
+      
+      return Object.entries(personalityUsage).map(([personality, count]) => ({
+        name: AI_PERSONALITIES[personality]?.name || personality,
+        count,
+        percentage: (count / messages.length) * 100
+      }));
+    }, [messages]);
+
+    const wellnessScore = useMemo(() => {
+      const metrics = healthMetrics;
+      const scores = [
+        (metrics.waterIntake / 10) * 100,
+        (metrics.sleepHours / 9) * 100,
+        (metrics.exerciseMinutes / 60) * 100,
+        metrics.energyLevel * 10,
+        (10 - metrics.stressLevel) * 10,
+        metrics.happinessLevel * 10
+      ];
+      return scores.reduce((a, b) => a + b) / scores.length;
+    }, [healthMetrics]);
+
+    return (
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl max-w-7xl w-full max-h-[95vh] overflow-hidden shadow-2xl border border-purple-200">
+          {/* Ultra Header */}
+          <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 p-8 text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-orange-500/20 animate-pulse" />
+            <div className="relative z-10 flex justify-between items-center">
+              <div>
+                <h2 className="text-4xl font-bold flex items-center gap-3">
+                  <Sparkles className="w-8 h-8" />
+                  Ultra Brilliant Analytics
+                </h2>
+                <p className="text-purple-100 mt-2 text-lg">Your pregnancy journey decoded with cosmic intelligence</p>
+                <div className="flex items-center gap-4 mt-4">
+                  <div className="flex items-center gap-2">
+                    <Crown className="w-5 h-5 text-yellow-300" />
+                    <span className="text-sm">Wellness Score: {wellnessScore.toFixed(1)}%</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Gem className="w-5 h-5 text-pink-300" />
+                    <span className="text-sm">Week {pregnancyWeek}</span>
+                  </div>
+                </div>
+              </div>
+              <button 
+                onClick={onClose} 
+                className="p-3 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-110"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="overflow-y-auto max-h-[calc(95vh-160px)] p-8">
+            {/* Current Mood Status */}
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 mb-8 border border-purple-100">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-2xl font-bold text-gray-800">Current Energy State</h3>
+                <UltraMoodRing mood={currentMood} size="large" showAnimation={true} />
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-purple-600">{ULTRA_MOOD_CONFIG[currentMood].energy}%</div>
+                  <div className="text-sm text-gray-600">Energy Level</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-pink-600">{healthMetrics.happinessLevel}/10</div>
+                  <div className="text-sm text-gray-600">Happiness</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-blue-600">{10 - healthMetrics.stressLevel}/10</div>
+                  <div className="text-sm text-gray-600">Calm Level</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-green-600">{wellnessScore.toFixed(0)}%</div>
+                  <div className="text-sm text-gray-600">Overall Wellness</div>
+                </div>
+              </div>
+              <div className="mt-6 p-4 bg-white rounded-2xl">
+                <p className="text-gray-700 text-center italic">
+                  "{ULTRA_MOOD_CONFIG[currentMood].description}"
+                </p>
+              </div>
+            </div>
+
+            {/* Emotional Journey Visualization */}
+            <div className="bg-white rounded-3xl p-8 mb-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <Brain className="w-6 h-6 text-purple-600" />
+                Emotional Energy Flow
+              </h3>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={emotionalTrendData}>
+                    <defs>
+                      <linearGradient id="energyGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1}/>
+                      </linearGradient>
+                      <linearGradient id="confidenceGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#ec4899" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#ec4899" stopOpacity={0.1}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="time" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#fff', 
+                        border: '1px solid #e5e7eb', 
+                        borderRadius: '12px',
+                        boxShadow: '0 10px 25px rgba(0,0,0,0.1)' 
+                      }}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="energy" 
+                      stroke="#8b5cf6" 
+                      fill="url(#energyGradient)" 
+                      strokeWidth={3}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="confidence" 
+                      stroke="#ec4899" 
+                      strokeWidth={2}
+                      dot={{ fill: '#ec4899', strokeWidth: 2, r: 4 }}
+                    />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* AI Personality Insights */}
+            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-3xl p-8 mb-8 border border-indigo-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-indigo-600" />
+                AI Personality Resonance
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                  <div className="h-64">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart>
+                        <Pie
+                          data={personalityInsights}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={100}
+                          dataKey="count"
+                          label={({ name, percentage }) => `${name}: ${percentage.toFixed(1)}%`}
+                        >
+                          {personalityInsights.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={`hsl(${index * 137.5}, 70%, 60%)`} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  {Object.entries(AI_PERSONALITIES).map(([key, personality]) => (
+                    <div key={key} className="bg-white rounded-2xl p-4 shadow-sm">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl">{personality.emoji}</span>
+                        <div>
+                          <h4 className="font-semibold text-gray-800">{personality.name}</h4>
+                          <p className="text-sm text-gray-600">{personality.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {personality.specialties.map(specialty => (
+                          <span key={specialty} className="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs">
+                            {specialty}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Health Metrics Radar */}
+            <div className="bg-white rounded-3xl p-8 mb-8 shadow-lg border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <Activity className="w-6 h-6 text-green-600" />
+                Holistic Wellness Matrix
+              </h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart data={[
+                      { metric: 'Hydration', value: (healthMetrics.waterIntake / 10) * 100 },
+                      { metric: 'Sleep', value: (healthMetrics.sleepHours / 9) * 100 },
+                      { metric: 'Activity', value: (healthMetrics.exerciseMinutes / 60) * 100 },
+                      { metric: 'Energy', value: healthMetrics.energyLevel * 10 },
+                      { metric: 'Calm', value: (10 - healthMetrics.stressLevel) * 10 },
+                      { metric: 'Joy', value: healthMetrics.happinessLevel * 10 }
+                    ]}>
+                      <PolarGrid stroke="#e5e7eb" />
+                      <PolarAngleAxis dataKey="metric" tick={{ fontSize: 12 }} />
+                      <PolarRadiusAxis angle={90} domain={[0, 100]} tick={false} />
+                      <Radar 
+                        name="Wellness" 
+                        dataKey="value" 
+                        stroke="#10b981" 
+                        fill="#10b981" 
+                        fillOpacity={0.3}
+                        strokeWidth={3}
+                      />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="space-y-4">
+                  {[
+                    { label: 'Hydration', value: healthMetrics.waterIntake, max: 10, icon: Droplets, color: 'blue' },
+                    { label: 'Sleep Quality', value: healthMetrics.sleepHours, max: 9, icon: Moon, color: 'purple' },
+                    { label: 'Physical Activity', value: healthMetrics.exerciseMinutes, max: 60, icon: Activity, color: 'green' },
+                    { label: 'Energy Level', value: healthMetrics.energyLevel, max: 10, icon: Zap, color: 'yellow' },
+                    { label: 'Stress Management', value: 10 - healthMetrics.stressLevel, max: 10, icon: Leaf, color: 'emerald' },
+                    { label: 'Happiness', value: healthMetrics.happinessLevel, max: 10, icon: Heart, color: 'pink' }
+                  ].map((metric, idx) => (
+                    <div key={idx} className="bg-gray-50 rounded-2xl p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                          <metric.icon className={`w-5 h-5 text-${metric.color}-600`} />
+                          <span className="font-medium text-gray-700">{metric.label}</span>
+                        </div>
+                        <span className="font-bold text-gray-800">{metric.value}/{metric.max}</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className={`bg-${metric.color}-500 h-2 rounded-full transition-all duration-1000`}
+                          style={{ width: `${(metric.value / metric.max) * 100}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* AI Insights & Recommendations */}
+            <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl p-8 border border-yellow-100">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <Lightbulb className="w-6 h-6 text-yellow-600" />
+                Cosmic AI Insights & Recommendations
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {[
+                  {
+                    type: 'celebration',
+                    icon: Crown,
+                    title: 'Radiant Achievement',
+                    message: 'Your emotional resilience has increased 35% this week! Your baby is absorbing this beautiful positive energy.',
+                    color: 'yellow'
+                  },
+                  {
+                    type: 'insight',
+                    icon: Brain,
+                    title: 'Pattern Recognition',
+                    message: 'I notice you feel most energized after morning walks. Your body is telling us something important!',
+                    color: 'purple'
+                  },
+                  {
+                    type: 'recommendation',
+                    icon: Sparkles,
+                    title: 'Cosmic Suggestion',
+                    message: 'Based on your sleep patterns, try our new lunar-cycle meditation tonight for deeper rest.',
+                    color: 'blue'
+                  },
+                  {
+                    type: 'milestone',
+                    icon: Target,
+                    title: 'Journey Milestone',
+                    message: `Week ${pregnancyWeek} brings exciting developments! Your baby's senses are rapidly developing.`,
+                    color: 'green'
+                  }
+                ].map((insight, idx) => (
+                  <div key={idx} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-xl bg-${insight.color}-100`}>
+                        <insight.icon className={`w-6 h-6 text-${insight.color}-600`} />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800 mb-2">{insight.title}</h4>
+                        <p className="text-gray-600 text-sm leading-relaxed">{insight.message}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Enhanced Chat Interface
+  const UltraChatInterface = () => (
+    <div className="flex flex-col h-full bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+      {/* Enhanced Header */}
+      <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 p-6 text-white shadow-xl">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <UltraMoodRing mood={currentMood} size="medium" showAnimation={true} />
+            <div>
+              <h1 className="text-2xl font-bold flex items-center gap-2">
+                <Sparkles className="w-6 h-6" />
+                Friday AI Ultra
+              </h1>
+              <p className="text-purple-100 text-sm">
+                {AI_PERSONALITIES[selectedPersonality].name} • Week {pregnancyWeek} • {ULTRA_MOOD_CONFIG[currentMood].description}
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowPersonalityModal(true)}
+              className="p-2 hover:bg-white/20 rounded-lg transition-all duration-300 hover:scale-110"
+            >
+              <User className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setShowAnalytics(true)}
+              className="p-2 hover:bg-white/20 rounded-lg transition-all duration-300 hover:scale-110"
+            >
+              <BarChart3 className="w-5 h-5" />
+            </button>
+            <button className="p-2 hover:bg-white/20 rounded-lg transition-all duration-300 hover:scale-110">
+              <Settings className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Personality Quick Selector */}
+        <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+          {Object.entries(AI_PERSONALITIES).map(([key, personality]) => (
+            <button
+              key={key}
+              onClick={() => setSelectedPersonality(key)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all ${
+                selectedPersonality === key
+                  ? 'bg-white text-purple-700 shadow-lg'
+                  : 'bg-white/20 text-white hover:bg-white/30'
+              }`}
+            >
+              <span>{personality.emoji}</span>
+              <span>{personality.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {messages.map((message, index) => (
+          <div
+            key={message.id}
+            className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fadeIn`}
+          >
+            <div className={`max-w-[80%] ${message.role === "user" ? "order-2" : "order-1"}`}>
+              {/* Message Bubble */}
+              <div
+                className={`rounded-3xl px-6 py-4 shadow-lg relative overflow-hidden ${
+                  message.role === "user"
+                    ? "bg-gradient-to-br from-purple-600 to-purple-700 text-white"
+                    : "bg-white border border-gray-100 text-gray-800"
+                }`}
+              >
+                {/* Background Animation for AI messages */}
+                {message.role === "assistant" && (
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50 opacity-30" />
+                )}
+                
+                <p className="whitespace-pre-wrap leading-relaxed relative z-10">{message.content}</p>
+                
+                {/* Enhanced AI message metadata */}
+                {message.role === "assistant" && (
+                  <div className="mt-4 flex items-center gap-3 relative z-10">
+                    <div className="flex items-center gap-2">
+                      <UltraMoodRing mood={message.mood || currentMood} size="small" showAnimation={false} />
+                      <span className="text-xs font-medium text-gray-600">
+                        {ULTRA_MOOD_CONFIG[message.mood || currentMood].description}
+                      </span>
+                    </div>
+                    
+                    {message.confidence && (
+                      <div className="flex items-center gap-1">
+                        <Zap className="w-3 h-3 text-yellow-500" />
+                        <span className="text-xs text-gray-500">
+                          {(message.confidence * 100).toFixed(0)}% resonance
+                        </span>
+                      </div>
+                    )}
+                    
+                    {message.personality && (
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs">{AI_PERSONALITIES[message.personality].emoji}</span>
+                        <span className="text-xs text-gray-500">
+                          {AI_PERSONALITIES[message.personality].name}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+              
+              {/* Message Actions */}
+              <div className="flex items-center gap-3 mt-3 px-2">
+                <p className="text-xs text-gray-500">
+                  {new Date(message.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+                
+                <button className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                  <BookMarked className="w-3 h-3 text-gray-400" />
+                </button>
+                
+                {message.role === "assistant" && (
+                  <div className="flex gap-1">
+                    {["✨", "💜", "🌟", "🙏"].map((emoji) => (
+                      <button
+                        key={emoji}
+                        className="hover:scale-125 transition-transform text-sm"
+                      >
+                        {emoji}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        {/* Typing Indicator */}
+        {isTyping && (
+          <div className="flex justify-start animate-fadeIn">
+            <div className="bg-white border border-gray-100 rounded-3xl px-6 py-4 shadow-lg">
+              <div className="flex items-center space-x-3">
+                <UltraMoodRing mood={currentMood} size="small" showAnimation={true} />
+                <div className="flex space-x-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" />
+                  <div className="w-2 h-2 bg-pink-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }} />
+                  <div className="w-2 h-2 bg-orange-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }} />
+                </div>
+                <span className="text-sm text-gray-500">
+                  {AI_PERSONALITIES[selectedPersonality].name} is thinking...
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Enhanced Input Area */}
+      <div className="p-6 bg-white border-t border-gray-100">
+        {/* Quick Mood Selector */}
+        <div className="flex gap-2 mb-4 overflow-x-auto pb-2">
+          <span className="text-sm text-gray-600 whitespace-nowrap flex items-center">How are you feeling?</span>
+          {Object.entries(ULTRA_MOOD_CONFIG).slice(0, 6).map(([mood, config]) => {
+            const Icon = config.icon;
+            return (
+              <button
+                key={mood}
+                onClick={() => setCurrentMood(mood)}
+                className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+                  currentMood === mood
+                    ? `${config.bg} ${config.text} ${config.border} border`
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                <Icon className="w-3 h-3" />
+                <span className="capitalize">{mood}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Input Controls */}
+        <div className="flex gap-3">
+          <button 
+            onClick={() => setIsListening(!isListening)}
+            className={`p-4 rounded-xl transition-all duration-300 ${
+              isListening 
+                ? 'bg-red-500 text-white shadow-lg animate-pulse' 
+                : 'bg-purple-100 text-purple-600 hover:bg-purple-200'
+            }`}
+          >
+            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+          </button>
+          
+          <div className="flex-1 relative">
+            <textarea
+              ref={textareaRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              placeholder="Share what's on your heart... ✨"
+              className="w-full p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all bg-gray-50 hover:bg-white"
+              rows={1}
+            />
+            {input && (
+              <div className="absolute bottom-2 right-2 flex gap-1">
+                <button className="p-2 text-gray-400 hover:text-purple-600 transition-colors">
+                  <Smile className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
+          
+          <button
+            onClick={handleSend}
+            disabled={!input.trim()}
+            className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 hover:scale-105 flex items-center gap-2"
+          >
+            <Send className="w-5 h-5" />
+            <span className="hidden sm:inline font-medium">Send</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // Auto-scroll effect
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 200) + "px";
+    }
+  }, [input]);
+
+  // Personality Selection Modal
+  const PersonalityModal = () => (
+    showPersonalityModal && (
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold">Choose Your AI Companion</h2>
+                <p className="text-purple-100 mt-1">Each personality offers unique wisdom and support</p>
+              </div>
+              <button 
+                onClick={() => setShowPersonalityModal(false)}
+                className="p-2 hover:bg-white/20 rounded-lg transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+          
+          <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Object.entries(AI_PERSONALITIES).map(([key, personality]) => (
+                <div
+                  key={key}
+                  onClick={() => {
+                    setSelectedPersonality(key);
+                    setShowPersonalityModal(false);
+                  }}
+                  className={`p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 hover:shadow-lg ${
+                    selectedPersonality === key
+                      ? 'border-purple-400 bg-purple-50 shadow-md'
+                      : 'border-gray-200 hover:border-purple-300'
+                  }`}
+                >
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="text-4xl">{personality.emoji}</div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-800">{personality.name}</h3>
+                      <p className="text-gray-600 text-sm">{personality.description}</p>
+                      <p className="text-purple-600 text-sm mt-1">Voice: {personality.voice}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <h4 className="font-semibold text-gray-700 mb-2">Specialties:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {personality.specialties.map(specialty => (
+                        <span key={specialty} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">
+                          {specialty}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-xl p-4">
+                    <p className="text-sm text-gray-700 italic">"{personality.responses.greeting}"</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  );
+
+  return (
+    <div className="flex flex-col h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+      <UltraChatInterface />
+      <UltraAnalyticsDashboard isOpen={showAnalytics} onClose={() => setShowAnalytics(false)} />
+      <PersonalityModal />
+    </div>
+  );
+};
+
+export default UltraBrilliantFridayAI;

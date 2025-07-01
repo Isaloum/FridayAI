@@ -1,0 +1,153 @@
+# Import necessary libraries
+import json
+import os
+import random
+from datetime import datetime
+import speech_recognition as sr
+import pyttsx3
+import openai
+
+# Set your OpenAI API key
+openai.api_key = "YOUR-API-KEY-HERE"  # <<< REPLACE with your actual API key
+
+# Define the Friday class
+class Friday:
+    def __init__(self, memory_file='friday_memory.json'):
+        # Initialize Friday with memory file and voice engine
+        self.memory_file = memory_file
+        self.memory = self.load_memory()
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', 150)
+
+    def load_memory(self):
+        # Load conversation history from memory file if it exists
+        if os.path.exists(self.memory_file):
+            with open(self.memory_file, 'r') as f:
+                return json.load(f)
+        return []
+
+    def save_memory(self):
+        # Save the updated memory into the memory file
+        with open(self.memory_file, 'w') as f:
+            json.dump(self.memory, f, indent=4)
+
+    def speak(self, text):
+        # Use text-to-speech to make Friday speak
+        self.engine.say(text)
+        self.engine.runAndWait()
+
+    def listen(self):
+        # Listen to the user's voice input and convert it to text
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Listening...")
+            audio = recognizer.listen(source)
+        try:
+            command = recognizer.recognize_google(audio)
+            print(f"You said: {command}")
+            return command
+        except sr.UnknownValueError:
+            print("Sorry, I did not understand that.")
+            return ""
+        except sr.RequestError:
+            print("Sorry, speech service is down.")
+            return ""
+
+    def chat(self, user_input):
+        # Handle conversation: get response, save to memory
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if user_input.lower() == "review memory":
+            return self.review_memory()
+        elif user_input.lower() == "delete memory":
+            self.memory.clear()
+            self.save_memory()
+            return "Memory has been wiped clean."
+        elif user_input.lower().startswith("search "):
+            keyword = user_input[7:].strip()
+            return self.search_memory(keyword)
+
+        # Use generate_response for general conversation
+        response = self.generate_response(user_input)
+        self.memory.append({
+            "timestamp": timestamp,
+            "user": user_input,
+            "friday": response
+        })
+        self.save_memory()
+        return response
+
+    def review_memory(self):
+        # Show all past conversations
+        if not self.memory:
+            return "No prior conversations stored."
+        review = "\n".join([
+            f"[{entry['timestamp']}] You: {entry['user']} | Friday: {entry['friday']}"
+            for entry in self.memory
+        ])
+        return review
+
+    def search_memory(self, keyword):
+        # Search for a keyword in past conversations
+        results = [
+            f"[{entry['timestamp']}] You: {entry['user']} | Friday: {entry['friday']}"
+            for entry in self.memory
+            if keyword.lower() in entry['user'].lower() or keyword.lower() in entry['friday'].lower()
+        ]
+        if not results:
+            return "No matching entries found."
+        return "\n".join(results)
+
+    def generate_response(self, user_input):
+        # Use OpenAI GPT model to generate a smart response
+        try:
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are Friday, an intelligent and highly professional AI assistant."},
+                    {"role": "user", "content": user_input}
+                ],
+                temperature=0.5,
+                max_tokens=150,
+                n=1,
+                stop=None
+            )
+            return response.choices[0].message['content'].strip()
+        except Exception as e:
+            return f"Error contacting GPT: {e}"
+
+# Main function to start Friday
+if __name__ == "__main__":
+    friday = Friday()
+    print("[FRIDAY] Online. How can I assist you?")
+    friday.speak("Online. How can I assist you?")
+
+    # Choose between typing or speaking
+    mode = input("Type 'voice' to enable speaking, or press Enter to stay typing: ").lower()
+
+    if mode == "voice":
+        use_voice = True
+    else:
+        use_voice = False
+
+    # Main chat loop
+    while True:
+        if use_voice:
+            user_input = friday.listen()
+        else:
+            user_input = input("You: ")
+
+        if user_input.lower() in ["exit", "quit", "shutdown"]:
+            response = "Acknowledged. Executing shutdown sequence."
+            print(f"Friday: {response}")
+            friday.speak(response)
+            break
+
+        if user_input == "":
+            continue
+
+        response = friday.chat(user_input)
+        print(f"Friday: {response}")
+
+        if use_voice:
+            friday.speak(response)

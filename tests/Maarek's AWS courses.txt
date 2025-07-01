@@ -1,0 +1,27 @@
+Exact order for Maarek's AWS courses:
+
+AWS Certified Cloud Practitioner CLF-C02 (CA$16.99)
+
+Start here. Foundation knowledge. Easy cert.
+
+
+Ultimate AWS Certified Solutions Architect Associate (CA$25.99)
+
+The money cert. Do this immediately after Cloud Practitioner.
+
+
+AWS CloudFormation Master Class (CA$16.99)
+
+Critical skill that most people skip. Do this before moving to advanced certs.
+
+
+
+Then pick ONE path:
+Developer Path:
+4. Ultimate AWS Certified Developer Associate (CA$23.99)
+Operations Path:
+4. Ultimate AWS Certified SysOps Administrator Associate (CA$24.99)
+Advanced (after getting a job):
+5. Ultimate AWS Certified Solutions Architect Professional (CA$35.99)
+6. AWS Certified DevOps Engineer Professional (CA$22.99)
+Stop there. Don't do Security, Data Engineer, Machine Learning, etc. unless your job specifically requires it.

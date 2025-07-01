@@ -1,0 +1,128 @@
+**FridayAI Product Roadmap: Leveraging AI Agent Frameworks for 2025**
+
+---
+
+### 🔧 OBJECTIVE
+
+Transform FridayAI from a content tool into a trusted, agent-powered productivity platform by incorporating best practices from leading AI agent deployment frameworks.
+
+---
+
+### ✅ 1. Task Type Classifier (Agent-Readiness Wizard)
+
+**Purpose**: Guide users to identify whether a task is suitable for agent automation.
+
+**Steps:**
+
+* Add classification step to agent creation flow
+* Ask users:
+
+  * Is the task repetitive/time-consuming?
+  * Does it use structured inputs?
+  * Is \~90% accuracy acceptable?
+  * Can success be measured?
+* Provide guidance based on answers:
+
+  * "✅ Ideal for Automation"
+  * "⚠️ Needs Human Oversight"
+
+**Impact**: Reduces user friction, ensures responsible automation, builds confidence.
+
+---
+
+### ✅ 2. Pre-Built Agent Templates (Plug-and-Play Use Cases)
+
+**Purpose**: Accelerate value by offering ready-to-deploy, proven AI agent workflows.
+
+**Templates:**
+
+* Content Transformer Agent
+* YouTube Insight Agent
+* Lead Research Agent
+* A/B Testing Optimizer Agent
+* FAQ Generator Agent
+
+**Implementation:**
+
+* Add "Start from Template" option in dashboard
+* Pre-load sample inputs, workflows, and metrics
+
+**Impact**: Quick wins, educates users, enables scalable deployment.
+
+---
+
+### ✅ 3. Human Oversight & Transparency Framework
+
+**Purpose**: Build user trust, safety, and control through guided collaboration.
+
+**Features:**
+
+* Approval toggle per agent step
+* Confidence threshold and fallback actions
+* Log history: "Agent did X because Y"
+
+**Impact**: Trusted workflows, safer execution in regulated contexts.
+
+---
+
+### ✅ 4. Agent Metrics Dashboard & Feedback Loop
+
+**Purpose**: Enable users to track, assess, and improve their agents.
+
+**Metrics:**
+
+* Time saved
+* Volume processed
+* Accuracy rating (user feedback)
+* Task-level ROI (cost vs. value)
+
+**Features:**
+
+* Suggestions to refine low-performing agents
+* Baseline comparisons vs. human output
+
+**Impact**: Drives continuous improvement and transparency.
+
+---
+
+### ✅ 5. FridayAI Academy (Agent Literacy Hub)
+
+**Purpose**: Help users become confident AI collaborators, not just consumers.
+
+**Modules:**
+
+* What Makes a Task Agent-Ready
+* Prompt Engineering 101
+* How to Review and Improve Agent Outputs
+* Security & Compliance Practices
+
+**Delivery:**
+
+* In-app tips
+* Self-serve learning hub
+
+**Impact**: Higher retention, reduced support needs, internal champions.
+
+---
+
+### 🌟 Bonus (Future Capabilities)
+
+* Agent Reputation System (trust score, team sharing)
+* Visual Agent Builder (drag-and-drop orchestration)
+* Modular Agent Blocks (reusable components)
+
+---
+
+### ✅ Summary Table
+
+| Feature Area        | Deliverable                        |
+| ------------------- | ---------------------------------- |
+| 🧠 Agent Wizard     | Classifies tasks for readiness     |
+| 📦 Templates        | High-impact, fast-deploy agents    |
+| 👩‍💻 Human Control | Oversight toggles + explainability |
+| 📊 Metrics          | Dashboards for ROI & quality       |
+| 🏫 Academy          | Teaches responsible agent design   |
+
+---
+
+**Strategic Outcome**: FridayAI positions itself as the most usable, trustworthy, and effective AI agent platform for teams and creators in 2025.

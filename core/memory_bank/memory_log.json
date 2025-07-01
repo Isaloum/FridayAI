@@ -1,0 +1,1903 @@
+[
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:35:15.917106",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:41:10.471655",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:44:09.788932",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:47:21.143574",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:48:24.707735",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:50:07.903980",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:52:17.363094",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:54:26.993021",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "reflection",
+    "content": "Task ID: task001\nDescription: Review recent pregnancy article\nResult: Executed task from uploaded_pdfs\nCompleted at: 2025-05-27T00:54:26.991874",
+    "tags": [
+      "reflection",
+      "task001"
+    ],
+    "timestamp": "2025-05-27T00:54:26.991874",
+    "emotion": "urgent"
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T00:59:08.397669",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "reflection",
+    "content": "Task ID: task001\nDescription: Review recent pregnancy article\nResult: Executed task from uploaded_pdfs\nCompleted at: 2025-05-27T00:59:08.397669",
+    "tags": [
+      "reflection",
+      "task001"
+    ],
+    "timestamp": "2025-05-27T00:59:08.397669",
+    "emotion": "urgent"
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T01:00:25.468424",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "reflection",
+    "content": "Task ID: task001\nDescription: Review recent pregnancy article\nResult: Executed task from uploaded_pdfs\nCompleted at: 2025-05-27T01:00:25.468424",
+    "tags": [
+      "reflection",
+      "task001"
+    ],
+    "timestamp": "2025-05-27T01:00:25.468424",
+    "emotion": "urgent"
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T01:24:08.639926",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "reflection",
+    "content": "Task ID: task001\nDescription: Review recent pregnancy article\nResult: Executed task from uploaded_pdfs\nCompleted at: 2025-05-27T01:24:08.639926",
+    "tags": [
+      "reflection",
+      "task001"
+    ],
+    "timestamp": "2025-05-27T01:24:08.639926",
+    "emotion": "urgent"
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Review recent pregnancy article from uploaded_pdfs",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T01:28:15.152366",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "reflection",
+    "content": "Task ID: task001\nDescription: Review recent pregnancy article\nResult: Executed task from uploaded_pdfs\nCompleted at: 2025-05-27T01:28:15.152366",
+    "tags": [
+      "reflection",
+      "task001"
+    ],
+    "timestamp": "2025-05-27T01:28:15.152366",
+    "emotion": "urgent"
+  },
+  {
+    "type": "task_execution",
+    "content": "Task: Analyze pregnancy risks from uploaded PDF from pregnancy_docs",
+    "tags": [
+      "danger",
+      "pregnancy_docs"
+    ],
+    "source": "TaskExecutor",
+    "timestamp": "2025-05-27T01:38:12.660840",
+    "metadata": {
+      "executed": true
+    }
+  },
+  {
+    "type": "reflection",
+    "content": "Task ID: pdf001\nDescription: Analyze pregnancy risks from uploaded PDF\nResult: Executed task from pregnancy_docs\nCompleted at: 2025-05-27T01:38:12.660840",
+    "tags": [
+      "reflection",
+      "pdf001"
+    ],
+    "timestamp": "2025-05-27T01:38:12.660840",
+    "emotion": "danger"
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.860624",
+    "metadata": {
+      "source_goal_id": "goal_001"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.864614",
+    "metadata": {
+      "source_goal_id": "goal_002"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.869731",
+    "metadata": {
+      "source_goal_id": "goal_003"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.875324",
+    "metadata": {
+      "source_goal_id": "goal_004"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.885520",
+    "metadata": {
+      "source_goal_id": "goal_005"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.899708",
+    "metadata": {
+      "source_goal_id": "goal_006"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.908328",
+    "metadata": {
+      "source_goal_id": "goal_007"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.923543",
+    "metadata": {
+      "source_goal_id": "goal_008"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.929643",
+    "metadata": {
+      "source_goal_id": "goal_009"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.935957",
+    "metadata": {
+      "source_goal_id": "goal_010"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.948695",
+    "metadata": {
+      "source_goal_id": "goal_011"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Review recent pregnancy article from uploaded_pdfs...",
+    "tags": [
+      "urgent",
+      "uploaded_pdfs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.957287",
+    "metadata": {
+      "source_goal_id": "goal_012"
+    }
+  },
+  {
+    "type": "task",
+    "content": "Follow-up on: Task: Analyze pregnancy risks from uploaded PDF from pregnancy_docs...",
+    "tags": [
+      "danger",
+      "pregnancy_docs"
+    ],
+    "origin": "GoalToTask",
+    "timestamp": "2025-05-28T14:04:09.968553",
+    "metadata": {
+      "source_goal_id": "goal_013"
+    }
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "overwhelemed",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-05-31T00:12:43.070800"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "it is diffecult to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-05-31T00:13:08.875377"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "dizzy",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-05-31T00:13:36.728541"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "sad",
+    "emotion": "sad",
+    "trimester": null,
+    "timestamp": "2025-05-31T00:13:45.645851"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-05-31T14:11:20.557125"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "dizzy",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-05-31T14:11:35.689023"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-05-31T14:11:35.700475"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "it is taugh to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-05-31T14:12:38.623554"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-05-31T14:40:21.060036"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "sad and depressed",
+    "emotion": "sad",
+    "trimester": "third",
+    "timestamp": "2025-05-31T14:40:34.410069"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-05-31T14:40:34.432667"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "i told you",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-05-31T14:42:07.677240"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-05-31T14:47:41.816232"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "sad",
+    "emotion": "sad",
+    "trimester": "second",
+    "timestamp": "2025-05-31T14:47:45.856486"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-05-31T14:47:45.871042"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "need help",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-05-31T14:47:51.662232"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-05-31T21:42:14.312105"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "dizzy and happly confused",
+    "emotion": "sadness",
+    "trimester": "third",
+    "timestamp": "2025-05-31T21:42:33.973916"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-05-31T21:42:34.018676"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "hard to day",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-05-31T21:42:44.203046"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-05-31T21:47:29.420133"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not very well",
+    "emotion": "sadness",
+    "trimester": "second",
+    "timestamp": "2025-05-31T21:47:38.694000"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-05-31T21:47:38.752869"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "it is hard to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-05-31T21:48:10.791260"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T15:06:49.459779"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not very well",
+    "emotion": "sadness",
+    "trimester": "second",
+    "timestamp": "2025-06-01T15:06:59.053595"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T15:06:59.117247"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not very well i already told you",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T15:07:22.182220"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T17:41:27.173199"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so good",
+    "emotion": "sadness",
+    "trimester": "second",
+    "timestamp": "2025-06-01T17:41:35.598121"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T17:41:35.645428"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "can't tell",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T17:41:45.559407"
+  },
+  {
+    "type": "journey_update",
+    "week": null,
+    "trimester": null,
+    "text": "\ud83e\udd30 Week None (None trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-01T23:08:41.721314"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T19:08:47.307010"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "happy",
+    "emotion": "joy",
+    "trimester": "second",
+    "timestamp": "2025-06-01T19:12:10.316450"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T19:12:10.376350"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "hard to tell",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T19:12:15.162225"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T19:20:58.790545"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "good",
+    "emotion": "neutral",
+    "trimester": "second",
+    "timestamp": "2025-06-01T19:21:09.271551"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-01T19:21:09.318410"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so bad",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T19:21:16.928332"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T21:34:29.777947"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "good",
+    "emotion": "neutral",
+    "trimester": "third",
+    "timestamp": "2025-06-01T21:34:50.887541"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T01:34:50.933844"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T21:34:50.992563"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so good",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T21:34:58.504767"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T01:34:58.548008"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T21:41:22.307943"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "xxeerff",
+    "emotion": "neutral",
+    "trimester": "third",
+    "timestamp": "2025-06-01T21:41:33.161187"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T01:41:33.243196"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T21:41:33.339780"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "sisy",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T21:41:39.352266"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T01:41:39.399612"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-01T22:10:42.147234"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "fdsfs",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-06-01T22:10:45.118463"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T02:10:45.162998"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-01T22:10:45.219271"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "fsdfsd",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T22:10:47.297797"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T02:10:47.378653"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T22:16:12.579741"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "123231",
+    "emotion": "neutral",
+    "trimester": "third",
+    "timestamp": "2025-06-01T22:16:15.696767"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T02:16:15.780896"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T22:16:15.853482"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "eqwdqwdq",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T22:16:17.943621"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T02:16:18.029048"
+  },
+  {
+    "type": "journey_update",
+    "week": 123123,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 123123 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T02:26:54.350231"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T22:26:54.433955"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "werqwer",
+    "emotion": "neutral",
+    "trimester": "third",
+    "timestamp": "2025-06-01T22:26:57.439806"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T02:26:57.488516"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T22:26:57.543713"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "dfqrew",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T22:27:00.970759"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T02:27:01.018865"
+  },
+  {
+    "type": "journey_update",
+    "week": 43,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 43 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T03:16:26.477296"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T23:16:26.576364"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "happy",
+    "emotion": "joy",
+    "trimester": "third",
+    "timestamp": "2025-06-01T23:16:49.353136"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "joy",
+    "timestamp": "2025-06-02T03:16:49.394813"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-01T23:16:49.449580"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "hard to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-01T23:17:02.049240"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T03:17:02.123031"
+  },
+  {
+    "type": "journey_update",
+    "week": 23,
+    "trimester": "second",
+    "text": "\ud83e\udd30 Week 23 (second trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T15:31:10.931079"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T11:31:11.036219"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "tired",
+    "emotion": "sadness",
+    "trimester": "second",
+    "timestamp": "2025-06-02T11:31:39.782613"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-02T15:31:39.865963"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "tired",
+    "trimester": "second",
+    "timestamp": "2025-06-02T15:31:39.940961"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T11:31:40.001032"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so good",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T11:31:48.467026"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T15:31:48.528124"
+  },
+  {
+    "type": "journey_update",
+    "week": 12,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 12 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T15:42:53.411143"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T11:42:53.498179"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "worried",
+    "emotion": "sadness",
+    "trimester": "first",
+    "timestamp": "2025-06-02T11:43:18.764060"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-02T15:43:18.863971"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "worried",
+    "trimester": "first",
+    "timestamp": "2025-06-02T15:43:18.950790"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T11:43:19.039522"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so good",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T11:43:26.102469"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T15:43:26.196998"
+  },
+  {
+    "type": "journey_update",
+    "week": 23,
+    "trimester": "second",
+    "text": "\ud83e\udd30 Week 23 (second trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T17:01:31.744040"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T13:01:31.819213"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "happy",
+    "emotion": "joy",
+    "trimester": "second",
+    "timestamp": "2025-06-02T13:01:53.028942"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "joy",
+    "timestamp": "2025-06-02T17:01:53.078822"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T13:01:53.141419"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so bad",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T13:02:12.034174"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T17:02:12.105065"
+  },
+  {
+    "type": "journey_update",
+    "week": 13,
+    "trimester": "second",
+    "text": "\ud83e\udd30 Week 13 (second trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T18:29:49.087038"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T14:29:49.251736"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so good",
+    "emotion": "sadness",
+    "trimester": "second",
+    "timestamp": "2025-06-02T14:29:57.956548"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-02T18:29:58.026178"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "not so good",
+    "trimester": "second",
+    "timestamp": "2025-06-02T18:29:58.094078"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T14:29:59.412082"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "hard to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T14:30:10.179993"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T18:30:10.302844"
+  },
+  {
+    "type": "journey_update",
+    "week": 35,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 35 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T21:16:39.974918"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-02T17:16:40.021111"
+  },
+  {
+    "type": "journey_update",
+    "week": 3,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 3 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T21:30:28.813266"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T17:30:28.860128"
+  },
+  {
+    "type": "journey_update",
+    "week": 2,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 2 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T22:02:51.126382"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T18:02:51.244414"
+  },
+  {
+    "type": "journey_update",
+    "week": 9,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 9 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-02T22:45:46.782727"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T18:45:46.919087"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "okayyy",
+    "emotion": "joy",
+    "trimester": "first",
+    "timestamp": "2025-06-02T18:46:15.388042"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "joy",
+    "timestamp": "2025-06-02T22:46:15.467247"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "okayyy",
+    "emotion": "joy",
+    "trimester": "first",
+    "timestamp": "2025-06-02T18:46:17.177566"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "joy",
+    "timestamp": "2025-06-02T22:46:17.283298"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T18:46:18.328708"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "hard to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T18:46:26.395857"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-02T22:46:26.510933"
+  },
+  {
+    "type": "journey_update",
+    "week": 4,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 4 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T00:11:15.957437"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:11:16.055340"
+  },
+  {
+    "type": "journey_update",
+    "week": 23,
+    "trimester": "second",
+    "text": "\ud83e\udd30 Week 23 (second trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T00:21:52.681523"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T20:21:52.760019"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "werwer",
+    "emotion": "neutral",
+    "trimester": "second",
+    "timestamp": "2025-06-02T20:21:55.685323"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:21:55.733972"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-02T20:21:56.676549"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "werwerw",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T20:21:59.660747"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:21:59.730931"
+  },
+  {
+    "type": "journey_update",
+    "week": 2,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 2 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T00:33:56.439632"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:33:56.582488"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "asda",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-06-02T20:34:00.343858"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:34:00.404684"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:34:01.746517"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "asdasd",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T20:34:05.147933"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:34:05.257217"
+  },
+  {
+    "type": "journey_update",
+    "week": 5,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 5 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T00:43:18.210897"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:43:18.312816"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:43:20.119664"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "kjkjkj",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T20:43:22.193857"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:43:22.306444"
+  },
+  {
+    "type": "journey_update",
+    "week": 12,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 12 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T00:46:55.587851"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:46:55.756773"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "3123eer",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-06-02T20:46:59.499739"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:46:59.575748"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:47:00.756609"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "123e3e",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T20:47:03.127850"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:47:03.290142"
+  },
+  {
+    "type": "journey_update",
+    "week": 5,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 5 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T00:49:32.621700"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:49:32.752437"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "KOOKLP[;",
+    "emotion": "neutral",
+    "trimester": "first",
+    "timestamp": "2025-06-02T20:49:35.310375"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:49:35.379374"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-02T20:49:38.360585"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "LKJHLLHUJKPLKLK",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T20:49:41.027941"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T00:49:41.161335"
+  },
+  {
+    "type": "journey_update",
+    "week": 37,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 37 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T01:26:03.542742"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-02T21:26:03.593232"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so bad",
+    "emotion": "sadness",
+    "trimester": "third",
+    "timestamp": "2025-06-02T21:26:49.571476"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-03T01:26:49.635147"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "not so bad",
+    "trimester": "third",
+    "timestamp": "2025-06-03T01:26:49.708643"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-02T21:26:50.785676"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "it is hard to say",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T21:26:58.517766"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T01:26:58.564340"
+  },
+  {
+    "type": "journey_update",
+    "week": 31,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 31 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T03:18:16.607216"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-02T23:18:16.674580"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so bad",
+    "emotion": "sadness",
+    "trimester": "third",
+    "timestamp": "2025-06-02T23:18:37.531272"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-03T03:18:37.632213"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "not so bad",
+    "trimester": "third",
+    "timestamp": "2025-06-03T03:18:37.694875"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-02T23:18:38.538764"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "tired",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-02T23:18:43.913355"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T03:18:43.970707"
+  },
+  {
+    "type": "journey_update",
+    "week": 32,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 32 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T16:31:07.067030"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-03T12:31:07.161738"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-03T12:31:09.537567"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "werwerw",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-03T12:31:11.586219"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-03T16:31:11.725852"
+  },
+  {
+    "type": "journey_update",
+    "week": 24,
+    "trimester": "second",
+    "text": "\ud83e\udd30 Week 24 (second trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-03T16:37:22.195780"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "second",
+    "goals": [
+      "Start gentle stretching or yoga.",
+      "Document positive body changes.",
+      "Discuss support systems with partner."
+    ],
+    "timestamp": "2025-06-03T12:37:22.340166"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not too bad",
+    "emotion": "sadness",
+    "trimester": "second",
+    "timestamp": "2025-06-03T12:37:34.084224"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-03T16:37:34.212546"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "not too bad",
+    "trimester": "second",
+    "timestamp": "2025-06-03T16:37:34.348345"
+  },
+  {
+    "type": "journey_update",
+    "week": 12,
+    "trimester": "first",
+    "text": "\ud83e\udd30 Week 12 (first trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-04T00:09:28.396808"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "first",
+    "goals": [
+      "Schedule your first prenatal checkup.",
+      "Start a gentle walking routine.",
+      "Begin a food/mood diary."
+    ],
+    "timestamp": "2025-06-03T20:09:28.459252"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not too bad",
+    "emotion": "sadness",
+    "trimester": "first",
+    "timestamp": "2025-06-03T20:09:37.052225"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-04T00:09:37.145951"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "not too bad",
+    "trimester": "first",
+    "timestamp": "2025-06-04T00:09:37.255300"
+  },
+  {
+    "type": "journey_update",
+    "week": 32,
+    "trimester": "third",
+    "text": "\ud83e\udd30 Week 32 (third trimester):\n- Update: Baby is growing fast.\n- Tip: Stay hydrated.\n- Reminder: Log how you feel today.\n",
+    "timestamp": "2025-06-04T00:15:32.176527"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-03T20:15:32.254636"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "not so bad",
+    "emotion": "sadness",
+    "trimester": "third",
+    "timestamp": "2025-06-03T20:15:37.987653"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "sadness",
+    "timestamp": "2025-06-04T00:15:38.097002"
+  },
+  {
+    "type": "anchor_event",
+    "emotion": "sadness",
+    "text": "not so bad",
+    "trimester": "third",
+    "timestamp": "2025-06-04T00:15:38.190730"
+  },
+  {
+    "type": "pregnancy_goals",
+    "trimester": "third",
+    "goals": [
+      "Pack your hospital bag.",
+      "Practice breathing techniques.",
+      "Log things that bring you comfort."
+    ],
+    "timestamp": "2025-06-03T20:15:41.158778"
+  },
+  {
+    "type": "pregnancy_log",
+    "text": "it is hard to say, any recommendation ??",
+    "emotion": "neutral",
+    "trimester": null,
+    "timestamp": "2025-06-03T20:15:56.785647"
+  },
+  {
+    "type": "emotion_trace",
+    "emotion": "neutral",
+    "timestamp": "2025-06-04T00:15:56.867266"
+  }
+]

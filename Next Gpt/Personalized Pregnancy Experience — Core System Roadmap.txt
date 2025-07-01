@@ -1,0 +1,76 @@
+Here's your **roadmap** for the **"Personalization Through User Profiles"** phase — broken into sharp, actionable steps with a clear flow.
+
+---
+
+## 🧭 PERSONALIZATION ROADMAP
+
+**Goal: Tailor support to each pregnant user's specific context, needs, and preferences.**
+
+---
+
+### 1. 🔐 Profile Definition
+
+**Create `PregnancyUserProfile` class**
+
+* `week`: current pregnancy week
+* `conditions`: list of medical flags (e.g. `["high-risk", "IVF"]`)
+* `birth_plan`: simple dict (e.g. preferred location, natural vs. medicated)
+* `preferences`: tone, language style, cultural cues, etc.
+
+---
+
+### 2. 📦 Store + Load Profile
+
+* Save profile in memory (or flat file for now).
+* Add CLI commands or input prompts to let user set/update it.
+
+---
+
+### 3. 🧠 Inject Profile into Core Agents
+
+Update the following to accept and utilize the profile:
+
+* `PregnancySupportCore`
+* `PregnancyPlanAdvisor`
+* `PregnancyEmotionPlanner`
+* `PregnancyReflectionEngine`
+
+---
+
+### 4. 🗣️ Behavior Adaptation
+
+Modify agent behavior based on profile:
+
+* **Tone**: Soften or energize based on preference.
+* **Risks**: Adapt exercise, diet, and self-care for medical flags.
+* **Trimester**: Show only relevant milestones/plans.
+
+---
+
+### 5. 🧩 Build Modular Agents
+
+Modularize logic into:
+
+* `NutritionAgent` (diet recs based on trimester + conditions)
+* `MentalHealthAgent` (emotion support + journal tips)
+* `WeeklyUpdateAgent` (summary and guidance per week)
+
+---
+
+### 6. 🧪 CLI Testing
+
+Add CLI prompts to test:
+
+* Profile creation/edit
+* Responses adapting to trimester and conditions
+
+---
+
+### 7. 🚨 Add Sensitivity Filters
+
+* If "high-risk" → avoid casual or automated advice
+* Inject disclaimers where needed
+
+---
+
+Let me know if you want me to start building from Step 1 now.

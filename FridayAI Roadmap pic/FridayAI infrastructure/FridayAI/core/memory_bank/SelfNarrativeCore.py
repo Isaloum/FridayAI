@@ -1,0 +1,1 @@
+# SelfNarrativeCore module

@@ -1,0 +1,121 @@
+import json
+import os
+from datetime import datetime
+import speech_recognition as sr
+import pyttsx3
+
+class Friday:
+    def __init__(self, memory_file='friday_memory.json'):
+        self.memory_file = memory_file
+        self.memory = self.load_memory()
+        self.engine = pyttsx3.init()
+        self.engine.setProperty('rate', 150)  # Speed of speech
+
+    def load_memory(self):
+        if os.path.exists(self.memory_file):
+            with open(self.memory_file, 'r') as f:
+                return json.load(f)
+        return []
+
+    def save_memory(self):
+        with open(self.memory_file, 'w') as f:
+            json.dump(self.memory, f, indent=4)
+
+    def speak(self, text):
+        self.engine.say(text)
+        self.engine.runAndWait()
+
+    def listen(self):
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Listening...")
+            audio = recognizer.listen(source)
+        try:
+            command = recognizer.recognize_google(audio)
+            print(f"You said: {command}")
+            return command
+        except sr.UnknownValueError:
+            print("Sorry, I did not understand that.")
+            return ""
+        except sr.RequestError:
+            print("Sorry, speech service is down.")
+            return ""
+
+    def chat(self, user_input):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        if user_input.lower() == "review memory":
+            return self.review_memory()
+        elif user_input.lower() == "delete memory":
+            self.memory.clear()
+            self.save_memory()
+            return "Memory has been wiped clean."
+        elif user_input.lower().startswith("search "):
+            keyword = user_input[7:].strip()
+            return self.search_memory(keyword)
+
+        response = self.generate_response(user_input)
+        self.memory.append({
+            "timestamp": timestamp,
+            "user": user_input,
+            "friday": response
+        })
+        self.save_memory()
+        return response
+
+    def review_memory(self):
+        if not self.memory:
+            return "No prior conversations stored."
+        review = "\n".join([
+            f"[{entry['timestamp']}] You: {entry['user']} | Friday: {entry['friday']}" 
+            for entry in self.memory
+        ])
+        return review
+
+    def search_memory(self, keyword):
+        results = [
+            f"[{entry['timestamp']}] You: {entry['user']} | Friday: {entry['friday']}"
+            for entry in self.memory
+            if keyword.lower() in entry['user'].lower() or keyword.lower() in entry['friday'].lower()
+        ]
+        if not results:
+            return "No matching entries found."
+        return "\n".join(results)
+
+    def generate_response(self, user_input):
+        user_input = user_input.lower()
+
+        if "how are you" in user_input:
+            return "Fully operational."
+        elif "what can you do" in user_input:
+            return "I manage memory, assist with information retrieval, and process commands."
+        elif "remember" in user_input:
+            return "All previous interactions are stored systematically."
+        elif "time" in user_input:
+            return f"Current system time is {datetime.now().strftime('%H:%M:%S')}."
+        elif "date" in user_input:
+            return f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
+        elif "shutdown" in user_input:
+            return "Acknowledged. Executing shutdown sequence."
+        elif "status" in user_input:
+            return "All systems are functioning within optimal parameters."
+        else:
+            return "Command received. Ready for next instruction."
+
+if __name__ == "__main__":
+    friday = Friday()
+    print("[FRIDAY] Online. How can I assist you?")
+    friday.speak("Online. How can I assist you?")
+
+    while True:
+        user_input = friday.listen()
+        if user_input.lower() in ["exit", "quit", "shutdown"]:
+            response = "Acknowledged. Executing shutdown sequence."
+            print(f"Friday: {response}")
+            friday.speak(response)
+            break
+        if user_input == "":
+            continue
+        response = friday.chat(user_input)
+        print(f"Friday: {response}")
+        friday.speak(response)

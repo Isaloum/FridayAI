@@ -1,0 +1,557 @@
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import {
+  Heart, Brain, Baby, Sparkles, Moon, Sun, Settings, Calendar, 
+  Send, Mic, Bell, User, Apple, Coffee, Droplets, Wind, 
+  Plus, Minus, Play, Pause, Volume2, Star, Flower, Crown,
+  MessageCircle, BarChart3, Target, Zap, Radio, Check, X
+} from "lucide-react";
+
+// ============ ELEGANT CONSTANTS ============
+const MOOD_THEMES = {
+  blissful: {
+    colors: "from-pink-100 via-rose-100 to-red-100",
+    accent: "pink-500",
+    icon: Heart,
+    emoji: "💖",
+    description: "Overflowing with love and joy"
+  },
+  peaceful: {
+    colors: "from-blue-100 via-cyan-100 to-teal-100", 
+    accent: "blue-500",
+    icon: Moon,
+    emoji: "🌙",
+    description: "Calm and serene like moonlight"
+  },
+  energetic: {
+    colors: "from-yellow-100 via-amber-100 to-orange-100",
+    accent: "yellow-500", 
+    icon: Sun,
+    emoji: "☀️",
+    description: "Bright and full of energy"
+  },
+  nurturing: {
+    colors: "from-green-100 via-emerald-100 to-teal-100",
+    accent: "green-500",
+    icon: Flower,
+    emoji: "🌸",
+    description: "Growing and flourishing"
+  },
+  dreamy: {
+    colors: "from-purple-100 via-violet-100 to-pink-100",
+    accent: "purple-500",
+    icon: Sparkles,
+    emoji: "✨",
+    description: "Magical and wonderful"
+  }
+};
+
+const AI_PERSONALITIES = {
+  caring_companion: {
+    name: "Luna",
+    emoji: "🌸",
+    description: "Your gentle pregnancy companion",
+    greeting: "Hello beautiful! I'm here to support you on this amazing journey. How are you feeling today? 💕"
+  },
+  wise_guide: {
+    name: "Sage",
+    emoji: "🦉", 
+    description: "Wise and knowledgeable guide",
+    greeting: "Greetings! I'm Sage, here to share wisdom and support throughout your pregnancy. What would you like to explore? ✨"
+  },
+  cheerful_friend: {
+    name: "Sunny",
+    emoji: "☀️",
+    description: "Your upbeat pregnancy buddy", 
+    greeting: "Hey there, mama! I'm Sunny and I'm SO excited to be part of your journey! What's making you smile today? 🌟"
+  }
+};
+
+// ============ ELEGANT COMPONENTS ============
+
+// Mood Orb Component
+const MoodOrb = ({ mood, size = "md", showPulse = false }) => {
+  const theme = MOOD_THEMES[mood] || MOOD_THEMES.peaceful;
+  const Icon = theme.icon;
+  
+  const sizeClasses = {
+    sm: "w-8 h-8",
+    md: "w-12 h-12", 
+    lg: "w-16 h-16",
+    xl: "w-24 h-24"
+  };
+
+  return (
+    <div className={`
+      ${sizeClasses[size]} rounded-full 
+      bg-gradient-to-br ${theme.colors}
+      border-2 border-${theme.accent}
+      flex items-center justify-center
+      shadow-lg transition-all duration-500
+      ${showPulse ? 'animate-pulse scale-110' : 'hover:scale-105'}
+    `}>
+      <Icon className={`w-1/2 h-1/2 text-${theme.accent}`} />
+    </div>
+  );
+};
+
+// Mood Selector Component  
+const MoodSelector = ({ currentMood, onMoodChange }) => {
+  return (
+    <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-gray-200">
+      <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+        <Heart className="w-4 h-4 text-pink-500" />
+        How are you feeling?
+      </h3>
+      <div className="flex gap-3 overflow-x-auto pb-2">
+        {Object.entries(MOOD_THEMES).map(([key, theme]) => (
+          <button
+            key={key}
+            onClick={() => onMoodChange(key)}
+            className={`
+              flex flex-col items-center p-3 rounded-xl min-w-[80px]
+              transition-all duration-300 hover:scale-105
+              ${currentMood === key 
+                ? `bg-gradient-to-br ${theme.colors} border-2 border-${theme.accent} shadow-md` 
+                : 'bg-gray-50 hover:bg-gray-100 border border-gray-200'
+              }
+            `}
+          >
+            <MoodOrb mood={key} size="sm" showPulse={currentMood === key} />
+            <span className="text-xs font-medium mt-1 text-gray-700 capitalize">
+              {key}
+            </span>
+            <span className="text-xs">{theme.emoji}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Baby Growth Visualization
+const BabyGrowth = ({ week }) => {
+  const growthStages = [
+    { week: 4, size: "poppy seed", emoji: "🌱", description: "Just beginning!" },
+    { week: 5, size: "sesame seed", emoji: "🌰", description: "Heart forming" },
+    { week: 6, size: "lentil", emoji: "🟤", description: "Brain developing" },
+    { week: 7, size: "blueberry", emoji: "🫐", description: "Arms & legs forming" },
+    { week: 8, size: "raspberry", emoji: "🍇", description: "Tiny but perfect!" },
+    { week: 9, size: "grape", emoji: "🍇", description: "Heart chambers forming" },
+    { week: 10, size: "kumquat", emoji: "🟠", description: "Organs functioning" },
+    { week: 11, size: "fig", emoji: "🟣", description: "Baby can hiccup" },
+    { week: 12, size: "lime", emoji: "🟢", description: "All organs formed!" },
+    { week: 13, size: "peach", emoji: "🍑", description: "Growing rapidly" },
+    { week: 14, size: "lemon", emoji: "🍋", description: "Facial features clear" },
+    { week: 15, size: "apple", emoji: "🍎", description: "Hair appearing" },
+    { week: 16, size: "avocado", emoji: "🥑", description: "First movements!" },
+    { week: 17, size: "turnip", emoji: "🟣", description: "Skeleton hardening" },
+    { week: 18, size: "bell pepper", emoji: "🫑", description: "Hearing developing" },
+    { week: 19, size: "tomato", emoji: "🍅", description: "Senses developing" },
+    { week: 20, size: "banana", emoji: "🍌", description: "Halfway there!" },
+    { week: 21, size: "carrot", emoji: "🥕", description: "Eyebrows forming" },
+    { week: 22, size: "papaya", emoji: "🥭", description: "Hearing sounds" },
+    { week: 23, size: "large mango", emoji: "🥭", description: "Brain growing" },
+    { week: 24, size: "cantaloupe", emoji: "🍈", description: "Viability milestone!" },
+    { week: 25, size: "cauliflower", emoji: "🥬", description: "Hair color forming" },
+    { week: 26, size: "lettuce head", emoji: "🥬", description: "Eyes opening" },
+    { week: 27, size: "rutabaga", emoji: "🟤", description: "Sleep cycles" },
+    { week: 28, size: "eggplant", emoji: "🍆", description: "Eyes open & close!" },
+    { week: 29, size: "butternut squash", emoji: "🧡", description: "Muscles strengthening" },
+    { week: 30, size: "cabbage", emoji: "🥬", description: "Brain developing" },
+    { week: 31, size: "coconut", emoji: "🥥", description: "Rapid brain growth" },
+    { week: 32, size: "jicama", emoji: "🟤", description: "Bones hardening!" },
+    { week: 33, size: "pineapple", emoji: "🍍", description: "Immune system" },
+    { week: 34, size: "cantaloupe", emoji: "🍈", description: "Lungs maturing" },
+    { week: 35, size: "honeydew", emoji: "🍈", description: "Gaining weight" },
+    { week: 36, size: "papaya", emoji: "🥭", description: "Almost ready!" },
+    { week: 37, size: "winter melon", emoji: "🍈", description: "Full term soon" },
+    { week: 38, size: "leek", emoji: "🟢", description: "Ready any day" },
+    { week: 39, size: "mini watermelon", emoji: "🍉", description: "Fully developed" },
+    { week: 40, size: "watermelon", emoji: "🍉", description: "Ready to meet you!" }
+  ];
+
+  // Find the correct stage by getting the latest stage that's <= current week
+  const currentStage = growthStages.reduce((prev, curr) => {
+    return (curr.week <= week) ? curr : prev;
+  }, growthStages[0]);
+  const progress = Math.min((week / 40) * 100, 100);
+
+  return (
+    <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
+      <div className="text-center mb-4">
+        <div className="text-6xl mb-2 font-emoji">{currentStage.emoji}</div>
+        <h3 className="text-lg font-bold text-gray-800">Week {week}</h3>
+        <p className="text-sm text-gray-600">Size of a {currentStage.size}</p>
+        <p className="text-xs text-gray-500 italic">{currentStage.description}</p>
+      </div>
+      
+      <div className="space-y-2">
+        <div className="flex justify-between text-xs text-gray-500">
+          <span>Progress</span>
+          <span>{Math.round(progress)}%</span>
+        </div>
+        <div className="w-full bg-gray-200 rounded-full h-2">
+          <div 
+            className="bg-gradient-to-r from-pink-400 to-purple-400 h-2 rounded-full transition-all duration-1000"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Chat Message Component
+const ChatMessage = ({ message, isUser, personality, mood }) => {
+  const theme = MOOD_THEMES[mood] || MOOD_THEMES.peaceful;
+  
+  return (
+    <div className={`flex mb-4 ${isUser ? 'justify-end' : 'justify-start'}`}>
+      <div className={`
+        max-w-[80%] rounded-2xl p-4 shadow-sm
+        ${isUser 
+          ? 'bg-gradient-to-br from-blue-500 to-purple-500 text-white' 
+          : `bg-gradient-to-br ${theme.colors} border border-${theme.accent}/30`
+        }
+      `}>
+        {!isUser && (
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-lg">{AI_PERSONALITIES[personality].emoji}</span>
+            <span className="text-xs font-semibold text-gray-700">
+              {AI_PERSONALITIES[personality].name}
+            </span>
+          </div>
+        )}
+        <p className={`text-sm leading-relaxed ${isUser ? 'text-white' : 'text-gray-800'}`}>
+          {message.content}
+        </p>
+        <div className={`text-xs mt-2 ${isUser ? 'text-blue-100' : 'text-gray-500'}`}>
+          {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Stats Dashboard
+const StatsDashboard = ({ week, mood }) => {
+  const stats = [
+    { label: "Pregnancy Week", value: week, max: 40, icon: Calendar, color: "blue" },
+    { label: "Mood Level", value: 85, max: 100, icon: Heart, color: "pink" },
+    { label: "Energy", value: 72, max: 100, icon: Zap, color: "yellow" },
+    { label: "Wellness", value: 90, max: 100, icon: Star, color: "green" }
+  ];
+
+  return (
+    <div className="grid grid-cols-2 gap-3">
+      {stats.map((stat, idx) => (
+        <div key={idx} className="bg-white rounded-xl p-3 shadow-sm border border-gray-200">
+          <div className="flex items-center gap-2 mb-2">
+            <stat.icon className={`w-4 h-4 text-${stat.color}-500`} />
+            <span className="text-xs font-medium text-gray-700">{stat.label}</span>
+          </div>
+          <div className="text-lg font-bold text-gray-800">{stat.value}</div>
+          <div className="w-full bg-gray-200 rounded-full h-1 mt-1">
+            <div 
+              className={`bg-${stat.color}-400 h-1 rounded-full transition-all duration-1000`}
+              style={{ width: `${(stat.value / stat.max) * 100}%` }}
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Main App Component
+const ElegantPregnancyAssistant = () => {
+  // State Management
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      content: AI_PERSONALITIES.caring_companion.greeting,
+      isUser: false,
+      timestamp: new Date(),
+      mood: 'peaceful'
+    }
+  ]);
+  
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [currentMood, setCurrentMood] = useState("peaceful");
+  const [pregnancyWeek, setPregnancyWeek] = useState(20);
+  const [selectedPersonality, setSelectedPersonality] = useState("caring_companion");
+  const [showStats, setShowStats] = useState(false);
+  const [quickSuggestions, setQuickSuggestions] = useState([]);
+  
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Handle sending messages with REAL FridayAI
+  const handleSend = useCallback(async () => {
+    if (input.trim() === "") return;
+
+    const userMessage = {
+      id: Date.now(),
+      content: input.trim(),
+      isUser: true,
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    const currentInput = input.trim();
+    setInput("");
+    setIsTyping(true);
+
+    try {
+      // REAL AI call to YOUR FridayAI backend! 🚀
+      const response = await fetch('http://localhost:8000/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: currentInput,
+          context: {
+            pregnancyWeek: pregnancyWeek,
+            currentMood: currentMood,
+            personality: selectedPersonality,
+            chatHistory: messages.slice(-5), // Last 5 messages for context
+            userProfile: {
+              week: pregnancyWeek,
+              mood: currentMood,
+              preferences: {
+                tone: AI_PERSONALITIES[selectedPersonality].description,
+                style: 'supportive_and_caring'
+              }
+            }
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const aiResponse = await response.json();
+      
+      const aiMessage = {
+        id: Date.now() + 1,
+        content: aiResponse.response || aiResponse.message || "I'm here to support you! 💕",
+        isUser: false,
+        timestamp: new Date(),
+        mood: aiResponse.detectedMood || currentMood,
+        confidence: aiResponse.confidence || 0.9,
+        suggestions: aiResponse.suggestions || [],
+        personality: selectedPersonality
+      };
+      
+      setMessages(prev => [...prev, aiMessage]);
+      
+      // Update mood if AI detected a different one
+      if (aiResponse.detectedMood && aiResponse.detectedMood !== currentMood) {
+        setCurrentMood(aiResponse.detectedMood);
+      }
+      
+    } catch (error) {
+      console.error('Error calling FridayAI:', error);
+      
+      // Fallback response if FridayAI is down
+      const fallbackMessage = {
+        id: Date.now() + 1,
+        content: "I'm having trouble connecting right now, but I'm still here for you! Please try again in a moment. 💕",
+        isUser: false,
+        timestamp: new Date(),
+        mood: currentMood,
+        isError: true
+      };
+      
+      setMessages(prev => [...prev, fallbackMessage]);
+    } finally {
+      setIsTyping(false);
+    }
+  }, [input, currentMood, pregnancyWeek, selectedPersonality, messages]);
+
+  // Keyboard handling
+  const handleKeyPress = useCallback((e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  }, [handleSend]);
+
+  return (
+    <div className="flex flex-col h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
+      {/* Header */}
+      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-200 p-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="bg-gradient-to-br from-pink-400 to-purple-500 text-white p-3 rounded-2xl shadow-lg">
+              <Baby className="w-6 h-6" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-800">Pregnancy Journey</h1>
+              <p className="text-sm text-gray-600">Week {pregnancyWeek} • Your companion: {AI_PERSONALITIES[selectedPersonality].name}</p>
+            </div>
+          </div>
+          
+          <div className="flex gap-2">
+            <button 
+              onClick={() => setShowStats(!showStats)}
+              className={`p-3 rounded-xl transition-all ${
+                showStats ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            >
+              <BarChart3 className="w-5 h-5" />
+            </button>
+            <button className="p-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-all">
+              <Settings className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-hidden flex">
+        {/* Left Sidebar */}
+        <div className="w-80 bg-white/50 backdrop-blur-sm border-r border-gray-200 p-4 space-y-4 overflow-y-auto">
+          {/* Baby Growth */}
+          <BabyGrowth week={pregnancyWeek} />
+          
+          {/* Week Controls */}
+          <div className="bg-white rounded-2xl p-4 shadow-lg border border-gray-200">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">Pregnancy Week</h3>
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setPregnancyWeek(Math.max(1, pregnancyWeek - 1))}
+                className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+              <span className="flex-1 text-center font-bold text-lg">{pregnancyWeek}</span>
+              <button 
+                onClick={() => setPregnancyWeek(Math.min(40, pregnancyWeek + 1))}
+                className="p-2 bg-gray-100 rounded-lg hover:bg-gray-200 transition-all"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Mood Selector */}
+          <MoodSelector currentMood={currentMood} onMoodChange={setCurrentMood} />
+          
+          {/* Stats Dashboard */}
+          {showStats && (
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-gray-200">
+              <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-blue-500" />
+                Your Journey Stats
+              </h3>
+              <StatsDashboard week={pregnancyWeek} mood={currentMood} />
+            </div>
+          )}
+        </div>
+
+        {/* Chat Area */}
+        <div className="flex-1 flex flex-col">
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto p-6 bg-gradient-to-b from-white/30 to-white/10">
+            {messages.map((message) => (
+              <ChatMessage
+                key={message.id}
+                message={message}
+                isUser={message.isUser}
+                personality={selectedPersonality}
+                mood={message.mood || currentMood}
+              />
+            ))}
+            
+            {/* Typing Indicator */}
+            {isTyping && (
+              <div className="flex justify-start mb-4">
+                <div className="bg-white rounded-2xl p-4 shadow-sm border border-gray-200">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">{AI_PERSONALITIES[selectedPersonality].emoji}</span>
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-75" />
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce delay-150" />
+                    </div>
+                    <span className="text-xs text-gray-500">
+                      {AI_PERSONALITIES[selectedPersonality].name} is typing...
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area */}
+          <div className="bg-white/80 backdrop-blur-sm border-t border-gray-200 p-4">
+            <div className="flex gap-3">
+              <button className="p-3 bg-gray-100 text-gray-600 rounded-xl hover:bg-gray-200 transition-all">
+                <Mic className="w-5 h-5" />
+              </button>
+              
+              <div className="flex-1 relative">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Share your thoughts and feelings..."
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent"
+                />
+              </div>
+              
+              <button
+                onClick={handleSend}
+                disabled={input.trim() === ''}
+                className="bg-gradient-to-r from-pink-400 to-purple-500 text-white rounded-xl px-6 py-3 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg transition-all"
+              >
+                <Send className="w-5 h-5" />
+                <span className="hidden sm:inline">Send</span>
+              </button>
+            </div>
+            
+            {/* Quick Actions */}
+            <div className="flex gap-2 mt-3">
+              {quickSuggestions.length > 0 ? (
+                quickSuggestions.map((suggestion, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setInput(suggestion)}
+                    className="text-xs bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 px-3 py-2 rounded-full hover:from-purple-200 hover:to-pink-200 transition-all border border-purple-200"
+                  >
+                    {suggestion}
+                  </button>
+                ))
+              ) : (
+                ['How are you?', 'Tell me about week ' + pregnancyWeek, 'I\'m feeling excited!'].map((suggestion, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setInput(suggestion)}
+                    className="text-xs bg-gray-100 text-gray-600 px-3 py-2 rounded-full hover:bg-gray-200 transition-all"
+                  >
+                    {suggestion}
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ElegantPregnancyAssistant;
