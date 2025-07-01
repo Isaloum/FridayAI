@@ -1,0 +1,955 @@
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Heart,
+  Droplets,
+  Activity,
+  Moon,
+  Baby,
+  X,
+  MoreVertical,
+  Check,
+  Stethoscope,
+  AlertCircle,
+  Pill,
+  Calendar,
+  BookMarked,
+  Apple,
+  Smile,
+  Sparkles,
+  Coffee,
+  HeartHandshake,
+  Meh,
+  Plus,
+  Target
+} from "lucide-react";
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  BarChart,
+  Bar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+} from "recharts";
+import useAppStore from "../../store/useAppStore";
+import personalitySystem from "../../components/config/personality";
+
+// Static configurations
+const moodConfig = {
+  happy: {
+    bg: "bg-gradient-to-br from-yellow-100 to-orange-100",
+    border: "border-yellow-400",
+    text: "text-yellow-800",
+    icon: Smile,
+    gradient: "from-yellow-400 to-orange-400",
+    animation: "animate-bounce",
+  },
+  anxious: {
+    bg: "bg-gradient-to-br from-purple-100 to-pink-100",
+    border: "border-purple-400",
+    text: "text-purple-800",
+    icon: AlertCircle,
+    gradient: "from-purple-400 to-pink-400",
+    animation: "animate-pulse",
+  },
+  calm: {
+    bg: "bg-gradient-to-br from-blue-100 to-cyan-100",
+    border: "border-blue-400",
+    text: "text-blue-800",
+    icon: Coffee,
+    gradient: "from-blue-400 to-cyan-400",
+    animation: "animate-pulse",
+  },
+  excited: {
+    bg: "bg-gradient-to-br from-pink-100 to-rose-100",
+    border: "border-pink-400",
+    text: "text-pink-800",
+    icon: Sparkles,
+    gradient: "from-pink-400 to-rose-400",
+    animation: "animate-spin",
+  },
+  neutral: {
+    bg: "bg-gradient-to-br from-gray-100 to-slate-100",
+    border: "border-gray-400",
+    text: "text-gray-800",
+    icon: Meh,
+    gradient: "from-gray-400 to-slate-400",
+    animation: "",
+  },
+  supportive: {
+    bg: "bg-gradient-to-br from-green-100 to-emerald-100",
+    border: "border-green-400",
+    text: "text-green-800",
+    icon: HeartHandshake,
+    gradient: "from-green-400 to-emerald-400",
+    animation: "animate-pulse",
+  },
+  friendly: {
+    bg: "bg-gradient-to-br from-indigo-100 to-purple-100",
+    border: "border-indigo-400",
+    text: "text-indigo-800",
+    icon: Heart,
+    gradient: "from-indigo-400 to-purple-400",
+    animation: "animate-pulse",
+  },
+};
+
+const toneSystem = {
+  supportive: {
+    description: "Warm, empathetic, and caring",
+    emoji: "🤗",
+    responses: {
+      greeting: "Hello beautiful mama! How's your day going? 💜",
+      concern: "I hear you, and your feelings are completely valid. Let's work through this together.",
+      celebration: "That's absolutely wonderful! I'm so happy for you! 🎉",
+    },
+  },
+  sassy: {
+    description: "Fun, confident, and personality-filled",
+    emoji: "💁‍♀️",
+    responses: {
+      greeting: "Hey gorgeous! Ready to slay this pregnancy thing? ✨",
+      concern: "Girl, I see those worries trying to steal your crown. Not today! Let's handle this.",
+      celebration: "YASSS QUEEN! You're absolutely crushing it! 👑",
+    },
+  },
+  clinical: {
+    description: "Medical, professional, and precise",
+    emoji: "👩‍⚕️",
+    responses: {
+      greeting: "Good day. I'm ready to assist with your pregnancy-related medical inquiries.",
+      concern: "I understand your concern. Let's review the medical facts and evidence-based recommendations.",
+      celebration: "Excellent progress. This is a positive indicator for your pregnancy health.",
+    },
+  },
+  friendly: {
+    description: "Casual, conversational, and approachable",
+    emoji: "😊",
+    responses: {
+      greeting: "Hi there! So nice to chat with you today! How's everything?",
+      concern: "Oh, I totally get that. It's super normal to feel this way. Want to talk about it?",
+      celebration: "Wow, that's amazing news! I'm doing a happy dance for you! 🎉",
+    },
+  },
+  motivational: {
+    description: "Inspiring, energetic, and empowering",
+    emoji: "💪",
+    responses: {
+      greeting: "Rise and shine, warrior mama! Today is YOUR day to conquer! 🌟",
+      concern: "Every challenge is an opportunity to show how strong you are. You've got this!",
+      celebration: "YES! This is the power of a determined mama! Keep shining bright! ⭐",
+    },
+  },
+};
+
+const quickActions = [
+  { id: 1, icon: Droplets, label: "Log Water", action: "water" },
+  { id: 2, icon: Baby, label: "Kick Count", action: "kicks" },
+  { id: 3, icon: Heart, label: "Mood Check", action: "mood" },
+  { id: 4, icon: Apple, label: "Nutrition", action: "nutrition" },
+];
+
+const emergencyKeywords = [
+  "bleeding", "severe pain", "cramping", "emergency", "help me", 
+  "urgent", "hospital", "dizzy", "faint", "vision problems", 
+  "headache severe", "chest pain", "difficulty breathing"
+];
+
+const moodPatterns = {
+  anxious: {
+    keywords: ["worried", "scared", "anxious", "nervous", "fear", "panic", "stress"],
+    emojis: ["😰", "😟", "😨", "😱"],
+    weight: 1.5,
+  },
+  happy: {
+    keywords: ["happy", "excited", "joy", "wonderful", "great", "amazing", "love"],
+    emojis: ["😊", "😄", "🥰", "💕", "🎉"],
+    weight: 1.2,
+  },
+  calm: {
+    keywords: ["calm", "peaceful", "relaxed", "serene", "comfortable"],
+    emojis: ["😌", "🧘‍♀️", "☺️"],
+    weight: 1.0,
+  },
+  excited: {
+    keywords: ["excited", "amazing", "thrilled", "can't wait", "awesome"],
+    emojis: ["🤗", "✨", "🎊", "💃"],
+    weight: 1.3,
+  },
+};
+
+const symptomKeywords = [
+  "pain", "ache", "cramp", "nausea", "tired", 
+  "exhausted", "swollen"
+];
+
+const goalCategories = {
+  wellness: { icon: Heart, color: "text-pink-600", bg: "bg-pink-50" },
+  fitness: { icon: Dumbbell, color: "text-green-600", bg: "bg-green-50" },
+  nutrition: { icon: Apple, color: "text-orange-600", bg: "bg-orange-50" },
+  preparation: { icon: BookOpen, color: "text-blue-600", bg: "bg-blue-50" },
+  baby: { icon: Baby, color: "text-purple-600", bg: "bg-purple-50" },
+};
+
+const FridayAI = () => {
+  // Zustand state
+  const {
+    messages, addMessage, updateMessage, goals, moodHistory,
+    waterIntake, setWaterIntake, sleepHours, setSleepHours,
+    exerciseMinutes, setExerciseMinutes, kickCounter, setKickCounter,
+    selectedPersonality, setPersonality
+  } = useAppStore();
+
+  // Local state
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [currentMood, setCurrentMood] = useState("friendly");
+  const [selectedTone, setSelectedTone] = useState("supportive");
+  const [showEmergencyButton, setShowEmergencyButton] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [activeTab, setActiveTab] = useState("chat");
+  const [pregnancyWeek] = useState(20);
+  const [notifications, setNotifications] = useState([]);
+  const [aiInsights, setAiInsights] = useState([]);
+  const [showSymptomModal, setShowSymptomModal] = useState(false);
+  const [showGoalModal, setShowGoalModal] = useState(false);
+
+  const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  // User profile data
+  const userProfile = {
+    name: "Sarah",
+    dueDate: new Date("2025-03-15"),
+    doctorName: "Dr. Johnson",
+    hospital: "City Medical Center",
+    emergencyContact: "555-0123",
+  };
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = 
+        Math.min(textareaRef.current.scrollHeight, 200) + "px";
+    }
+  }, [input]);
+
+  // Generate AI insights
+  useEffect(() => {
+    const generateInsights = () => {
+      const insights = [];
+      if (waterIntake < 6) insights.push({
+        type: "hydration", priority: "high",
+        message: "Your water intake is below recommended levels. Try setting hourly reminders!",
+        icon: Droplets,
+      });
+      if (sleepHours < 7) insights.push({
+        type: "sleep", priority: "medium",
+        message: "Quality sleep is crucial during pregnancy. Consider a bedtime routine.",
+        icon: Moon,
+      });
+      if (moodHistory.length > 3 && moodHistory.slice(-3).every(m => m === "anxious")) {
+        insights.push({
+          type: "mental-health", priority: "high",
+          message: "I've noticed you've been feeling anxious. Try some relaxation techniques?",
+          icon: Heart,
+        });
+      }
+      setAiInsights(insights);
+    };
+
+    const timer = setInterval(generateInsights, 30000);
+    return () => clearInterval(timer);
+  }, [waterIntake, sleepHours, moodHistory]);
+
+  // Emergency detection
+  const checkForEmergency = (text) => {
+    return emergencyKeywords.some(keyword => 
+      text.toLowerCase().includes(keyword)
+    );
+  };
+
+  // Mood detection
+  const detectMood = (text) => {
+    let detectedMood = "neutral";
+    let highestScore = 0;
+
+    for (const [mood, pattern] of Object.entries(moodPatterns)) {
+      let score = 0;
+      pattern.keywords.forEach(keyword => {
+        if (text.toLowerCase().includes(keyword)) score += pattern.weight;
+      });
+      pattern.emojis.forEach(emoji => {
+        if (text.includes(emoji)) score += pattern.weight * 1.5;
+      });
+      if (score > highestScore) {
+        highestScore = score;
+        detectedMood = mood;
+      }
+    }
+    return detectedMood;
+  };
+
+  // Response generation
+  const generateResponse = (userMessage, detectedMood) => {
+    const contextualResponses = {
+      supportive: {
+        anxious: [
+          "I understand you're feeling worried. That's normal during pregnancy. Let's take a deep breath together. 💜",
+          "Your feelings are valid. Many mamas experience similar worries. Want to try a relaxation exercise?",
+          "I hear you, and I'm here for you. What's weighing on your mind?",
+        ],
+        happy: [
+          "Your joy is absolutely beautiful! ✨ What's making your heart full today?",
+          "I'm beaming with happiness for you! Tell me more about what's bringing you joy!",
+          "What a beautiful mood! Let's celebrate - what amazing thing happened? 🎉",
+        ],
+        symptom: [
+          "I understand that can be uncomfortable. How long have you been experiencing this?",
+          "Thank you for sharing. Let's document this and I can suggest remedies.",
+          "On a scale of 1-10, how would you rate your discomfort?",
+        ],
+      },
+      sassy: {
+        anxious: [
+          "Okay honey, I see anxiety trying to crash your party! 🙅‍♀️ Spill it - what's got you stressed?",
+          "Girl, those pregnancy hormones are NOT playing fair today! What's trying to steal your peace?",
+          "Listen babe, worry is overprotective. You're a warrior mama! 💪",
+        ],
+        happy: [
+          "YASSS MAMA! 👑 That glow isn't just pregnancy - that's pure happiness!",
+          "I NEED to know what's got you shining brighter than a diamond! ✨",
+          "Stop it right now - you're literally glowing! 🌟 Tell me everything!",
+        ],
+      },
+      motivational: {
+        general: [
+          "Every day you're growing a miracle! 🌟 How can I empower you today?",
+          "You're doing something incredible! Your body is creating life. 🦸‍♀️",
+          "What goal can we conquer together today?",
+        ],
+      },
+    };
+
+    const responses = contextualResponses[selectedTone] || contextualResponses.supportive;
+    const isSymptomRelated = symptomKeywords.some(keyword => 
+      userMessage.toLowerCase().includes(keyword)
+    );
+
+    if (isSymptomRelated && responses.symptom) {
+      return responses.symptom[Math.floor(Math.random() * responses.symptom.length)];
+    }
+
+    const moodResponses = responses[detectedMood] || responses.general || responses.anxious;
+    return moodResponses[Math.floor(Math.random() * moodResponses.length)];
+  };
+
+  // Message reactions
+  const addReaction = (messageId, reaction) => {
+    updateMessage(messageId, (msg) => {
+      const reactions = [...msg.reactions];
+      const existingIndex = reactions.findIndex(r => r.emoji === reaction);
+      
+      if (existingIndex >= 0) {
+        reactions[existingIndex].count += 1;
+      } else {
+        reactions.push({ emoji: reaction, count: 1 });
+      }
+      
+      return { reactions };
+    });
+  };
+
+  // Bookmark message
+  const toggleBookmark = (messageId) => {
+    updateMessage(messageId, (msg) => ({
+      isBookmarked: !msg.isBookmarked
+    }));
+  };
+
+  // Voice message simulation
+  const handleVoiceMessage = () => {
+    setIsListening(!isListening);
+    if (!isListening) {
+      setTimeout(() => {
+        setIsListening(false);
+        setInput("I've been feeling some movement today, is that normal?");
+      }, 3000);
+    }
+  };
+
+  // Handle message send
+  const handleSend = () => {
+    if (input.trim() === "") return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: "user",
+      content: input,
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false,
+    };
+
+    addMessage(userMessage);
+    setInput("");
+    setIsTyping(true);
+
+    // Check for emergencies
+    if (checkForEmergency(input)) {
+      setShowEmergencyButton(true);
+      setNotifications([{
+        id: Date.now(),
+        type: "emergency",
+        message: "Emergency keywords detected. Contact your healthcare provider if needed.",
+        timestamp: new Date(),
+      }, ...notifications].slice(0, 10));
+    }
+
+    // Detect and track mood
+    const detectedMood = detectMood(input);
+    setCurrentMood(detectedMood);
+    useAppStore.setState({ 
+      moodHistory: [...moodHistory, detectedMood].slice(-10)
+    });
+
+    // Simulate AI response
+    setTimeout(() => {
+      const response = generateResponse(input, detectedMood);
+      addMessage({
+        id: Date.now() + 1,
+        role: "assistant",
+        content: response,
+        mood: detectedMood,
+        timestamp: new Date(),
+        reactions: [],
+        isBookmarked: false,
+      });
+      setIsTyping(false);
+    }, 1500 + Math.random() * 1000);
+  };
+
+  // Quick action handlers
+  const handleQuickAction = (action) => {
+    switch (action) {
+      case "water":
+        setWaterIntake(Math.min(waterIntake + 1, 12));
+        addNotification("success", "💧 Water intake logged!");
+        break;
+      case "kicks":
+        setKickCounter(kickCounter + 1);
+        addNotification("success", "👶 Kick counted!");
+        break;
+      case "mood":
+        setShowSymptomModal(true);
+        break;
+      case "nutrition":
+        setActiveTab("health");
+        break;
+    }
+  };
+
+  const addNotification = (type, message) => {
+    const notification = {
+      id: Date.now(),
+      type,
+      message,
+      timestamp: new Date(),
+    };
+
+    setNotifications([notification, ...notifications].slice(0, 10));
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== notification.id));
+    }, 5000);
+  };
+
+  // Analytics Dashboard Component
+  const AnalyticsDashboard = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
+
+    const emotionalData = moodHistory.map((mood, index) => ({
+      time: index,
+      mood,
+      value: mood === "happy" ? 0.9 : mood === "anxious" ? 0.3 : 0.5,
+    }));
+
+    const healthMetrics = [
+      { name: "Water", value: (waterIntake / 10) * 100, color: "#3b82f6" },
+      { name: "Sleep", value: (sleepHours / 9) * 100, color: "#8b5cf6" },
+      { name: "Exercise", value: (exerciseMinutes / 30) * 100, color: "#10b981" },
+      { name: "Nutrition", value: 75, color: "#f59e0b" },
+    ];
+
+    const weeklyMoodData = [
+      { day: "Mon", happy: 4, anxious: 2, calm: 3 },
+      { day: "Tue", happy: 3, anxious: 1, calm: 4 },
+      { day: "Wed", happy: 5, anxious: 1, calm: 2 },
+      { day: "Thu", happy: 2, anxious: 3, calm: 3 },
+      { day: "Fri", happy: 4, anxious: 1, calm: 4 },
+      { day: "Sat", happy: 5, anxious: 0, calm: 3 },
+      { day: "Sun", happy: 4, anxious: 1, calm: 4 },
+    ];
+
+    return (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-3xl font-bold">Your Wellness Analytics</h2>
+                <p className="text-purple-100 mt-1">Insights for a healthier pregnancy</p>
+              </div>
+              <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          <div className="overflow-y-auto max-h-[calc(90vh-120px)] p-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+              {[
+                { icon: Droplets, value: `${waterIntake}/10`, label: "Water Intake", color: "blue", progress: (waterIntake / 10) * 100 },
+                { icon: Moon, value: `${sleepHours}h`, label: "Sleep Duration", color: "purple", progress: (sleepHours / 9) * 100 },
+                { icon: Activity, value: `${exerciseMinutes}m`, label: "Exercise Today", color: "green", progress: (exerciseMinutes / 30) * 100 },
+                { icon: Baby, value: kickCounter, label: "Baby Kicks", color: "pink" },
+              ].map((metric, idx) => (
+                <div key={idx} className={`bg-gradient-to-br from-${metric.color}-50 to-${metric.color}-100 rounded-2xl p-6`}>
+                  <div className="flex items-center justify-between mb-4">
+                    <metric.icon className={`w-8 h-8 text-${metric.color}-600`} />
+                    <span className={`text-3xl font-bold text-${metric.color}-700`}>{metric.value}</span>
+                  </div>
+                  <p className={`text-sm text-${metric.color}-600 font-medium`}>{metric.label}</p>
+                  {metric.progress && (
+                    <div className="mt-2">
+                      <div className={`bg-${metric.color}-200 rounded-full h-2`}>
+                        <div
+                          className={`bg-${metric.color}-600 h-2 rounded-full transition-all`}
+                          style={{ width: `${metric.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-gray-50 rounded-2xl p-6 mb-8">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Emotional Journey</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={emotionalData}>
+                    <defs>
+                      <linearGradient id="emotionalGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8} />
+                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="time" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip contentStyle={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: "8px" }} />
+                    <Area type="monotone" dataKey="value" stroke="#8b5cf6" fill="url(#emotionalGradient)" strokeWidth={3} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="bg-gray-50 rounded-2xl p-6 mb-8">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Weekly Mood Patterns</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={weeklyMoodData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="day" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip contentStyle={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: "8px" }} />
+                    <Bar dataKey="happy" fill="#fbbf24" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="calm" fill="#60a5fa" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="anxious" fill="#c084fc" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex justify-center gap-6 mt-4">
+                {[
+                  { color: "yellow-400", label: "Happy" },
+                  { color: "blue-400", label: "Calm" },
+                  { color: "purple-400", label: "Anxious" },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <div className={`w-3 h-3 bg-${item.color} rounded-full`} />
+                    <span className="text-sm text-gray-600">{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Overall Wellness Score</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={healthMetrics}>
+                    <PolarGrid stroke="#e5e7eb" />
+                    <PolarAngleAxis dataKey="name" stroke="#6b7280" />
+                    <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#6b7280" />
+                    <Radar name="Health Score" dataKey="value" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.6} />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {aiInsights.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">AI-Powered Insights</h3>
+                <div className="space-y-3">
+                  {aiInsights.map((insight, idx) => {
+                    const priorityColors = {
+                      high: "bg-red-50 border-red-200",
+                      medium: "bg-yellow-50 border-yellow-200",
+                      low: "bg-blue-50 border-blue-200"
+                    };
+                    const textColors = {
+                      high: "text-red-600",
+                      medium: "text-yellow-600",
+                      low: "text-blue-600"
+                    };
+                    
+                    return (
+                      <div key={idx} className={`p-4 rounded-xl border ${priorityColors[insight.priority] || "bg-blue-50"}`}>
+                        <div className="flex items-start gap-3">
+                          <insight.icon className={`w-5 h-5 mt-0.5 ${textColors[insight.priority] || "text-blue-600"}`} />
+                          <p className="text-sm text-gray-700">{insight.message}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Goal Manager Component
+  const GoalManager = () => (
+    <div className="p-4 space-y-4">
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">Your Goals</h2>
+          <p className="text-gray-600 mt-1">Track your pregnancy milestones</p>
+        </div>
+        <button
+          onClick={() => setShowGoalModal(true)}
+          className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+        >
+          <Plus className="w-5 h-5" />
+          New Goal
+        </button>
+      </div>
+
+      {goals.length === 0 ? (
+        <div className="text-center py-16 bg-gray-50 rounded-2xl">
+          <Target className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">No goals yet</h3>
+          <p className="text-gray-500">Create your first pregnancy goal to get started!</p>
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {goals.map((goal) => {
+            const category = goalCategories[goal.category];
+            const Icon = category.icon;
+
+            return (
+              <div key={goal.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-start gap-4">
+                    <div className={`p-3 rounded-xl ${category.bg}`}>
+                      <Icon className={`w-6 h-6 ${category.color}`} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-800 text-lg">{goal.text}</h3>
+                      <p className="text-sm text-gray-500 mt-1">
+                        {goal.category} • Started {new Date(goal.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <button className="text-gray-400 hover:text-gray-600">
+                    <MoreVertical className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">Progress</span>
+                    <span className="font-bold text-gray-800">{goal.progress}%</span>
+                  </div>
+                  <div className="relative bg-gray-100 rounded-full h-3 overflow-hidden">
+                    <div
+                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+                      style={{ width: `${goal.progress}%` }}
+                    />
+                  </div>
+
+                  {goal.milestones?.length > 0 && (
+                    <div className="mt-4 space-y-2">
+                      <p className="text-sm font-medium text-gray-700">Milestones:</p>
+                      {goal.milestones.map((milestone, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-sm">
+                          <div className={`w-4 h-4 rounded-full ${milestone.completed ? "bg-green-500" : "bg-gray-300"}`}>
+                            {milestone.completed && <Check className="w-3 h-3 text-white" />}
+                          </div>
+                          <span className={milestone.completed ? "text-gray-600 line-through" : "text-gray-700"}>
+                            {milestone.text}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+
+  // Health Tracker Component
+  const HealthTracker = () => {
+    const [activeHealthTab, setActiveHealthTab] = useState("overview");
+
+    return (
+      <div className="p-4">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Health Tracking</h2>
+          <p className="text-gray-600 mt-1">Monitor your pregnancy health metrics</p>
+        </div>
+
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          {["overview", "vitals", "symptoms", "medications", "appointments"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveHealthTab(tab)}
+              className={`px-4 py-2 rounded-lg font-medium capitalize whitespace-nowrap transition-all ${
+                activeHealthTab === tab
+                  ? "bg-purple-600 text-white shadow-lg"
+                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {activeHealthTab === "overview" && (
+          <div className="space-y-6">
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-800">Pregnancy Progress</h3>
+                <Baby className="w-6 h-6 text-purple-600" />
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-sm text-gray-600">Week {pregnancyWeek} of 40</span>
+                    <span className="text-sm font-medium text-purple-600">
+                      {Math.round((pregnancyWeek / 40) * 100)}%
+                    </span>
+                  </div>
+                  <div className="bg-white rounded-full h-4 overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-1000"
+                      style={{ width: `${(pregnancyWeek / 40) * 100}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="bg-white rounded-xl p-4">
+                    <Calendar className="w-5 h-5 text-purple-600 mb-2" />
+                    <p className="text-xs text-gray-600">Due Date</p>
+                    <p className="font-semibold text-gray-800">{userProfile.dueDate.toLocaleDateString()}</p>
+                  </div>
+                  <div className="bg-white rounded-xl p-4">
+                    <Baby className="w-5 h-5 text-pink-600 mb-2" />
+                    <p className="text-xs text-gray-600">Baby Size</p>
+                    <p className="font-semibold text-gray-800">Cantaloupe</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { icon: Droplets, value: waterIntake, label: "Glasses of water", action: "water", color: "blue" },
+                { icon: Moon, value: sleepHours, label: "Hours of sleep", action: null, color: "purple" },
+                { icon: Activity, value: exerciseMinutes, label: "Exercise mins", action: null, color: "green" },
+                { icon: Heart, value: kickCounter, label: "Baby kicks", action: "kicks", color: "red" },
+              ].map((metric, idx) => (
+                <div key={idx} className="bg-white rounded-xl p-4 border border-gray-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <metric.icon className={`w-5 h-5 text-${metric.color}-500`} />
+                    <span className="text-2xl font-bold text-gray-800">{metric.value}</span>
+                  </div>
+                  <p className="text-sm text-gray-600">{metric.label}</p>
+                  {metric.action && (
+                    <button
+                      onClick={() => handleQuickAction(metric.action)}
+                      className={`mt-2 text-xs text-${metric.color}-600 hover:text-${metric.color}-700 font-medium`}
+                    >
+                      + Add {metric.action === "water" ? "glass" : "kick"}
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {[
+                  { icon: Stethoscope, label: "Log Vitals", color: "purple" },
+                  { icon: AlertCircle, label: "Track Symptom", color: "orange", action: () => setShowSymptomModal(true) },
+                  { icon: Pill, label: "Medications", color: "blue" },
+                  { icon: Calendar, label: "Appointments", color: "green" },
+                ].map((action, idx) => (
+                  <button
+                    key={idx}
+                    onClick={action.action}
+                    className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all"
+                  >
+                    <action.icon className={`w-6 h-6 text-${action.color}-600 mb-2`} />
+                    <p className="text-sm font-medium text-gray-700">{action.label}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Chat Interface Component
+  const ChatInterface = () => (
+    <div className="flex flex-col h-full">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+        {messages.map((message) => (
+          <div
+            key={message.id}
+            className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-fadeIn`}
+          >
+            <div className={`max-w-[80%] ${message.role === "user" ? "order-2" : "order-1"}`}>
+              <div
+                className={`rounded-2xl px-5 py-3 shadow-sm ${
+                  message.role === "user"
+                    ? "bg-gradient-to-br from-purple-600 to-purple-700 text-white"
+                    : "bg-white border border-gray-100 text-gray-800"
+                }`}
+              >
+                <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+
+                {message.mood && message.role === "assistant" && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <span
+                      className={`text-xs px-3 py-1 rounded-full ${
+                        moodConfig[message.mood].bg
+                      } ${moodConfig[message.mood].text} font-medium`}
+                    >
+                      Mood: {message.mood}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2 mt-2 px-2">
+                <p className="text-xs text-gray-500">
+                  {new Date(message.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+
+                <button
+                  onClick={() => toggleBookmark(message.id)}
+                  className="p-1 hover:bg-gray-100 rounded transition-colors"
+                >
+                  <BookMarked
+                    className={`w-3 h-3 ${
+                      message.isBookmarked ? "text-purple-600 fill-purple-600" : "text-gray-400"
+                    }`}
+                  />
+                </button>
+
+                {message.role === "assistant" && (
+                  <div className="flex gap-1">
+                    {["👍", "❤️", "😊"].map((emoji) => (
+                      <button
+                        key={emoji}
+                        onClick={() => addReaction(message.id, emoji)}
+                        className="hover:scale-110 transition-transform"
+                      >
+                        {emoji}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {message.reactions?.length > 0 && (
+                <div className="flex gap-2 mt-2 px-2">
+                  {message.reactions.map((reaction, idx) => (
+                    <span key={idx} className="bg-gray-100 px-2 py-1 rounded-full text-xs">
+                      {reaction.emoji} {reaction.count}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+
+        {isTyping && (
+          <div className="flex justify-start animate-fadeIn">
+            <div className="bg-white border border-gray-100 rounded-2xl px-5 py-3 shadow-sm">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" />
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }} />
+                <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }} />
+              </div>
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+    </div>
+  );
+
+  // Main Render
+  return (
+    <div className="flex flex-col h-screen bg-white">
+      {activeTab === "chat" && <ChatInterface />}
+      {activeTab === "health" && <HealthTracker />}
+      {activeTab === "goals" && <GoalManager />}
+      {showAnalytics && <AnalyticsDashboard isOpen={showAnalytics} onClose={() => setShowAnalytics(false)} />}
+    </div>
+  );
+};
+
+export default FridayAI;

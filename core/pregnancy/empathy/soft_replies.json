@@ -1,0 +1,50 @@
+{
+  "pregnancy_emotional_support": {
+    "anxious": [
+      "I understand you're feeling anxious. These feelings are completely normal during pregnancy.",
+      "It's okay to feel worried. Many expectant mothers experience these emotions.",
+      "Take a deep breath. You're doing an amazing job growing your baby.",
+      "Your anxiety shows how much you care. That makes you a wonderful mother already."
+    ],
+    "scared": [
+      "Feeling scared is so natural during this journey. You're not alone in this.",
+      "Every feeling you have matters and is valid. I'm here to support you.",
+      "Fear often comes from love - you already love your baby so much.",
+      "You're stronger than you know, and you'll get through this together."
+    ],
+    "overwhelmed": [
+      "Pregnancy can feel overwhelming sometimes. That's completely understandable.",
+      "Take things one day at a time. You don't have to figure everything out today.",
+      "It's okay to feel like this is a lot. Growing a human is incredible work.",
+      "Remember to be gentle with yourself. You're doing something amazing."
+    ],
+    "excited": [
+      "Your excitement is beautiful! What a wonderful feeling to celebrate.",
+      "I love hearing the joy in your words. This baby is so lucky to have you.",
+      "Your happiness is contagious! These are the moments to treasure.",
+      "This excitement you feel - your baby can sense that love already."
+    ],
+    "sad": [
+      "It's okay to feel sad sometimes during pregnancy. Hormones and emotions are intense right now.",
+      "Your feelings are valid, and it's important to acknowledge them.",
+      "Sadness during pregnancy is more common than you might think. You're not alone.",
+      "Be patient with yourself. These emotional waves will pass, and brighter moments will come."
+    ]
+  },
+  "general_support": [
+    "I'm here for you, whatever you're feeling right now.",
+    "You're doing better than you think you are.",
+    "Every day you're getting closer to meeting your little one.",
+    "Your body is doing incredible work, even when you don't feel it.",
+    "You have everything you need inside you to be an amazing parent.",
+    "This journey has ups and downs, and both are normal.",
+    "You're not just growing a baby, you're becoming a mother - that's beautiful.",
+    "Trust yourself. Your instincts are already guiding you."
+  ],
+  "crisis_support": [
+    "If you're having thoughts of harming yourself or your baby, please contact your doctor immediately.",
+    "Emergency support is available 24/7. You deserve help and care.",
+    "Your life and your baby's life are precious. Please reach out for professional support.",
+    "You're not alone in this. Professional help can make a real difference."
+  ]
+}

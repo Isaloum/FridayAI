@@ -1,0 +1,1052 @@
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { Heart, Brain, Shield, Activity, AlertCircle, Moon, Sun, Settings, TrendingUp, Calendar, Target, Sparkles, ChevronRight, X, Send, Mic, Bell, User, Home, BarChart3, BookOpen, Phone, MessageCircle, Zap, Star, Baby, Stethoscope, Apple, Dumbbell, Music, Camera, Share2, Download, Lock, Smile, Frown, Meh, ThumbsUp, Coffee, Droplets, Pill, Wind, HeartHandshake, Users, Gift, ShoppingBag, FileText, Video, HelpCircle, Award, Palette, Volume2, ChevronLeft, Plus, Minus, Check, Clock, MapPin, Thermometer, Weight, Ruler, Calculator, BookMarked, Headphones, Wifi, WifiOff, Battery, BatteryLow, Cloud, CloudOff, Eye, EyeOff, Edit3, Trash2, Copy, Share, Filter, Search, Menu, MoreVertical, Info, AlertTriangle, CheckCircle, XCircle, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, RotateCw, RefreshCw, Loader, Pause, Play, Square, Circle, Triangle } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ScatterChart, Scatter } from 'recharts';
+
+const FridayAI = () => {
+  // Enhanced state management
+  const [messages, setMessages] = useState([
+    {
+      id: Date.now(),
+      role: 'assistant',
+      content: "Hello! I'm Friday, your AI companion. I'm here to support you through every moment of your pregnancy journey. How are you feeling today? 💜",
+      mood: 'friendly',
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false
+    }
+  ]);
+  
+  const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [currentMood, setCurrentMood] = useState('friendly');
+  const [selectedTone, setSelectedTone] = useState('supportive');
+  const [showEmergencyButton, setShowEmergencyButton] = useState(false);
+  const [showAnalytics, setShowAnalytics] = useState(false);
+  const [activeTab, setActiveTab] = useState('chat');
+  const [goals, setGoals] = useState([]);
+  const [healthRecords, setHealthRecords] = useState([]);
+  const [showGoalModal, setShowGoalModal] = useState(false);
+  const [pregnancyWeek, setPregnancyWeek] = useState(20);
+  const [theme, setTheme] = useState('light');
+  const [notifications, setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [dailyTips, setDailyTips] = useState([]);
+  const [moodHistory, setMoodHistory] = useState([]);
+  const [waterIntake, setWaterIntake] = useState(0);
+  const [sleepHours, setSleepHours] = useState(7);
+  const [exerciseMinutes, setExerciseMinutes] = useState(0);
+  const [symptoms, setSymptoms] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const [medications, setMedications] = useState([]);
+  const [kickCounter, setKickCounter] = useState(0);
+  const [contractionTimer, setContractionTimer] = useState(null);
+  const [birthPlan, setBirthPlan] = useState({});
+  const [partnerMode, setPartnerMode] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [userProfile, setUserProfile] = useState({
+    name: 'Sarah',
+    dueDate: new Date('2025-03-15'),
+    doctorName: 'Dr. Johnson',
+    hospital: 'City Medical Center',
+    emergencyContact: '555-0123'
+  });
+  const [aiInsights, setAiInsights] = useState([]);
+  const [weeklyReport, setWeeklyReport] = useState(null);
+  const [showMeditationModal, setShowMeditationModal] = useState(false);
+  const [showSymptomModal, setShowSymptomModal] = useState(false);
+  const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [quickActions, setQuickActions] = useState([
+    { id: 1, icon: Droplets, label: 'Log Water', action: 'water' },
+    { id: 2, icon: Baby, label: 'Kick Count', action: 'kicks' },
+    { id: 3, icon: Heart, label: 'Mood Check', action: 'mood' },
+    { id: 4, icon: Apple, label: 'Nutrition', action: 'nutrition' }
+  ]);
+
+  const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+
+  // Enhanced mood configuration
+  const moodConfig = {
+    happy: { 
+      bg: 'bg-gradient-to-br from-yellow-100 to-orange-100', 
+      border: 'border-yellow-400', 
+      text: 'text-yellow-800',
+      icon: Smile,
+      gradient: 'from-yellow-400 to-orange-400',
+      animation: 'animate-bounce'
+    },
+    anxious: { 
+      bg: 'bg-gradient-to-br from-purple-100 to-pink-100', 
+      border: 'border-purple-400', 
+      text: 'text-purple-800',
+      icon: AlertCircle,
+      gradient: 'from-purple-400 to-pink-400',
+      animation: 'animate-pulse'
+    },
+    calm: { 
+      bg: 'bg-gradient-to-br from-blue-100 to-cyan-100', 
+      border: 'border-blue-400', 
+      text: 'text-blue-800',
+      icon: Coffee,
+      gradient: 'from-blue-400 to-cyan-400',
+      animation: 'animate-pulse'
+    },
+    excited: { 
+      bg: 'bg-gradient-to-br from-pink-100 to-rose-100', 
+      border: 'border-pink-400', 
+      text: 'text-pink-800',
+      icon: Sparkles,
+      gradient: 'from-pink-400 to-rose-400',
+      animation: 'animate-spin'
+    },
+    neutral: { 
+      bg: 'bg-gradient-to-br from-gray-100 to-slate-100', 
+      border: 'border-gray-400', 
+      text: 'text-gray-800',
+      icon: Meh,
+      gradient: 'from-gray-400 to-slate-400',
+      animation: ''
+    },
+    supportive: { 
+      bg: 'bg-gradient-to-br from-green-100 to-emerald-100', 
+      border: 'border-green-400', 
+      text: 'text-green-800',
+      icon: HeartHandshake,
+      gradient: 'from-green-400 to-emerald-400',
+      animation: 'animate-pulse'
+    },
+    friendly: { 
+      bg: 'bg-gradient-to-br from-indigo-100 to-purple-100', 
+      border: 'border-indigo-400', 
+      text: 'text-indigo-800',
+      icon: Heart,
+      gradient: 'from-indigo-400 to-purple-400',
+      animation: 'animate-pulse'
+    }
+  };
+
+  // Enhanced tone system
+  const toneSystem = {
+    supportive: {
+      description: "Warm, empathetic, and caring",
+      emoji: "🤗",
+      responses: {
+        greeting: "Hello beautiful mama! How's your day going? 💜",
+        concern: "I hear you, and your feelings are completely valid. Let's work through this together.",
+        celebration: "That's absolutely wonderful! I'm so happy for you! 🎉"
+      }
+    },
+    sassy: {
+      description: "Fun, confident, and personality-filled",
+      emoji: "💁‍♀️",
+      responses: {
+        greeting: "Hey gorgeous! Ready to slay this pregnancy thing? ✨",
+        concern: "Girl, I see those worries trying to steal your crown. Not today! Let's handle this.",
+        celebration: "YASSS QUEEN! You're absolutely crushing it! 👑"
+      }
+    },
+    clinical: {
+      description: "Medical, professional, and precise",
+      emoji: "👩‍⚕️",
+      responses: {
+        greeting: "Good day. I'm ready to assist with your pregnancy-related medical inquiries.",
+        concern: "I understand your concern. Let's review the medical facts and evidence-based recommendations.",
+        celebration: "Excellent progress. This is a positive indicator for your pregnancy health."
+      }
+    },
+    friendly: {
+      description: "Casual, conversational, and approachable",
+      emoji: "😊",
+      responses: {
+        greeting: "Hi there! So nice to chat with you today! How's everything?",
+        concern: "Oh, I totally get that. It's super normal to feel this way. Want to talk about it?",
+        celebration: "Wow, that's amazing news! I'm doing a happy dance for you! 🎉"
+      }
+    },
+    motivational: {
+      description: "Inspiring, energetic, and empowering",
+      emoji: "💪",
+      responses: {
+        greeting: "Rise and shine, warrior mama! Today is YOUR day to conquer! 🌟",
+        concern: "Every challenge is an opportunity to show how strong you are. You've got this!",
+        celebration: "YES! This is the power of a determined mama! Keep shining bright! ⭐"
+      }
+    }
+  };
+
+  // Auto-scroll to bottom
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 200) + 'px';
+    }
+  }, [input]);
+
+  // Initialize daily tips
+  useEffect(() => {
+    const tips = [
+      "💧 Remember to stay hydrated! Aim for 8-10 glasses of water daily.",
+      "🚶‍♀️ A 20-minute walk can boost your mood and energy levels.",
+      "🥑 Avocados are rich in folate - perfect for baby's development!",
+      "😴 Side sleeping with a pillow between your knees can improve comfort.",
+      "🧘‍♀️ Deep breathing exercises can help reduce pregnancy anxiety."
+    ];
+    setDailyTips(tips);
+  }, []);
+
+  // Generate AI insights based on user data
+  useEffect(() => {
+    const generateInsights = () => {
+      const insights = [];
+      
+      if (waterIntake < 6) {
+        insights.push({
+          type: 'hydration',
+          priority: 'high',
+          message: 'Your water intake is below recommended levels. Try setting hourly reminders!',
+          icon: Droplets
+        });
+      }
+      
+      if (sleepHours < 7) {
+        insights.push({
+          type: 'sleep',
+          priority: 'medium',
+          message: 'Quality sleep is crucial during pregnancy. Consider a bedtime routine.',
+          icon: Moon
+        });
+      }
+      
+      if (moodHistory.length > 3 && moodHistory.slice(-3).every(m => m === 'anxious')) {
+        insights.push({
+          type: 'mental-health',
+          priority: 'high',
+          message: "I've noticed you've been feeling anxious. Would you like to try some relaxation techniques?",
+          icon: Brain
+        });
+      }
+      
+      setAiInsights(insights);
+    };
+    
+    const timer = setInterval(generateInsights, 30000); // Update every 30 seconds
+    return () => clearInterval(timer);
+  }, [waterIntake, sleepHours, moodHistory]);
+
+  // Enhanced emergency detection
+  const checkForEmergency = (text) => {
+    const emergencyKeywords = [
+      'bleeding', 'severe pain', 'cramping', 'emergency', 'help me', 
+      'urgent', 'hospital', 'dizzy', 'faint', 'vision problems',
+      'headache severe', 'chest pain', 'difficulty breathing'
+    ];
+    const lowerText = text.toLowerCase();
+    return emergencyKeywords.some(keyword => lowerText.includes(keyword));
+  };
+
+  // Advanced mood detection with context
+  const detectMood = (text) => {
+    const moodPatterns = {
+      anxious: {
+        keywords: ['worried', 'scared', 'anxious', 'nervous', 'fear', 'panic', 'stress'],
+        emojis: ['😰', '😟', '😨', '😱'],
+        weight: 1.5
+      },
+      happy: {
+        keywords: ['happy', 'excited', 'joy', 'wonderful', 'great', 'amazing', 'love'],
+        emojis: ['😊', '😄', '🥰', '💕', '🎉'],
+        weight: 1.2
+      },
+      calm: {
+        keywords: ['calm', 'peaceful', 'relaxed', 'serene', 'comfortable'],
+        emojis: ['😌', '🧘‍♀️', '☺️'],
+        weight: 1.0
+      },
+      excited: {
+        keywords: ['excited', 'amazing', 'thrilled', 'can\'t wait', 'awesome'],
+        emojis: ['🤗', '✨', '🎊', '💃'],
+        weight: 1.3
+      }
+    };
+
+    let detectedMood = 'neutral';
+    let highestScore = 0;
+
+    for (const [mood, pattern] of Object.entries(moodPatterns)) {
+      let score = 0;
+      
+      // Check keywords
+      pattern.keywords.forEach(keyword => {
+        if (text.toLowerCase().includes(keyword)) {
+          score += pattern.weight;
+        }
+      });
+      
+      // Check emojis
+      pattern.emojis.forEach(emoji => {
+        if (text.includes(emoji)) {
+          score += pattern.weight * 1.5;
+        }
+      });
+      
+      if (score > highestScore) {
+        highestScore = score;
+        detectedMood = mood;
+      }
+    }
+
+    return detectedMood;
+  };
+
+  // Enhanced response generation
+  const generateResponse = (userMessage, detectedMood) => {
+    const contextualResponses = {
+      supportive: {
+        anxious: [
+          "I understand you're feeling worried. That's completely normal during pregnancy. Let's take a deep breath together. What specific concerns can I help you with? 💜",
+          "Your feelings are so valid. Many mamas experience similar worries. I'm here to support you through this. Would you like to try a quick relaxation exercise?",
+          "I hear you, and I'm here for you. Anxiety during pregnancy is more common than you might think. Let's work through these feelings together. What's weighing on your mind?"
+        ],
+        happy: [
+          "Your joy is absolutely beautiful! ✨ Pregnancy can be such an incredible journey. What's making your heart so full today?",
+          "I'm beaming with happiness for you! This positive energy is wonderful for both you and baby. Tell me more about what's bringing you such joy!",
+          "What a beautiful mood! Your happiness is literally making me smile. Let's celebrate - what amazing thing happened today? 🎉"
+        ],
+        symptom: [
+          "I understand that can be uncomfortable. Let me help you track this symptom and provide some evidence-based relief strategies. How long have you been experiencing this?",
+          "Thank you for sharing this with me. Tracking symptoms is so important. Let's document this properly and I can suggest some safe remedies.",
+          "I hear you. Pregnancy symptoms can be challenging. Let's work together to find some relief. On a scale of 1-10, how would you rate your discomfort?"
+        ]
+      },
+      sassy: {
+        anxious: [
+          "Okay honey, I see anxiety trying to crash your party! 🙅‍♀️ But guess what? You're stronger than any worry. Spill it - what's got you stressed?",
+          "Girl, those pregnancy hormones are NOT playing fair today! But we're gonna show them who's boss. What's trying to steal your peace?",
+          "Listen babe, worry is just your brain being overprotective. But you? You're a warrior mama! Let's tackle these fears together! 💪"
+        ],
+        happy: [
+          "YASSS MAMA! 👑 That glow isn't just pregnancy - that's pure happiness radiating! Okay, dish - what's got you feeling so fabulous?",
+          "Okay, I NEED to know what's got you shining brighter than a diamond today! This energy is EVERYTHING! ✨",
+          "Stop it right now - you're literally glowing! 🌟 This is the vibe we love to see! Tell me everything!"
+        ]
+      },
+      motivational: {
+        general: [
+          "Every day you're growing a miracle! 🌟 Remember, you're not just carrying a baby - you're carrying infinite strength and love. How can I empower you today?",
+          "You're doing something absolutely incredible right now! Your body is literally creating life. That makes you a superhero in my book! 🦸‍♀️",
+          "Champions aren't made in comfort zones, and you're proving that every single day! What goal can we conquer together today?"
+        ]
+      }
+    };
+
+    const tone = toneSystem[selectedTone];
+    const responses = contextualResponses[selectedTone] || contextualResponses.supportive;
+    
+    // Check for symptom-related keywords
+    const symptomKeywords = ['pain', 'ache', 'cramp', 'nausea', 'tired', 'exhausted', 'swollen'];
+    const isSymptomRelated = symptomKeywords.some(keyword => userMessage.toLowerCase().includes(keyword));
+    
+    if (isSymptomRelated && responses.symptom) {
+      return responses.symptom[Math.floor(Math.random() * responses.symptom.length)];
+    }
+    
+    const moodResponses = responses[detectedMood] || responses.general || responses.anxious;
+    return moodResponses[Math.floor(Math.random() * moodResponses.length)];
+  };
+
+  // Message reactions
+  const addReaction = (messageId, reaction) => {
+    setMessages(prev => prev.map(msg => {
+      if (msg.id === messageId) {
+        const reactions = [...msg.reactions];
+        const existingIndex = reactions.findIndex(r => r.emoji === reaction);
+        
+        if (existingIndex >= 0) {
+          reactions[existingIndex].count += 1;
+        } else {
+          reactions.push({ emoji: reaction, count: 1 });
+        }
+        
+        return { ...msg, reactions };
+      }
+      return msg;
+    }));
+  };
+
+  // Bookmark message
+  const toggleBookmark = (messageId) => {
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId ? { ...msg, isBookmarked: !msg.isBookmarked } : msg
+    ));
+  };
+
+  // Voice message simulation
+  const handleVoiceMessage = () => {
+    setIsListening(!isListening);
+    if (!isListening) {
+      // Simulate voice recording
+      setTimeout(() => {
+        setIsListening(false);
+        setInput("I've been feeling some movement today, is that normal?");
+      }, 3000);
+    }
+  };
+
+  // Handle message send
+  const handleSend = () => {
+    if (input.trim() === '') return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: 'user',
+      content: input,
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsTyping(true);
+
+    // Check for emergencies
+    if (checkForEmergency(input)) {
+      setShowEmergencyButton(true);
+      
+      // Add emergency notification
+      setNotifications(prev => [{
+        id: Date.now(),
+        type: 'emergency',
+        message: 'Emergency keywords detected. Please contact your healthcare provider if needed.',
+        timestamp: new Date()
+      }, ...prev]);
+    }
+
+    // Detect and track mood
+    const detectedMood = detectMood(input);
+    setCurrentMood(detectedMood);
+    setMoodHistory(prev => [...prev, detectedMood].slice(-10)); // Keep last 10 moods
+
+    // Simulate AI response with typing delay
+    setTimeout(() => {
+      const response = generateResponse(input, detectedMood);
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        role: 'assistant',
+        content: response,
+        mood: detectedMood,
+        timestamp: new Date(),
+        reactions: [],
+        isBookmarked: false
+      }]);
+      setIsTyping(false);
+    }, 1500 + Math.random() * 1000); // Variable typing time for realism
+  };
+
+  // Quick action handlers
+  const handleQuickAction = (action) => {
+    switch(action) {
+      case 'water':
+        setWaterIntake(prev => Math.min(prev + 1, 12));
+        addNotification('success', '💧 Water intake logged! Keep it up!');
+        break;
+      case 'kicks':
+        setKickCounter(prev => prev + 1);
+        addNotification('success', '👶 Kick counted! Baby is active!');
+        break;
+      case 'mood':
+        setShowSymptomModal(true);
+        break;
+      case 'nutrition':
+        setActiveTab('health');
+        break;
+    }
+  };
+
+  const addNotification = (type, message) => {
+    const notification = {
+      id: Date.now(),
+      type,
+      message,
+      timestamp: new Date()
+    };
+    
+    setNotifications(prev => [notification, ...prev].slice(0, 10));
+    
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== notification.id));
+    }, 5000);
+  };
+
+  // Enhanced Mood Ring Component
+  const MoodRing = ({ mood, size = 'medium' }) => {
+    const [isAnimating, setIsAnimating] = useState(false);
+    const config = moodConfig[mood] || moodConfig.neutral;
+    const Icon = config.icon;
+    
+    const sizeClasses = {
+      small: 'w-8 h-8',
+      medium: 'w-12 h-12',
+      large: 'w-16 h-16'
+    };
+
+    useEffect(() => {
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 1000);
+      return () => clearTimeout(timer);
+    }, [mood]);
+
+    return (
+      <div className={`
+        ${sizeClasses[size]} rounded-full border-4 transition-all duration-1000
+        ${config.border} ${config.bg} shadow-lg
+        ${isAnimating ? 'scale-110 ' + config.animation : 'scale-100'}
+        flex items-center justify-center relative overflow-hidden
+      `}>
+        <div className={`absolute inset-0 bg-gradient-to-br ${config.gradient} opacity-30`} />
+        <Icon className={`${size === 'small' ? 'w-4 h-4' : size === 'large' ? 'w-8 h-8' : 'w-6 h-6'} ${config.text} relative z-10`} />
+      </div>
+    );
+  };
+
+  // Premium Analytics Dashboard
+  const AnalyticsDashboard = ({ isOpen, onClose }) => {
+    if (!isOpen) return null;
+
+    const emotionalData = moodHistory.map((mood, index) => ({
+      time: index,
+      mood: mood,
+      value: mood === 'happy' ? 0.9 : mood === 'anxious' ? 0.3 : mood === 'excited' ? 0.8 : 0.5
+    }));
+
+    const healthMetrics = [
+      { name: 'Water', value: (waterIntake / 10) * 100, color: '#3b82f6' },
+      { name: 'Sleep', value: (sleepHours / 9) * 100, color: '#8b5cf6' },
+      { name: 'Exercise', value: (exerciseMinutes / 30) * 100, color: '#10b981' },
+      { name: 'Nutrition', value: 75, color: '#f59e0b' }
+    ];
+
+    const weeklyMoodData = [
+      { day: 'Mon', happy: 4, anxious: 2, calm: 3 },
+      { day: 'Tue', happy: 3, anxious: 1, calm: 4 },
+      { day: 'Wed', happy: 5, anxious: 1, calm: 2 },
+      { day: 'Thu', happy: 2, anxious: 3, calm: 3 },
+      { day: 'Fri', happy: 4, anxious: 1, calm: 4 },
+      { day: 'Sat', happy: 5, anxious: 0, calm: 3 },
+      { day: 'Sun', happy: 4, anxious: 1, calm: 4 }
+    ];
+
+    return (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl max-w-6xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-3xl font-bold">Your Wellness Analytics</h2>
+                <p className="text-purple-100 mt-1">Comprehensive insights for a healthier pregnancy</p>
+              </div>
+              <button onClick={onClose} className="p-2 hover:bg-white/20 rounded-lg transition-colors">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="overflow-y-auto max-h-[calc(90vh-120px)] p-6">
+            {/* Key Metrics */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <Droplets className="w-8 h-8 text-blue-600" />
+                  <span className="text-3xl font-bold text-blue-700">{waterIntake}/10</span>
+                </div>
+                <p className="text-sm text-blue-600 font-medium">Daily Water Intake</p>
+                <div className="mt-2 bg-blue-200 rounded-full h-2">
+                  <div className="bg-blue-600 h-2 rounded-full transition-all" style={{ width: `${(waterIntake / 10) * 100}%` }} />
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <Moon className="w-8 h-8 text-purple-600" />
+                  <span className="text-3xl font-bold text-purple-700">{sleepHours}h</span>
+                </div>
+                <p className="text-sm text-purple-600 font-medium">Sleep Duration</p>
+                <div className="mt-2 bg-purple-200 rounded-full h-2">
+                  <div className="bg-purple-600 h-2 rounded-full transition-all" style={{ width: `${(sleepHours / 9) * 100}%` }} />
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <Activity className="w-8 h-8 text-green-600" />
+                  <span className="text-3xl font-bold text-green-700">{exerciseMinutes}m</span>
+                </div>
+                <p className="text-sm text-green-600 font-medium">Exercise Today</p>
+                <div className="mt-2 bg-green-200 rounded-full h-2">
+                  <div className="bg-green-600 h-2 rounded-full transition-all" style={{ width: `${(exerciseMinutes / 30) * 100}%` }} />
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <Baby className="w-8 h-8 text-pink-600" />
+                  <span className="text-3xl font-bold text-pink-700">{kickCounter}</span>
+                </div>
+                <p className="text-sm text-pink-600 font-medium">Baby Kicks Today</p>
+                <div className="mt-2">
+                  <span className="text-xs text-pink-500">Last kick: 15 min ago</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Emotional Journey Chart */}
+            <div className="bg-gray-50 rounded-2xl p-6 mb-8">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Emotional Journey</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={emotionalData}>
+                    <defs>
+                      <linearGradient id="emotionalGradient" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0.1}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="time" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                      labelFormatter={(value) => `Session ${value + 1}`}
+                    />
+                    <Area 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#8b5cf6" 
+                      fill="url(#emotionalGradient)" 
+                      strokeWidth={3}
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* Weekly Mood Breakdown */}
+            <div className="bg-gray-50 rounded-2xl p-6 mb-8">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Weekly Mood Patterns</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={weeklyMoodData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                    <XAxis dataKey="day" stroke="#6b7280" />
+                    <YAxis stroke="#6b7280" />
+                    <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                    <Bar dataKey="happy" fill="#fbbf24" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="calm" fill="#60a5fa" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="anxious" fill="#c084fc" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="flex justify-center gap-6 mt-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-yellow-400 rounded-full" />
+                  <span className="text-sm text-gray-600">Happy</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-blue-400 rounded-full" />
+                  <span className="text-sm text-gray-600">Calm</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-purple-400 rounded-full" />
+                  <span className="text-sm text-gray-600">Anxious</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Health Score Radar */}
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">Overall Wellness Score</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart data={healthMetrics}>
+                    <PolarGrid stroke="#e5e7eb" />
+                    <PolarAngleAxis dataKey="name" stroke="#6b7280" />
+                    <PolarRadiusAxis angle={90} domain={[0, 100]} stroke="#6b7280" />
+                    <Radar name="Health Score" dataKey="value" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.6} />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            {/* AI Insights */}
+            {aiInsights.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-xl font-bold text-gray-800 mb-4">AI-Powered Insights</h3>
+                <div className="space-y-3">
+                  {aiInsights.map((insight, idx) => (
+                    <div key={idx} className={`p-4 rounded-xl border ${
+                      insight.priority === 'high' ? 'bg-red-50 border-red-200' : 
+                      insight.priority === 'medium' ? 'bg-yellow-50 border-yellow-200' : 
+                      'bg-blue-50 border-blue-200'
+                    }`}>
+                      <div className="flex items-start gap-3">
+                        <insight.icon className={`w-5 h-5 mt-0.5 ${
+                          insight.priority === 'high' ? 'text-red-600' : 
+                          insight.priority === 'medium' ? 'text-yellow-600' : 
+                          'text-blue-600'
+                        }`} />
+                        <p className="text-sm text-gray-700">{insight.message}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Enhanced Goal Management
+  const GoalManager = () => {
+    const goalCategories = {
+      wellness: { icon: Heart, color: 'text-pink-600', bg: 'bg-pink-50' },
+      fitness: { icon: Dumbbell, color: 'text-green-600', bg: 'bg-green-50' },
+      nutrition: { icon: Apple, color: 'text-orange-600', bg: 'bg-orange-50' },
+      preparation: { icon: BookOpen, color: 'text-blue-600', bg: 'bg-blue-50' },
+      baby: { icon: Baby, color: 'text-purple-600', bg: 'bg-purple-50' }
+    };
+
+    return (
+      <div className="p-4 space-y-4">
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-800">Your Goals</h2>
+            <p className="text-gray-600 mt-1">Track your pregnancy milestones</p>
+          </div>
+          <button
+            onClick={() => setShowGoalModal(true)}
+            className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all flex items-center gap-2"
+          >
+            <Plus className="w-5 h-5" />
+            New Goal
+          </button>
+        </div>
+
+        {goals.length === 0 ? (
+          <div className="text-center py-16 bg-gray-50 rounded-2xl">
+            <Target className="w-20 h-20 text-gray-300 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-gray-700 mb-2">No goals yet</h3>
+            <p className="text-gray-500">Create your first pregnancy goal to get started!</p>
+          </div>
+        ) : (
+          <div className="grid gap-4">
+            {goals.map(goal => {
+              const category = goalCategories[goal.category];
+              const Icon = category.icon;
+              
+              return (
+                <div key={goal.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-start gap-4">
+                      <div className={`p-3 rounded-xl ${category.bg}`}>
+                        <Icon className={`w-6 h-6 ${category.color}`} />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-800 text-lg">{goal.text}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{goal.category} • Started {new Date(goal.createdAt).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                    <button className="text-gray-400 hover:text-gray-600">
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center text-sm">
+                      <span className="text-gray-600">Progress</span>
+                      <span className="font-bold text-gray-800">{goal.progress}%</span>
+                    </div>
+                    <div className="relative bg-gray-100 rounded-full h-3 overflow-hidden">
+                      <div
+                        className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-500"
+                        style={{ width: `${goal.progress}%` }}
+                      />
+                    </div>
+                    
+                    {goal.milestones && goal.milestones.length > 0 && (
+                      <div className="mt-4 space-y-2">
+                        <p className="text-sm font-medium text-gray-700">Milestones:</p>
+                        {goal.milestones.map((milestone, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-sm">
+                            <div className={`w-4 h-4 rounded-full ${milestone.completed ? 'bg-green-500' : 'bg-gray-300'}`}>
+                              {milestone.completed && <Check className="w-3 h-3 text-white" />}
+                            </div>
+                            <span className={milestone.completed ? 'text-gray-600 line-through' : 'text-gray-700'}>
+                              {milestone.text}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Premium Health Tracker
+  const HealthTracker = () => {
+    const [activeHealthTab, setActiveHealthTab] = useState('overview');
+    
+    return (
+      <div className="p-4">
+        <div className="mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Health Tracking</h2>
+          <p className="text-gray-600 mt-1">Monitor your pregnancy health metrics</p>
+        </div>
+
+        {/* Sub-navigation */}
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          {['overview', 'vitals', 'symptoms', 'medications', 'appointments'].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveHealthTab(tab)}
+              className={`px-4 py-2 rounded-lg font-medium capitalize whitespace-nowrap transition-all ${
+                activeHealthTab === tab
+                  ? 'bg-purple-600 text-white shadow-lg'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
+        {activeHealthTab === 'overview' && (
+          <div className="space-y-6">
+            {/* Pregnancy Progress */}
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-800">Pregnancy Progress</h3>
+                <Baby className="w-6 h-6 text-purple-600" />
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <span className="text-sm text-gray-600">Week {pregnancyWeek} of 40</span>
+                    <span className="text-sm font-medium text-purple-600">{Math.round((pregnancyWeek / 40) * 100)}%</span>
+                  </div>
+                  <div className="bg-white rounded-full h-4 overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-1000"
+                      style={{ width: `${(pregnancyWeek / 40) * 100}%` }}
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="bg-white rounded-xl p-4">
+                    <Calendar className="w-5 h-5 text-purple-600 mb-2" />
+                    <p className="text-xs text-gray-600">Due Date</p>
+                    <p className="font-semibold text-gray-800">{userProfile.dueDate.toLocaleDateString()}</p>
+                  </div>
+                  <div className="bg-white rounded-xl p-4">
+                    <Baby className="w-5 h-5 text-pink-600 mb-2" />
+                    <p className="text-xs text-gray-600">Baby Size</p>
+                    <p className="font-semibold text-gray-800">Cantaloupe</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Today's Health Summary */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-white rounded-xl p-4 border border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <Droplets className="w-5 h-5 text-blue-500" />
+                  <span className="text-2xl font-bold text-gray-800">{waterIntake}</span>
+                </div>
+                <p className="text-sm text-gray-600">Glasses of water</p>
+                <button 
+                  onClick={() => handleQuickAction('water')}
+                  className="mt-2 text-xs text-blue-600 hover:text-blue-700 font-medium"
+                >
+                  + Add glass
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl p-4 border border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <Moon className="w-5 h-5 text-purple-500" />
+                  <span className="text-2xl font-bold text-gray-800">{sleepHours}</span>
+                </div>
+                <p className="text-sm text-gray-600">Hours of sleep</p>
+                <button className="mt-2 text-xs text-purple-600 hover:text-purple-700 font-medium">
+                  Log sleep
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl p-4 border border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <Activity className="w-5 h-5 text-green-500" />
+                  <span className="text-2xl font-bold text-gray-800">{exerciseMinutes}</span>
+                </div>
+                <p className="text-sm text-gray-600">Exercise mins</p>
+                <button className="mt-2 text-xs text-green-600 hover:text-green-700 font-medium">
+                  Add activity
+                </button>
+              </div>
+
+              <div className="bg-white rounded-xl p-4 border border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <Heart className="w-5 h-5 text-red-500" />
+                  <span className="text-2xl font-bold text-gray-800">{kickCounter}</span>
+                </div>
+                <p className="text-sm text-gray-600">Baby kicks</p>
+                <button 
+                  onClick={() => handleQuickAction('kicks')}
+                  className="mt-2 text-xs text-red-600 hover:text-red-700 font-medium"
+                >
+                  + Count kick
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <button className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all">
+                  <Stethoscope className="w-6 h-6 text-purple-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Log Vitals</p>
+                </button>
+                <button 
+                  onClick={() => setShowSymptomModal(true)}
+                  className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all"
+                >
+                  <AlertCircle className="w-6 h-6 text-orange-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Track Symptom</p>
+                </button>
+                <button className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all">
+                  <Pill className="w-6 h-6 text-blue-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Medications</p>
+                </button>
+                <button className="bg-white p-4 rounded-xl border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all">
+                  <Calendar className="w-6 h-6 text-green-600 mb-2" />
+                  <p className="text-sm font-medium text-gray-700">Appointments</p>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  // Enhanced Chat Interface
+  const ChatInterface = () => {
+    const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const emojis = ['😊', '😔', '😰', '🤗', '💜', '👶', '🤰', '✨', '💪', '🙏'];
+
+    return (
+      <div className="flex flex-col h-full">
+        {/* Messages Area */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+          {messages.map((message, index) => (
+            <div
+              key={message.id}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+            >
+              <div className={`max-w-[80%] ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
+                <div
+                  className={`rounded-2xl px-5 py-3 shadow-sm ${
+                    message.role === 'user'
+                      ? 'bg-gradient-to-br from-purple-600 to-purple-700 text-white'
+                      : 'bg-white border border-gray-100 text-gray-800'
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                  
+                  {message.mood && message.role === 'assistant' && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <span className={`text-xs px-3 py-1 rounded-full ${moodConfig[message.mood].bg} ${moodConfig[message.mood].text} font-medium`}>
+                        Mood: {message.mood}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Message Actions */}
+                <div className="flex items-center gap-2 mt-2 px-2">
+                  <p className="text-xs text-gray-500">
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                  
+                  <button
+                    onClick={() => toggleBookmark(message.id)}
+                    className="p-1 hover:bg-gray-100 rounded transition-colors"
+                  >
+                    <BookMarked className={`w-3 h-3 ${message.isBookmarked ? 'text-purple-600 fill-purple-600' : 'text-gray-400'}`} />
+                  </button>
+                  
+                  {message.role === 'assistant' && (
+                    <div className="flex gap-1">
+                      {['👍', '❤️', '😊'].map(emoji => (
+                        <button
+                          key={emoji}
+                          onClick={() => addReaction(message.id, emoji)}
+                          className="hover:scale-110 transition-transform"
+                        >
+                          {emoji}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Reactions Display */}
+                {message.reactions && message.reactions.length > 0 && (
+                  <div className="flex gap-2 mt-2 px-2">
+                    {message.reactions.map((reaction, idx) => (
+                      <span key={idx} className="bg-gray-100 px-2 py-1 rounded-full text-xs">
+                        {reaction.emoji} {reaction.count}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+          
+          {isTyping && (
+            <div className="flex justify-start animate-fadeIn">
+              <div className="bg-white border border-gray-100 rounded-2xl px-5 py-3 shadow-sm">
+                <div className="flex items-center space-x-2">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" />
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                </div>
+              </div>
+            </div>

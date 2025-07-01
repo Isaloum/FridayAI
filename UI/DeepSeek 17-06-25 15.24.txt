@@ -1,0 +1,700 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Heart, Brain, Activity, AlertCircle, Moon, Settings, Calendar, Target, Sparkles, ChevronRight,
+  X, Send, Mic, Bell, MessageCircle, Baby, Droplets, Apple, Smile, Coffee, BarChart3, BookOpen,
+  Phone, BookMarked, Palette, ChevronLeft, Check, Users, Gift, ShoppingBag, FileText, Video,
+  HelpCircle, Award, Volume2, Plus, Minus, Clock, MapPin, Thermometer, Weight, Ruler, Calculator,
+  Headphones, Wifi, Battery, Cloud, Eye, Edit3, Trash2, Copy, Filter, Search, Menu, Info,
+  AlertTriangle, CheckCircle, ArrowUp, ArrowDown, Pause, Play, Circle, Triangle, Star, Music,
+  Camera, Share2, Download, Lock, Frown, Meh, ThumbsUp, Stethoscope, Dumbbell, Wind, Pill,
+  HeartHandshake, Zap
+} from 'lucide-react';
+
+const FridayAI = () => {
+  // Personality system with visual themes
+  const personalitySystem = {
+    supportive: {
+      name: "Supportive",
+      emoji: "🤗",
+      description: "Warm, empathetic, and caring",
+      theme: {
+        primary: "bg-gradient-to-br from-purple-100 to-pink-100",
+        secondary: "bg-gradient-to-br from-purple-200 to-pink-200",
+        userBubble: "bg-gradient-to-br from-purple-500 to-pink-500",
+        assistantBubble: "bg-white",
+        text: "text-purple-800",
+        border: "border-purple-300",
+        accent: "text-pink-500",
+        reactions: ["💜", "🤗", "🌷"]
+      },
+      responses: {
+        greeting: "Hello beautiful mama! How's your day going? 💜",
+        concern: "I hear you, and your feelings are completely valid. Let's work through this together.",
+        celebration: "That's absolutely wonderful! I'm so happy for you! 🎉"
+      }
+    },
+    sassy: {
+      name: "Sassy",
+      emoji: "💁‍♀️",
+      description: "Fun, confident, and personality-filled",
+      theme: {
+        primary: "bg-gradient-to-br from-orange-100 to-yellow-100",
+        secondary: "bg-gradient-to-br from-orange-200 to-yellow-200",
+        userBubble: "bg-gradient-to-br from-orange-500 to-yellow-500",
+        assistantBubble: "bg-white",
+        text: "text-orange-800",
+        border: "border-orange-300",
+        accent: "text-yellow-500",
+        reactions: ["💅", "👑", "✨"]
+      },
+      responses: {
+        greeting: "Hey gorgeous! Ready to slay this pregnancy thing? ✨",
+        concern: "Girl, I see those worries trying to steal your crown. Not today! Let's handle this.",
+        celebration: "YASSS QUEEN! You're absolutely crushing it! 👑"
+      }
+    },
+    clinical: {
+      name: "Clinical",
+      emoji: "👩‍⚕️",
+      description: "Medical, professional, and precise",
+      theme: {
+        primary: "bg-gradient-to-br from-blue-100 to-cyan-100",
+        secondary: "bg-gradient-to-br from-blue-200 to-cyan-200",
+        userBubble: "bg-gradient-to-br from-blue-500 to-cyan-500",
+        assistantBubble: "bg-white",
+        text: "text-blue-800",
+        border: "border-blue-300",
+        accent: "text-cyan-500",
+        reactions: ["📊", "📚", "🔬"]
+      },
+      responses: {
+        greeting: "Good day. I'm ready to assist with your pregnancy-related medical inquiries.",
+        concern: "I understand your concern. Let's review the medical facts and evidence-based recommendations.",
+        celebration: "Excellent progress. This is a positive indicator for your pregnancy health."
+      }
+    },
+    friendly: {
+      name: "Friendly",
+      emoji: "😊",
+      description: "Casual, conversational, and approachable",
+      theme: {
+        primary: "bg-gradient-to-br from-green-100 to-emerald-100",
+        secondary: "bg-gradient-to-br from-green-200 to-emerald-200",
+        userBubble: "bg-gradient-to-br from-green-500 to-emerald-500",
+        assistantBubble: "bg-white",
+        text: "text-green-800",
+        border: "border-green-300",
+        accent: "text-emerald-500",
+        reactions: ["👍", "😊", "💚"]
+      },
+      responses: {
+        greeting: "Hi there! So nice to chat with you today! How's everything?",
+        concern: "Oh, I totally get that. It's super normal to feel this way. Want to talk about it?",
+        celebration: "Wow, that's amazing news! I'm doing a happy dance for you! 🎉"
+      }
+    }
+  };
+
+  // State management
+  const [messages, setMessages] = useState([
+    {
+      id: Date.now(),
+      role: 'assistant',
+      content: "Hello! I'm Friday, your AI pregnancy companion. Choose a personality style to get started!",
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false
+    }
+  ]);
+  
+  const [input, setInput] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [selectedPersonality, setSelectedPersonality] = useState('supportive');
+  const [showEmergencyButton, setShowEmergencyButton] = useState(false);
+  const [activeTab, setActiveTab] = useState('chat');
+  const [pregnancyWeek, setPregnancyWeek] = useState(20);
+  const [notifications, setNotifications] = useState([]);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [waterIntake, setWaterIntake] = useState(0);
+  const [sleepHours, setSleepHours] = useState(7);
+  const [kickCounter, setKickCounter] = useState(0);
+  
+  const userProfile = {
+    name: 'Sarah',
+    dueDate: new Date('2025-03-15'),
+    doctorName: 'Dr. Johnson',
+    hospital: 'City Medical Center',
+    emergencyContact: '555-0123'
+  };
+
+  const messagesEndRef = useRef(null);
+  const textareaRef = useRef(null);
+  const currentTheme = personalitySystem[selectedPersonality].theme;
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 200) + 'px';
+    }
+  }, [input]);
+
+  // Emergency detection
+  const checkForEmergency = (text) => {
+    const emergencyKeywords = ['bleeding', 'severe pain', 'cramping', 'emergency', 'urgent', 'hospital'];
+    return emergencyKeywords.some(keyword => text.toLowerCase().includes(keyword));
+  };
+
+  // Mood detection
+  const detectMood = (text) => {
+    const moodKeywords = {
+      anxious: ['worried', 'scared', 'anxious', 'nervous', 'fear'],
+      happy: ['happy', 'excited', 'joy', 'wonderful', 'great'],
+      calm: ['calm', 'peaceful', 'relaxed', 'serene'],
+      excited: ['excited', 'amazing', 'thrilled', 'can\'t wait']
+    };
+
+    for (const [mood, keywords] of Object.entries(moodKeywords)) {
+      if (keywords.some(keyword => text.toLowerCase().includes(keyword))) {
+        return mood;
+      }
+    }
+    return 'neutral';
+  };
+
+  // Generate response based on personality
+  const generateResponse = (userMessage, detectedMood) => {
+    const personality = personalitySystem[selectedPersonality];
+    
+    if (detectedMood === 'anxious') {
+      return personality.responses.concern;
+    } else if (detectedMood === 'happy' || detectedMood === 'excited') {
+      return personality.responses.celebration;
+    }
+    
+    return personality.responses.greeting;
+  };
+
+  // Handle send
+  const handleSend = () => {
+    if (input.trim() === '') return;
+
+    const userMessage = {
+      id: Date.now(),
+      role: 'user',
+      content: input,
+      timestamp: new Date(),
+      reactions: [],
+      isBookmarked: false
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    setIsTyping(true);
+
+    if (checkForEmergency(input)) {
+      setShowEmergencyButton(true);
+      addNotification('emergency', 'Emergency detected! Please contact your healthcare provider immediately.');
+    }
+
+    const detectedMood = detectMood(input);
+
+    setTimeout(() => {
+      const response = generateResponse(input, detectedMood);
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        role: 'assistant',
+        content: response,
+        mood: detectedMood,
+        timestamp: new Date(),
+        reactions: [],
+        isBookmarked: false
+      }]);
+      setIsTyping(false);
+    }, 1500);
+  };
+
+  // Quick actions
+  const handleQuickAction = (action) => {
+    switch(action) {
+      case 'water':
+        setWaterIntake(prev => Math.min(prev + 1, 12));
+        addNotification('success', '💧 Water intake logged! Keep it up!');
+        break;
+      case 'kicks':
+        setKickCounter(prev => prev + 1);
+        addNotification('success', '👶 Kick counted! Baby is active!');
+        break;
+    }
+  };
+
+  const addNotification = (type, message) => {
+    const notification = {
+      id: Date.now(),
+      type,
+      message,
+      timestamp: new Date()
+    };
+    setNotifications(prev => [notification, ...prev].slice(0, 10));
+    
+    setTimeout(() => {
+      setNotifications(prev => prev.filter(n => n.id !== notification.id));
+    }, 5000);
+  };
+
+  // Toggle bookmark
+  const toggleBookmark = (messageId) => {
+    setMessages(prev => prev.map(msg => 
+      msg.id === messageId ? { ...msg, isBookmarked: !msg.isBookmarked } : msg
+    ));
+  };
+
+  // Add reaction
+  const addReaction = (messageId, reaction) => {
+    setMessages(prev => prev.map(msg => {
+      if (msg.id === messageId) {
+        const reactions = [...msg.reactions];
+        const existingIndex = reactions.findIndex(r => r.emoji === reaction);
+        
+        if (existingIndex >= 0) {
+          reactions[existingIndex].count += 1;
+        } else {
+          reactions.push({ emoji: reaction, count: 1 });
+        }
+        
+        return { ...msg, reactions };
+      }
+      return msg;
+    }));
+  };
+
+  // Personality selector
+  const PersonalitySelector = () => {
+    return (
+      <div className="mb-6 p-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-gray-200">
+        <h3 className="text-lg font-semibold text-gray-800 mb-3">Choose My Personality</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {Object.entries(personalitySystem).map(([key, personality]) => (
+            <button
+              key={key}
+              onClick={() => setSelectedPersonality(key)}
+              className={`p-3 rounded-xl transition-all transform hover:scale-105 ${
+                selectedPersonality === key
+                  ? `${currentTheme.secondary} border-2 ${currentTheme.border} shadow-lg`
+                  : 'bg-gray-100 hover:bg-gray-200'
+              }`}
+            >
+              <div className="text-3xl mb-2">{personality.emoji}</div>
+              <div className="font-medium text-sm">{personality.name}</div>
+              <div className="text-xs text-gray-600 mt-1">{personality.description}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  // Chat Interface with dynamic theme
+  const ChatInterface = () => {
+    return (
+      <div className={`flex flex-col h-full ${currentTheme.primary} relative`}>
+        {/* Personality header */}
+        <div className={`px-4 py-3 ${currentTheme.secondary} border-b ${currentTheme.border}`}>
+          <div className="flex items-center justify-center gap-2">
+            <div className={`w-3 h-3 rounded-full ${currentTheme.accent} animate-pulse`} />
+            <span className={`text-sm font-medium ${currentTheme.text}`}>
+              {personalitySystem[selectedPersonality].name} Mode • {personalitySystem[selectedPersonality].emoji}
+            </span>
+            <div className={`w-3 h-3 rounded-full ${currentTheme.accent} animate-pulse`} />
+          </div>
+        </div>
+
+        {/* Messages area */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <PersonalitySelector />
+          
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
+            >
+              <div className={`max-w-[80%] ${message.role === 'user' ? 'order-2' : 'order-1'}`}>
+                <div
+                  className={`rounded-2xl px-5 py-3 shadow-sm ${
+                    message.role === 'user'
+                      ? `${currentTheme.userBubble} text-white`
+                      : `${currentTheme.assistantBubble} border ${currentTheme.border} ${currentTheme.text}`
+                  }`}
+                >
+                  <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+                </div>
+                
+                {/* Message actions */}
+                <div className="flex items-center gap-2 mt-2 px-2">
+                  <p className={`text-xs ${currentTheme.text} opacity-70`}>
+                    {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                  
+                  <button
+                    onClick={() => toggleBookmark(message.id)}
+                    className="p-1 hover:opacity-80 transition-opacity"
+                  >
+                    <BookMarked className={`w-3 h-3 ${message.isBookmarked ? `${currentTheme.accent} fill-current` : currentTheme.text}`} />
+                  </button>
+                  
+                  {message.role === 'assistant' && (
+                    <div className="flex gap-1">
+                      {personalitySystem[selectedPersonality].theme.reactions.map(emoji => (
+                        <button
+                          key={emoji}
+                          onClick={() => addReaction(message.id, emoji)}
+                          className="hover:scale-110 transition-transform"
+                        >
+                          {emoji}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+          
+          {isTyping && (
+            <div className="flex justify-start">
+              <div className={`${currentTheme.assistantBubble} border ${currentTheme.border} rounded-2xl px-5 py-3 shadow-sm`}>
+                <div className="flex items-center space-x-2">
+                  <div className={`w-2 h-2 ${currentTheme.accent} rounded-full animate-bounce`} />
+                  <div className={`w-2 h-2 ${currentTheme.accent} rounded-full animate-bounce`} style={{ animationDelay: '0.1s' }} />
+                  <div className={`w-2 h-2 ${currentTheme.accent} rounded-full animate-bounce`} style={{ animationDelay: '0.2s' }} />
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Emergency alert */}
+        {showEmergencyButton && (
+          <div className="px-4 py-3 bg-gradient-to-r from-rose-100 to-pink-100 border-t border-rose-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-rose-200 rounded-full">
+                  <AlertCircle className="w-5 h-5 text-rose-700" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-rose-800">I'm here for you 💕</p>
+                  <p className="text-xs text-rose-600">Your safety is important to me</p>
+                </div>
+              </div>
+              <button className="bg-gradient-to-r from-rose-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:shadow-lg transition-all">
+                Get Help Now
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Input area */}
+        <div className={`p-4 ${currentTheme.secondary} border-t ${currentTheme.border}`}>
+          <div className="flex gap-2">
+            <button 
+              onClick={() => handleQuickAction('water')}
+              className={`p-3 ${currentTheme.accent} hover:opacity-80 transition-opacity`}
+            >
+              <Droplets className="w-5 h-5" />
+            </button>
+            
+            <button 
+              onClick={() => handleQuickAction('kicks')}
+              className={`p-3 ${currentTheme.accent} hover:opacity-80 transition-opacity`}
+            >
+              <Baby className="w-5 h-5" />
+            </button>
+            
+            <div className="flex-1 relative">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSend();
+                  }
+                }}
+                placeholder="Share your thoughts..."
+                className={`w-full p-4 rounded-2xl resize-none focus:outline-none placeholder-${currentTheme.text}/50 bg-white/90 backdrop-blur-sm ${currentTheme.text}`}
+                rows={1}
+              />
+            </div>
+            
+            <button
+              onClick={handleSend}
+              disabled={!input.trim()}
+              className={`px-6 py-3 ${currentTheme.userBubble} text-white rounded-full hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all`}
+            >
+              <Send className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Health Tab
+  const HealthTab = () => {
+    const healthMetrics = [
+      { name: 'Water', value: waterIntake, target: 10, icon: Droplets, color: 'bg-blue-500' },
+      { name: 'Sleep', value: sleepHours, target: 8, icon: Moon, color: 'bg-purple-500' },
+      { name: 'Kicks', value: kickCounter, target: 10, icon: Baby, color: 'bg-pink-500' },
+    ];
+
+    return (
+      <div className="p-4 h-full overflow-y-auto">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Pregnancy Journey</h2>
+          <p className="text-gray-600">Week {pregnancyWeek} of 40</p>
+          
+          {/* Progress bar */}
+          <div className="mt-4 bg-white rounded-full h-4 overflow-hidden border border-gray-200">
+            <div 
+              className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-1000"
+              style={{ width: `${(pregnancyWeek / 40) * 100}%` }}
+            />
+          </div>
+        </div>
+        
+        <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-6 mb-8 border border-purple-100">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">Baby Development</h3>
+            <Baby className="w-6 h-6 text-purple-600" />
+          </div>
+          
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-gray-600">Current Size</p>
+                <p className="font-semibold text-gray-800">Banana</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-600">Weight</p>
+                <p className="font-semibold text-gray-800">~10.6 oz</p>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <p className="text-sm text-gray-600">Development Milestones</p>
+              <p className="text-gray-800 mt-1">Baby can now swallow and is developing taste buds!</p>
+            </div>
+          </div>
+        </div>
+        
+        <h3 className="text-lg font-semibold text-gray-800 mb-4">Daily Tracking</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {healthMetrics.map((metric, index) => (
+            <div 
+              key={index}
+              className="bg-white rounded-xl p-5 border border-gray-100 hover:shadow-md transition-all"
+              onClick={() => metric.name === 'Water' && handleQuickAction('water')}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-2xl font-bold text-purple-700">{metric.value}</div>
+                <div className={`p-2 rounded-full ${metric.color === 'bg-blue-500' ? 'bg-blue-100 text-blue-600' : metric.color === 'bg-purple-500' ? 'bg-purple-100 text-purple-600' : 'bg-pink-100 text-pink-600'}`}>
+                  <metric.icon className="w-5 h-5" />
+                </div>
+              </div>
+              <p className="text-sm text-gray-600">{metric.name}</p>
+              <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  className={`h-2 rounded-full ${metric.color}`}
+                  style={{ width: `${(metric.value / metric.target) * 100}%` }}
+                ></div>
+              </div>
+              <p className="text-xs text-gray-500 mt-1">{metric.value}/{metric.target}</p>
+            </div>
+          ))}
+        </div>
+        
+        <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 mb-8 border border-blue-100">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">Self Care Tips</h3>
+            <Heart className="w-6 h-6 text-blue-600" />
+          </div>
+          
+          <ul className="space-y-2 text-gray-700">
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600">•</span>
+              <span>Practice deep breathing for 5 minutes today</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600">•</span>
+              <span>Try a prenatal yoga session</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600">•</span>
+              <span>Eat a serving of leafy greens</span>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="text-blue-600">•</span>
+              <span>Connect with your support network</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
+  // Resources Tab
+  const ResourcesTab = () => {
+    const resources = [
+      { icon: BookOpen, title: 'Pregnancy Guide', desc: 'Complete week-by-week guide' },
+      { icon: Phone, title: 'Emergency Contacts', desc: 'Important phone numbers' },
+      { icon: Heart, title: 'Wellness Tips', desc: 'Mental and physical health' },
+      { icon: Activity, title: 'Exercise Library', desc: 'Safe pregnancy workouts' },
+      { icon: Apple, title: 'Nutrition Guide', desc: 'Healthy eating during pregnancy' },
+      { icon: Music, title: 'Relaxation Music', desc: 'Soothing sounds for you and baby' }
+    ];
+
+    return (
+      <div className="p-4 h-full overflow-y-auto">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Helpful Resources</h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {resources.map((resource, idx) => {
+            const Icon = resource.icon;
+            return (
+              <div key={idx} className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer">
+                <div className="flex items-start gap-4">
+                  <div className="bg-purple-100 p-3 rounded-xl">
+                    <Icon className="w-6 h-6 text-purple-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-gray-800">{resource.title}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{resource.desc}</p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400 mt-2" />
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        
+        <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-6 border border-pink-100">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-800">24/7 Support</h3>
+            <MessageCircle className="w-6 h-6 text-pink-600" />
+          </div>
+          
+          <p className="text-gray-700 mb-4">
+            Remember, I'm always here to listen and support you. Whether you have questions, concerns, 
+            or just want to share your excitement, I'm available anytime.
+          </p>
+          
+          <div className="flex gap-3">
+            <button className="flex-1 bg-gradient-to-br from-purple-600 to-pink-600 text-white py-3 rounded-lg font-medium">
+              Ask a Question
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex flex-col h-screen bg-gradient-to-b from-purple-50 to-pink-50">
+      {/* Header */}
+      <header className="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg">
+        <div className="px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="bg-white p-2 rounded-xl">
+                <Heart className="w-6 h-6 text-purple-600" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold">Friday Pregnancy Companion</h1>
+                <p className="text-xs opacity-90">Week {pregnancyWeek} • {userProfile.name}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <button
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="relative p-2 hover:bg-white hover:bg-opacity-20 rounded-lg transition-colors"
+              >
+                <Bell className="w-5 h-5" />
+                {notifications.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Tabs */}
+        <div className="flex border-t border-white border-opacity-20">
+          {[
+            { id: 'chat', icon: MessageCircle, label: 'Chat' },
+            { id: 'health', icon: Activity, label: 'Health' },
+            { id: 'resources', icon: BookOpen, label: 'Resources' }
+          ].map(tab => {
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 transition-colors ${
+                  activeTab === tab.id ? 'bg-white bg-opacity-20' : 'hover:bg-white hover:bg-opacity-10'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span className="text-sm">{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </header>
+
+      {/* Notifications */}
+      {showNotifications && notifications.length > 0 && (
+        <div className="absolute top-16 right-4 w-80 bg-white rounded-xl shadow-lg z-40 max-h-96 overflow-hidden border border-gray-200">
+          <div className="p-4 border-b bg-gray-50">
+            <h3 className="font-semibold flex items-center gap-2">
+              <Bell className="w-4 h-4" />
+              Notifications
+            </h3>
+          </div>
+          <div className="overflow-y-auto max-h-80">
+            {notifications.map(notif => (
+              <div 
+                key={notif.id} 
+                className={`p-4 border-b hover:bg-gray-50 transition-colors ${
+                  notif.type === 'emergency' ? 'bg-red-50 hover:bg-red-50' : ''
+                }`}
+              >
+                <p className="text-sm">{notif.message}</p>
+                <p className="text-xs text-gray-500 mt-1">
+                  {new Date(notif.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="flex-1 overflow-hidden">
+        {activeTab === 'chat' && <ChatInterface />}
+        {activeTab === 'health' && <HealthTab />}
+        {activeTab === 'resources' && <ResourcesTab />}
+      </div>
+    </div>
+  );
+};
+
+export default FridayAI;

@@ -1,0 +1,5 @@
+[
+  {"timestamp": "...", "emotions": {"anxious": 1}},
+  {"timestamp": "...", "emotions": {"happy": 1}},
+  {"timestamp": "...", "emotions": {"proud": 1}}
+]

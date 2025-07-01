@@ -1,0 +1,621 @@
+import React, { useState } from 'react';
+
+const LoggingSystemDesign = () => {
+  const [activeTab, setActiveTab] = useState('architecture');
+  const [checkedItems, setCheckedItems] = useState({});
+
+  const handleCheckboxChange = (itemId) => {
+    setCheckedItems(prev => ({
+      ...prev,
+      [itemId]: !prev[itemId]
+    }));
+  };
+
+  const LogLevel = ({ level, color }) => (
+    <span className={`inline-block px-3 py-1 rounded-full text-white text-sm font-semibold mx-1 ${color}`}>
+      {level}
+    </span>
+  );
+
+  const CodeBlock = ({ children, title }) => (
+    <div className="bg-slate-800 rounded-lg p-6 my-4 overflow-x-auto">
+      {title && <div className="text-cyan-400 text-sm mb-2 font-semibold">{title}</div>}
+      <pre className="text-gray-100 text-sm">
+        <code>{children}</code>
+      </pre>
+    </div>
+  );
+
+  const ArchitectureLayer = ({ icon, title, purpose, examples, levels }) => (
+    <div className="bg-white rounded-lg p-6 mb-4 shadow-lg border-l-4 border-blue-500 hover:shadow-xl transition-shadow">
+      <h3 className="text-xl font-bold text-gray-800 mb-2">{icon} {title}</h3>
+      <p className="text-gray-600 mb-2"><strong>Purpose:</strong> {purpose}</p>
+      <p className="text-gray-600 mb-3"><strong>Examples:</strong> {examples}</p>
+      {levels && (
+        <div className="flex flex-wrap">
+          {levels.map(level => (
+            <LogLevel key={level.name} level={level.name} color={level.color} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const ChecklistSection = ({ title, items, icon }) => (
+    <div className="bg-gray-50 rounded-lg p-6 mb-6">
+      <h3 className="text-xl font-bold text-gray-800 mb-4">{icon} {title}</h3>
+      {items.map((item, index) => {
+        const itemId = `${title.toLowerCase().replace(/\s+/g, '-')}-${index}`;
+        const isChecked = checkedItems[itemId];
+        
+        return (
+          <div 
+            key={itemId}
+            className={`flex items-center p-3 mb-2 rounded-lg cursor-pointer transition-all ${
+              isChecked ? 'bg-green-100 border-l-4 border-green-500' : 'bg-white hover:bg-gray-100'
+            }`}
+            onClick={() => handleCheckboxChange(itemId)}
+          >
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={() => handleCheckboxChange(itemId)}
+              className="mr-4 h-5 w-5 text-blue-600"
+            />
+            <label className="flex-1 cursor-pointer">{item}</label>
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  const TabButton = ({ tabKey, label, isActive, onClick }) => (
+    <button
+      onClick={() => onClick(tabKey)}
+      className={`flex-1 py-4 px-6 text-center font-semibold transition-all ${
+        isActive 
+          ? 'bg-slate-700 text-white border-b-4 border-blue-400' 
+          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+      }`}
+    >
+      {label}
+    </button>
+  );
+
+  const renderArchitecture = () => (
+    <div className="space-y-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">🏗️ Logging Architecture</h2>
+      
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-8">
+        <h3 className="text-2xl font-bold text-gray-800 mb-6">Multi-Layer Logging System</h3>
+        
+        <ArchitectureLayer
+          icon="📱"
+          title="Application Layer"
+          purpose="Capture business logic events, user actions, and application state changes"
+          examples="User login, API calls, feature usage, errors"
+          levels={[
+            { name: 'DEBUG', color: 'bg-gray-500' },
+            { name: 'INFO', color: 'bg-blue-500' },
+            { name: 'WARN', color: 'bg-yellow-500' },
+            { name: 'ERROR', color: 'bg-red-500' }
+          ]}
+        />
+        
+        <ArchitectureLayer
+          icon="🔄"
+          title="Infrastructure Layer"
+          purpose="System health, performance metrics, resource usage"
+          examples="CPU usage, memory consumption, network latency, database connections"
+        />
+        
+        <ArchitectureLayer
+          icon="🔒"
+          title="Security Layer"
+          purpose="Security events, authentication, authorization, potential threats"
+          examples="Failed logins, permission changes, suspicious activity"
+        />
+        
+        <ArchitectureLayer
+          icon="📊"
+          title="Analytics Layer"
+          purpose="Business metrics, user behavior, performance analytics"
+          examples="Conversion rates, feature adoption, user journeys"
+        />
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">🔧 Technology Stack Recommendations</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="font-semibold text-gray-700 mb-2">Logging Libraries</h4>
+            <ul className="space-y-1 text-gray-600">
+              <li><strong>Python:</strong> structlog, loguru</li>
+              <li><strong>Node.js:</strong> winston, pino</li>
+              <li><strong>React:</strong> react-error-boundary, @sentry/react</li>
+              <li><strong>Java:</strong> logback, log4j2</li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-semibold text-gray-700 mb-2">Log Aggregation</h4>
+            <ul className="space-y-1 text-gray-600">
+              <li><strong>ELK Stack:</strong> Elasticsearch, Logstash, Kibana</li>
+              <li><strong>Modern:</strong> Fluentd, Grafana Loki</li>
+              <li><strong>Cloud:</strong> CloudWatch, Datadog, New Relic</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderImplementation = () => (
+    <div className="space-y-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">💻 Implementation Examples</h2>
+      
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">React Error Boundary with Logging</h3>
+        <CodeBlock title="ErrorBoundary.jsx">
+{`import React from 'react';
+
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    // Log to your logging service
+    this.logError(error, errorInfo);
+  }
+
+  logError = (error, errorInfo) => {
+    const errorData = {
+      level: 'ERROR',
+      message: 'React component error',
+      error_type: error.name,
+      error_message: error.message,
+      stack_trace: error.stack,
+      component_stack: errorInfo.componentStack,
+      timestamp: new Date().toISOString(),
+      user_agent: navigator.userAgent,
+      url: window.location.href
+    };
+
+    // Send to your logging endpoint
+    fetch('/api/logs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(errorData)
+    }).catch(console.error);
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="error-fallback">
+          <h2>Something went wrong.</h2>
+          <button onClick={() => this.setState({ hasError: false })}>
+            Try again
+          </button>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}`}
+        </CodeBlock>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Custom React Logging Hook</h3>
+        <CodeBlock title="useLogger.js">
+{`import { useCallback, useContext } from 'react';
+
+const LoggerContext = React.createContext();
+
+export const useLogger = () => {
+  const context = useContext(LoggerContext);
+  
+  const log = useCallback((level, message, data = {}) => {
+    const logEntry = {
+      level,
+      message,
+      timestamp: new Date().toISOString(),
+      session_id: context.sessionId,
+      user_id: context.userId,
+      page: window.location.pathname,
+      ...data
+    };
+
+    // Send to backend
+    fetch('/api/logs', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(logEntry)
+    });
+
+    // Also log to console in development
+    if (process.env.NODE_ENV === 'development') {
+      console[level.toLowerCase()](message, data);
+    }
+  }, [context]);
+
+  return {
+    debug: (msg, data) => log('DEBUG', msg, data),
+    info: (msg, data) => log('INFO', msg, data),
+    warn: (msg, data) => log('WARN', msg, data),
+    error: (msg, data) => log('ERROR', msg, data),
+    logUserAction: (action, data) => log('INFO', 'user_action', { action, ...data })
+  };
+};
+
+// Usage in component
+const MyComponent = () => {
+  const logger = useLogger();
+  
+  const handleClick = () => {
+    logger.logUserAction('button_click', { button_id: 'submit' });
+  };
+
+  return <button onClick={handleClick}>Submit</button>;
+};`}
+        </CodeBlock>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Node.js Backend Logger</h3>
+        <CodeBlock title="logger.js">
+{`const winston = require('winston');
+const { v4: uuidv4 } = require('uuid');
+
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.errors({ stack: true }),
+    winston.format.json()
+  ),
+  defaultMeta: { service: 'my-app' },
+  transports: [
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+    new winston.transports.Console({
+      format: winston.format.simple()
+    })
+  ]
+});
+
+// Middleware for request logging
+const requestLogger = (req, res, next) => {
+  req.correlationId = uuidv4();
+  
+  logger.info('HTTP Request', {
+    correlation_id: req.correlationId,
+    method: req.method,
+    url: req.url,
+    user_agent: req.get('User-Agent'),
+    ip: req.ip,
+    user_id: req.user?.id
+  });
+
+  const start = Date.now();
+  res.on('finish', () => {
+    logger.info('HTTP Response', {
+      correlation_id: req.correlationId,
+      status_code: res.statusCode,
+      response_time: Date.now() - start
+    });
+  });
+
+  next();
+};
+
+module.exports = { logger, requestLogger };`}
+        </CodeBlock>
+      </div>
+    </div>
+  );
+
+  const renderBestPractices = () => (
+    <div className="space-y-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">✅ Best Practices</h2>
+
+      <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6">
+        <h3 className="text-xl font-bold text-green-800 mb-3">🎯 Structured Logging</h3>
+        <p className="text-green-700">Always use structured logs (JSON format) instead of plain text. This makes logs searchable and parseable by automated systems.</p>
+      </div>
+
+      <div className="bg-gradient-to-r from-blue-100 to-cyan-100 rounded-lg p-6">
+        <h3 className="text-xl font-bold text-blue-800 mb-3">🔍 Consistent Log Levels</h3>
+        <p className="text-blue-700 mb-3">Use log levels consistently:</p>
+        <div className="space-y-2 text-blue-700">
+          <div><LogLevel level="DEBUG" color="bg-gray-500" /> Detailed diagnostic info for developers</div>
+          <div><LogLevel level="INFO" color="bg-blue-500" /> General app flow and business events</div>
+          <div><LogLevel level="WARN" color="bg-yellow-500" /> Potentially harmful situations</div>
+          <div><LogLevel level="ERROR" color="bg-red-500" /> Error events that don't stop the app</div>
+          <div><LogLevel level="FATAL" color="bg-purple-600" /> Severe errors that cause termination</div>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-red-100 to-pink-100 rounded-lg p-6">
+        <h3 className="text-xl font-bold text-red-800 mb-3">🔐 Security Considerations</h3>
+        <p className="text-red-700">Never log sensitive data: passwords, credit cards, PII, API keys. Use masking or hashing for sensitive fields that must be logged.</p>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">📝 Log Message Examples</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div>
+            <h4 className="text-green-600 font-semibold mb-2">✅ Good Examples</h4>
+            <CodeBlock>
+{`// Structured and informative
+{
+  "level": "info",
+  "message": "user_login_successful",
+  "user_id": "12345",
+  "login_method": "oauth",
+  "ip_address": "192.168.1.100",
+  "timestamp": "2025-06-19T10:30:00Z"
+}
+
+// Clear error context
+{
+  "level": "error",
+  "message": "api_call_failed",
+  "endpoint": "/api/users",
+  "status_code": 500,
+  "retry_count": 3,
+  "correlation_id": "abc123"
+}`}
+            </CodeBlock>
+          </div>
+          <div>
+            <h4 className="text-red-600 font-semibold mb-2">❌ Bad Examples</h4>
+            <CodeBlock>
+{`// Vague and unstructured
+"User did something"
+"Error happened"
+"Request processed"
+
+// Sensitive data exposed
+{
+  "message": "login_attempt",
+  "username": "john@email.com",
+  "password": "secret123",  // ❌ Never!
+  "credit_card": "4111-1111-1111-1111"
+}`}
+            </CodeBlock>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderMonitoring = () => (
+    <div className="space-y-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">📊 Monitoring & Alerting</h2>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">🚨 Alert Configuration</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-red-50 rounded-lg p-4 border-l-4 border-red-500">
+            <h4 className="font-bold text-red-800 mb-2">Critical Alerts (Immediate)</h4>
+            <ul className="text-red-700 space-y-1">
+              <li>• Application crashes (FATAL level)</li>
+              <li>• High error rates (&gt;5% in 5 min)</li>
+              <li>• Security breaches</li>
+              <li>• Database connection failures</li>
+            </ul>
+          </div>
+          <div className="bg-yellow-50 rounded-lg p-4 border-l-4 border-yellow-500">
+            <h4 className="font-bold text-yellow-800 mb-2">Warning Alerts (Within 15 min)</h4>
+            <ul className="text-yellow-700 space-y-1">
+              <li>• Performance degradation</li>
+              <li>• Unusual traffic patterns</li>
+              <li>• Resource usage spikes</li>
+              <li>• Third-party service issues</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">📈 Key Metrics Dashboard</h3>
+        <CodeBlock title="Essential Metrics to Track">
+{`# Application Performance
+- Response time percentiles (p50, p95, p99)
+- Request rate (requests per second)
+- Error rate (errors per total requests)
+- Active user sessions
+
+# System Health  
+- CPU and memory usage
+- Disk space and I/O
+- Network latency
+- Database query performance
+
+# Business Metrics
+- User registration rate
+- Feature adoption
+- Conversion funnel metrics
+- Revenue per user
+
+# Security Metrics
+- Failed authentication attempts
+- Privilege escalation attempts
+- Unusual access patterns
+- Data export activities`}
+        </CodeBlock>
+      </div>
+
+      <div className="bg-white rounded-lg p-6 shadow-lg">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">🔍 Common Log Queries</h3>
+        <CodeBlock title="Troubleshooting Queries">
+{`# Find all errors for a specific user
+level:ERROR AND user_id:"12345" 
+
+# Performance issues in last hour
+level:WARN AND response_time:>5000 AND @timestamp:[now-1h TO now]
+
+# Failed API calls by endpoint
+level:ERROR AND api_endpoint:"/api/users" 
+
+# Security: Multiple failed logins
+action:"login_failed" | stats count by user_id | where count > 5
+
+# React component errors
+message:"React component error" AND @timestamp:[now-24h TO now]`}
+        </CodeBlock>
+      </div>
+    </div>
+  );
+
+  const renderChecklist = () => {
+    const checklistData = [
+      {
+        title: "Architecture Setup",
+        icon: "🏗️",
+        items: [
+          "Implement structured logging (JSON format)",
+          "Define and implement consistent log levels",
+          "Add correlation IDs for request tracing",
+          "Set up centralized log aggregation",
+          "Configure React Error Boundaries",
+          "Implement custom logging hooks"
+        ]
+      },
+      {
+        title: "Security & Compliance",
+        icon: "🔒",
+        items: [
+          "Implement sensitive data masking/filtering",
+          "Configure log access controls",
+          "Enable log encryption at rest and in transit",
+          "Define log retention policies",
+          "Set up GDPR compliance for user data",
+          "Implement audit logging"
+        ]
+      },
+      {
+        title: "Monitoring & Alerting",
+        icon: "📊",
+        items: [
+          "Create monitoring dashboards",
+          "Configure critical error alerts",
+          "Set up key performance metrics",
+          "Implement log system health checks",
+          "Configure Slack/email notifications",
+          "Set up anomaly detection"
+        ]
+      },
+      {
+        title: "Performance & Scalability",
+        icon: "🚀",
+        items: [
+          "Implement asynchronous logging",
+          "Configure log rotation",
+          "Set up log sampling for high-volume events",
+          "Performance test logging overhead",
+          "Optimize log indexing",
+          "Configure log buffering"
+        ]
+      }
+    ];
+
+    const totalItems = checklistData.reduce((sum, section) => sum + section.items.length, 0);
+    const completedItems = Object.values(checkedItems).filter(Boolean).length;
+    const progressPercentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-3xl font-bold text-gray-800">✅ Implementation Checklist</h2>
+          <div className="text-right">
+            <div className="text-2xl font-bold text-blue-600">{completedItems}/{totalItems}</div>
+            <div className="text-sm text-gray-600">{progressPercentage}% Complete</div>
+          </div>
+        </div>
+
+        <div className="bg-blue-100 rounded-lg p-4 mb-6">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-blue-800 font-semibold">Progress</span>
+            <span className="text-blue-800">{progressPercentage}%</span>
+          </div>
+          <div className="w-full bg-blue-200 rounded-full h-3">
+            <div 
+              className="bg-blue-600 h-3 rounded-full transition-all duration-500"
+              style={{ width: `${progressPercentage}%` }}
+            ></div>
+          </div>
+        </div>
+
+        {checklistData.map((section, index) => (
+          <ChecklistSection
+            key={index}
+            title={section.title}
+            icon={section.icon}
+            items={section.items}
+          />
+        ))}
+
+        <div className="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-green-800 mb-3">🎯 Success Criteria</h3>
+          <p className="text-green-700 mb-3">Your logging system is ready when you can:</p>
+          <ul className="text-green-700 space-y-2">
+            <li>• Trace any user request end-to-end</li>
+            <li>• Detect and alert on critical issues within 1 minute</li>
+            <li>• Troubleshoot production issues without accessing servers</li>
+            <li>• Generate business insights from log data</li>
+            <li>• Meet compliance requirements for data retention</li>
+          </ul>
+        </div>
+      </div>
+    );
+  };
+
+  const tabs = [
+    { key: 'architecture', label: 'Architecture', render: renderArchitecture },
+    { key: 'implementation', label: 'Implementation', render: renderImplementation },
+    { key: 'best-practices', label: 'Best Practices', render: renderBestPractices },
+    { key: 'monitoring', label: 'Monitoring', render: renderMonitoring },
+    { key: 'checklist', label: 'Checklist', render: renderChecklist }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-slate-800 to-slate-700 text-white p-8 text-center">
+          <h1 className="text-4xl font-bold mb-2">🚀 App Logging System Design</h1>
+          <p className="text-xl opacity-90">Complete guide to building robust, scalable logging for your React app</p>
+        </div>
+
+        {/* Navigation */}
+        <div className="flex bg-white shadow-sm">
+          {tabs.map(tab => (
+            <TabButton
+              key={tab.key}
+              tabKey={tab.key}
+              label={tab.label}
+              isActive={activeTab === tab.key}
+              onClick={setActiveTab}
+            />
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="p-8">
+          {tabs.find(tab => tab.key === activeTab)?.render()}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoggingSystemDesign;

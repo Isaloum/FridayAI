@@ -1,0 +1,93 @@
+2025-06-19 21:28:16,132 INFO: Request ae584627-778f-49e8-9d4f-4d49b0e34fa1 - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:98]
+2025-06-19 21:28:16,515 ERROR: Response error: too many values to unpack (expected 5) [in c:\Users\ihabs\FridayAI\api_service.py:159]
+Traceback (most recent call last):
+  File "c:\Users\ihabs\FridayAI\api_service.py", line 142, in respond
+    result = ai.respond_to(user_input)
+  File "c:\Users\ihabs\FridayAI\fridayai.py", line 1818, in respond_to
+    raw_reply, emotional_tone, memory_context, identity_context, pregnancy_analysis = generate_core_response()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
+2025-06-19 21:28:16,517 INFO: Response ae584627-778f-49e8-9d4f-4d49b0e34fa1 - 500 (384.56ms) [in c:\Users\ihabs\FridayAI\api_service.py:110]
+2025-06-19 21:28:16,530 INFO: Request 16094b4f-f33b-4a43-8b99-fe908c49ccf1 - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:98]
+2025-06-19 21:28:16,531 INFO: Response 16094b4f-f33b-4a43-8b99-fe908c49ccf1 - 500 (1.44ms) [in c:\Users\ihabs\FridayAI\api_service.py:110]
+2025-06-19 21:28:16,543 INFO: Request e2ed3939-9e15-4892-956c-6fc19069ee6e - POST /api/v1/reflect [in c:\Users\ihabs\FridayAI\api_service.py:98]
+2025-06-19 21:28:16,544 ERROR: Reflection error: 'SelfBeliefUpdater' object has no attribute 'evaluate_drift' [in c:\Users\ihabs\FridayAI\api_service.py:176]
+Traceback (most recent call last):
+  File "c:\Users\ihabs\FridayAI\api_service.py", line 166, in reflect
+    result = ai.reflection_loop.run_reflection_cycle(
+        self_awareness=ai.self_awareness,
+        belief_updater=ai.belief_updater
+    )
+  File "c:\Users\ihabs\FridayAI\core\ReflectionLoopManager.py", line 64, in run_reflection_cycle
+    belief_updater.evaluate_drift()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SelfBeliefUpdater' object has no attribute 'evaluate_drift'
+2025-06-19 21:28:16,546 INFO: Response e2ed3939-9e15-4892-956c-6fc19069ee6e - 500 (2.60ms) [in c:\Users\ihabs\FridayAI\api_service.py:110]
+2025-06-19 21:30:53,945 INFO: Request 7d56e5c6-40fb-41bd-9eab-91f580ee4575 - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:30:54,315 ERROR: Response error: too many values to unpack (expected 5) [in c:\Users\ihabs\FridayAI\api_service.py:168]
+Traceback (most recent call last):
+  File "c:\Users\ihabs\FridayAI\api_service.py", line 151, in respond
+    result = ai.respond_to(user_input)
+  File "c:\Users\ihabs\FridayAI\fridayai.py", line 1818, in respond_to
+    raw_reply, emotional_tone, memory_context, identity_context, pregnancy_analysis = generate_core_response()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
+2025-06-19 21:30:54,316 INFO: Response 7d56e5c6-40fb-41bd-9eab-91f580ee4575 - 500 (371.40ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:30:54,325 INFO: Request c21f9a9a-7a49-43a6-9c30-07c4963128d9 - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:30:54,326 INFO: Response c21f9a9a-7a49-43a6-9c30-07c4963128d9 - 500 (1.35ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:30:54,332 INFO: Request 79059387-0e95-47b2-a796-4ff3a4394e1b - POST /api/v1/reflect [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:30:54,333 ERROR: Reflection error: 'SelfBeliefUpdater' object has no attribute 'evaluate_drift' [in c:\Users\ihabs\FridayAI\api_service.py:185]
+Traceback (most recent call last):
+  File "c:\Users\ihabs\FridayAI\api_service.py", line 175, in reflect
+    result = ai.reflection_loop.run_reflection_cycle(
+        self_awareness=ai.self_awareness,
+        belief_updater=ai.belief_updater
+    )
+  File "c:\Users\ihabs\FridayAI\core\ReflectionLoopManager.py", line 64, in run_reflection_cycle
+    belief_updater.evaluate_drift()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SelfBeliefUpdater' object has no attribute 'evaluate_drift'
+2025-06-19 21:30:54,334 INFO: Response 79059387-0e95-47b2-a796-4ff3a4394e1b - 500 (1.54ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:50:45,602 INFO: Request 365ea0fd-dd75-464d-9058-6eda0c80f79e - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:50:45,967 ERROR: Response error: too many values to unpack (expected 5) [in c:\Users\ihabs\FridayAI\api_service.py:168]
+Traceback (most recent call last):
+  File "c:\Users\ihabs\FridayAI\api_service.py", line 151, in respond
+    result = ai.respond_to(user_input)
+  File "c:\Users\ihabs\FridayAI\fridayai.py", line 1818, in respond_to
+    raw_reply, emotional_tone, memory_context, identity_context, pregnancy_analysis = generate_core_response()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 5)
+2025-06-19 21:50:45,968 INFO: Response 365ea0fd-dd75-464d-9058-6eda0c80f79e - 500 (366.20ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:50:45,976 INFO: Request 1b465069-7960-42f1-a03f-3d608057d35e - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:50:45,978 INFO: Response 1b465069-7960-42f1-a03f-3d608057d35e - 500 (1.52ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:50:45,984 INFO: Request 04285c16-e931-4226-b85b-4d1acf1826b9 - POST /api/v1/reflect [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:50:45,985 ERROR: Reflection error: 'SelfBeliefUpdater' object has no attribute 'evaluate_drift' [in c:\Users\ihabs\FridayAI\api_service.py:185]
+Traceback (most recent call last):
+  File "c:\Users\ihabs\FridayAI\api_service.py", line 175, in reflect
+    result = ai.reflection_loop.run_reflection_cycle(
+        self_awareness=ai.self_awareness,
+        belief_updater=ai.belief_updater
+    )
+  File "c:\Users\ihabs\FridayAI\core\ReflectionLoopManager.py", line 64, in run_reflection_cycle
+    belief_updater.evaluate_drift()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'SelfBeliefUpdater' object has no attribute 'evaluate_drift'
+2025-06-19 21:50:45,986 INFO: Response 04285c16-e931-4226-b85b-4d1acf1826b9 - 500 (1.51ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:56:19,565 INFO: Request 5837321a-b394-48dd-a8d6-b37d344eaa2e - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:56:19,567 INFO: Response 5837321a-b394-48dd-a8d6-b37d344eaa2e - 200 (1.53ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:56:19,571 INFO: Request e6489a09-60e4-4251-9b88-8fd15fa1a3ae - POST /api/v1/respond [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:56:19,572 INFO: Response e6489a09-60e4-4251-9b88-8fd15fa1a3ae - 200 (1.48ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 21:56:19,580 INFO: Request 7316621e-53f0-4354-9e2e-27f6133d4603 - POST /api/v1/reflect [in c:\Users\ihabs\FridayAI\api_service.py:107]
+2025-06-19 21:56:19,580 INFO: Response 7316621e-53f0-4354-9e2e-27f6133d4603 - 200 (0.28ms) [in c:\Users\ihabs\FridayAI\api_service.py:119]
+2025-06-19 22:07:29,859 INFO: POST /api/v1/respond (ID: 2ae18c31-40ac-4772-b667-759b88c07897)
+2025-06-19 22:07:29,861 INFO: 200 in 1.45ms (ID: 2ae18c31-40ac-4772-b667-759b88c07897)
+2025-06-19 22:07:29,864 INFO: POST /api/v1/respond (ID: 92175e9c-51e5-46b6-a756-135739fef24f)
+2025-06-19 22:07:29,864 INFO: 200 in 0.44ms (ID: 92175e9c-51e5-46b6-a756-135739fef24f)
+2025-06-19 22:07:29,873 INFO: POST /api/v1/reflect (ID: 5a06a506-409d-4f62-9762-33f6321ffc49)
+2025-06-19 22:07:29,874 INFO: 200 in 0.30ms (ID: 5a06a506-409d-4f62-9762-33f6321ffc49)
+2025-06-19 22:10:43,057 INFO: POST /api/v1/respond (ID: 6131c3de-6970-4e80-84dc-aa792384b4a4)
+2025-06-19 22:10:43,059 INFO: 200 in 1.41ms (ID: 6131c3de-6970-4e80-84dc-aa792384b4a4)
+2025-06-19 22:10:43,063 INFO: POST /api/v1/respond (ID: 69da7241-0501-4642-b2b6-7fb6f0133a84)
+2025-06-19 22:10:43,064 INFO: 400 in 1.17ms (ID: 69da7241-0501-4642-b2b6-7fb6f0133a84)
+2025-06-19 22:10:43,067 INFO: POST /api/v1/reflect (ID: 37d4bdcb-799d-4ba4-b5dd-bb0c1c29d274)
+2025-06-19 22:10:43,067 INFO: 200 in 0.42ms (ID: 37d4bdcb-799d-4ba4-b5dd-bb0c1c29d274)

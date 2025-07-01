@@ -1,0 +1,37 @@
+2025-05-26 18:36:46,999 - INFO - QUEUED: pregnancy_guide.pdf (new)
+2025-05-26 18:36:47,203 - INFO - EMBEDDED: pregnancy_guide.pdf
+2025-05-26 18:42:06,666 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 18:47:26,123 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 18:52:46,075 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 18:58:05,986 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:03:26,073 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:08:45,478 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:14:04,753 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:19:24,550 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:24:44,964 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:30:04,402 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:35:23,667 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:40:43,761 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:46:03,921 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:51:32,922 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 19:51:32,923 - INFO - QUEUED: test_intro.txt (new)
+2025-05-26 19:51:32,997 - INFO - EMBEDDED: test_intro.txt
+2025-05-26 20:11:52,518 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 20:11:52,518 - INFO - QUEUED: test_intro.txt (new)
+2025-05-26 20:11:52,731 - INFO - EMBEDDED: test_intro.txt
+2025-05-26 20:56:08,982 - INFO - QUEUED: emergency_case.txt (new)
+2025-05-26 20:56:09,146 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 20:56:09,147 - INFO - SKIPPED: test_intro.txt (already indexed)
+2025-05-26 20:56:09,194 - INFO - EMBEDDED: emergency_case.txt
+2025-05-26 20:56:09,203 - INFO - MEMORY_INJECTED: emergency_case.txt
+2025-05-26 20:56:09,204 - INFO - TASK_SUGGESTED: Investigate emotional trigger 'anxiety' in document emergency_case.txt
+2025-05-26 20:56:09,204 - INFO - TASK_SUGGESTED: Investigate emotional trigger 'bleeding' in document emergency_case.txt
+2025-05-26 21:24:31,454 - INFO - SKIPPED: emergency_case.txt (already indexed)
+2025-05-26 21:24:31,456 - INFO - QUEUED: new.txt (new)
+2025-05-26 21:24:31,615 - INFO - SKIPPED: pregnancy_guide.pdf (already indexed)
+2025-05-26 21:24:31,627 - INFO - SKIPPED: test_intro.txt (already indexed)
+2025-05-26 21:24:31,687 - INFO - EMBEDDED: new.txt
+2025-05-26 21:24:31,691 - INFO - MEMORY_INJECTED: new.txt
+2025-05-26 21:24:31,694 - INFO - TASK_SUGGESTED: Investigate emotional trigger 'bleeding' in document new.txt
+2025-05-26 21:24:31,695 - INFO - TASK_SUGGESTED: Investigate emotional trigger 'anxiety' in document new.txt
+2025-05-26 21:24:31,695 - INFO - TASK_SUGGESTED: Investigate emotional trigger 'severe' in document new.txt
