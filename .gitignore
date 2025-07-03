@@ -1,23 +1,19 @@
+# Python virtualenv
+venv/
+.venv/
 
-# Ignore environment files
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment files
 .env
 
-# Ignore encryption keys
-*.key
+# Editor configs
+*.swp
+.vscode/
 
-# Ignore memory files (optional)
-*.dat
-
-*.py
-.env 
-*.pem
-*.zip
-*.dll
-*.xml
-
-venv/
-data/
-models/
-assets/
-Zip/
+# Database / logs
+*.sqlite3
+*.log
 
