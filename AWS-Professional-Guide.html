@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Complete Professional Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #FF9500, #FF6B35);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        .nav-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nav-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Content Sections */
+        .section {
+            background: white;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .section-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .section-header .description {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section-content {
+            padding: 40px;
+        }
+
+        /* Service Grid */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .service-card:hover:before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .service-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .service-description {
+            font-size: 1em;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Comparison Tables */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+
+        .comparison-table tr:nth-child(even) td {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:hover td {
+            background: #e3f2fd;
+        }
+
+        /* Architecture Diagrams */
+        .architecture-container {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .architecture-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .architecture-diagram {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Best Practices */
+        .best-practice {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #4CAF50;
+        }
+
+        .best-practice h4 {
+            color: #2E7D32;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Warning/Important Notes */
+        .warning {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #e17055;
+        }
+
+        .warning h4 {
+            color: #d63031;
+            margin-bottom: 10px;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Statistics Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Pricing Cards */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .pricing-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured {
+            border-color: #ff6b6b;
+            transform: scale(1.05);
+        }
+
+        .pricing-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            margin: -30px -30px 20px -30px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .pricing-title {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .pricing-price {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        /* Interview Questions */
+        .question-container {
+            background: white;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .question-header:hover {
+            background: linear-gradient(135deg, #0984e3, #74b9ff);
+        }
+
+        .question-content {
+            padding: 25px;
+            display: none;
+        }
+
+        .question-content.active {
+            display: block;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #e0e0e0;
+            border-radius: 25px;
+            padding: 3px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 20px;
+            border-radius: 25px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .scroll-to-top:hover {
+            transform: scale(1.1);
+        }
+
+        .scroll-to-top.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header fade-in">
+            <h1>☁️ AWS Complete Guide</h1>
+            <div class="subtitle">Professional Documentation for Cloud Excellence</div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="nav-container fade-in">
+            <div class="nav-grid">
+                <a href="#overview" class="nav-item">📊 Overview</a>
+                <a href="#compute" class="nav-item">💻 Compute</a>
+                <a href="#storage" class="nav-item">🗄️ Storage</a>
+                <a href="#database" class="nav-item">🗃️ Database</a>
+                <a href="#networking" class="nav-item">🌐 Networking</a>
+                <a href="#security" class="nav-item">🔒 Security</a>
+                <a href="#analytics" class="nav-item">📈 Analytics</a>
+                <a href="#ai-ml" class="nav-item">🤖 AI/ML</a>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <div id="overview" class="section fade-in">
+            <div class="section-header">
+                <h2>🌟 AWS Overview</h2>
+                <div class="description">The world's most comprehensive cloud platform</div>
+            </div>
+            <div class="section-content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">32%</span>
+                        <span class="stat-label">Global Market Share</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Services Available</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">33</span>
+                        <span class="stat-label">Geographic Regions</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">105</span>
+                        <span class="stat-label">Availability Zones</span>
+                    </div>
+                </div>
+
+                <div class="best-practice">
+                    <h4>🎯 What Makes AWS Special</h4>
+                    <p>AWS offers the most comprehensive set of cloud services, enabling organizations to move faster, lower IT costs, and scale applications. From startups to global enterprises, millions of customers trust AWS to power their infrastructure.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compute Services -->
+        <div id="compute" class="section fade-in">
+            <div class="section-header">
+                <h2>💻 Compute Services</h2>
+                <div class="description">Power your applications with scalable compute resources</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🖥️</span>
+                        <div class="service-name">Amazon EC2</div>
+                        <div class="service-description">Secure and resizable compute capacity in the cloud. Launch virtual servers in minutes.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">⚡</span>
+                        <div class="service-name">AWS Lambda</div>
+                        <div class="service-description">Run code without thinking about servers. Pay only for compute time consumed.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🚢</span>
+                        <div class="service-name">Amazon ECS</div>
+                        <div class="service-description">Fully managed container orchestration service for Docker containers.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">☸️</span>
+                        <div class="service-name">Amazon EKS</div>
+                        <div class="service-description">Managed Kubernetes service to run Kubernetes applications in the cloud.</div>
+                    </div>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Instance Type</th>
+                            <th>vCPUs</th>
+                            <th>Memory (GB)</th>
+                            <th>Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>t3.micro</strong></td>
+                            <td>2</td>
+                            <td>1</td>
+                            <td>Low to moderate baseline performance</td>
+                        </tr>
+                        <tr>
+                            <td><strong>m5.large</strong></td>
+                            <td>2</td>
+                            <td>8</td>
+                            <td>General purpose computing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>c5.xlarge</strong></td>
+                            <td>4</td>
+                            <td>8</td>
+                            <td>Compute-intensive applications</td>
+                        </tr>
+                        <tr>
+                            <td><strong>r5.large</strong></td>
+                            <td>2</td>
+                            <td>16</td>
+                            <td>Memory-intensive applications</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="best-practice">
+                    <h4>💡 Best Practice: Right-Sizing Instances</h4>
+                    <p>Start with smaller instances and monitor performance. Use CloudWatch metrics to determine when to scale up or down. Consider Reserved Instances for predictable workloads to save up to 75% compared to On-Demand pricing.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Storage Services -->
+        <div id="storage" class="section fade-in">
+            <div class="section-header">
+                <h2>🗄️ Storage Services</h2>
+                <div class="description">Secure, durable, and scalable storage for any workload</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">📦</span>
+                        <div class="service-name">Amazon S3</div>
+                        <div class="service-description">Object storage built to store and retrieve any amount of data from anywhere.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">💾</span>
+                        <div class="service-name">Amazon EBS</div>
+                        <div class="service-description">High-performance block storage service for use with EC2 instances.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">📁</span>
+                        <div class="service-name">Amazon EFS</div>
+                        <div class="service-description">Simple, scalable, fully managed elastic NFS file system.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">❄️</span>
+                        <div class="service-name">S3 Glacier</div>
+                        <div class="service-description">Secure, durable, and low-cost storage for data archiving and backup.</div>
+                    </div>
+                </div>
+
+                <div class="architecture-container">
+                    <div class="architecture-title">📊 S3 Storage Classes Comparison</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Storage Class</th>
+                                <th>Durability</th>
+                                <th>Availability</th>
+                                <th>Use Case</th>
+                                <th>Retrieval Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>S3 Standard</strong></td>
+                                <td>99.999999999%</td>
+                                <td>99.99%</td>
+                                <td>Frequently accessed data</td>
+                                <td>Immediate</td>
+                            </tr>
+                            <tr>
+                                <td><strong>S3 Standard-IA</strong></td>
+                                <td>99.999999999%</td>
+                                <td>99.9%</td>
+                                <td>Infrequently accessed data</td>
+                                <td>Immediate</td>
+                            </tr>
+                            <tr>
+                                <td><strong>S3 Glacier</strong></td>
+                                <td>99.999999999%</td>
+                                <td>99.99%</td>
+                                <td>Long-term archive</td>
+                                <td>1-12 hours</td>
+                            </tr>
+                            <tr>
+                                <td><strong>S3 Deep Archive</strong></td>
+                                <td>99.999999999%</td>
+                                <td>99.99%</td>
+                                <td>Long-term backup</td>
+                                <td>12+ hours</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Services -->
+        <div id="database" class="section fade-in">
+            <div class="section-header">
+                <h2>🗃️ Database Services</h2>
+                <div class="description">Purpose-built databases for every application</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🏛️</span>
+                        <div class="service-name">Amazon RDS</div>
+                        <div class="service-description">Managed relational database service supporting multiple engines.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">⚡</span>
+                        <div class="service-name">DynamoDB</div>
+                        <div class="service-description">Fast and flexible NoSQL database service for any scale.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🌟</span>
+                        <div class="service-name">Amazon Aurora</div>
+                        <div class="service-description">MySQL and PostgreSQL-compatible relational database built for the cloud.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">📊</span>
+                        <div class="service-name">Amazon Redshift</div>
+                        <div class="service-description">Fast, simple, cost-effective data warehousing service.</div>
+                    </div>
+                </div>
+
+                <div class="warning">
+                    <h4>⚠️ Database Selection Guide</h4>
+                    <p><strong>Use RDS when:</strong> You need SQL, ACID compliance, complex queries<br>
+                    <strong>Use DynamoDB when:</strong> You need high performance, simple queries, automatic scaling<br>
+                    <strong>Use Redshift when:</strong> You need analytics, data warehousing, complex aggregations</p>
+                </div>
+
+                <div class="architecture-container">
+                    <div class="architecture-title">🏗️ High Availability Database Architecture</div>
+                    <div class="architecture-diagram">
+<pre>
+┌─────────────────┐    ┌─────────────────┐
+│   Primary AZ    │    │   Secondary AZ  │
+│                 │    │                 │
+│  ┌───────────┐  │    │  ┌───────────┐  │
+│  │    RDS    │◄─┼────┼──┤    RDS    │  │
+│  │  Primary  │  │    │  │  Standby  │  │
+│  └───────────┘  │    │  └───────────┘  │
+│                 │    │                 │
+│  ┌───────────┐  │    │  ┌───────────┐  │
+│  │    EC2    │  │    │  │    EC2    │  │
+│  │Application│  │    │  │Application│  │
+│  └───────────┘  │    │  └───────────┘  │
+└─────────────────┘    └─────────────────┘
+        │                       │
+        └───────┬───────────────┘
+                │
+    ┌─────────────────┐
+    │ Application     │
+    │ Load Balancer   │
+    └─────────────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Networking -->
+        <div id="networking" class="section fade-in">
+            <div class="section-header">
+                <h2>🌐 Networking & Content Delivery</h2>
+                <div class="description">Connect and secure your cloud resources</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🏠</span>
+                        <div class="service-name">Amazon VPC</div>
+                        <div class="service-description">Isolated cloud resources in a virtual network you define.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🌍</span>
+                        <div class="service-name">CloudFront</div>
+                        <div class="service-description">Global content delivery network for fast content delivery.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">⚖️</span>
+                        <div class="service-name">Elastic Load Balancing</div>
+                        <div class="service-description">Distribute incoming traffic across multiple targets.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🗺️</span>
+                        <div class="service-name">Route 53</div>
+                        <div class="service-description">Scalable domain name system (DNS) web service.</div>
+                    </div>
+                </div>
+
+                <div class="architecture-container">
+                    <div class="architecture-title">🏗️ Multi-Tier VPC Architecture</div>
+                    <div class="architecture-diagram">
+<pre>
+Internet Gateway
+        │
+┌───────┴────────────────────────────────┐
+│              VPC (10.0.0.0/16)         │
+│                                        │
+│  ┌─────────────────────────────────┐   │
+│  │        Public Subnet            │   │
+│  │      (10.0.1.0/24)             │   │
+│  │  ┌─────────┐  ┌─────────┐      │   │
+│  │  │   ALB   │  │   NAT   │      │   │
+│  │  └─────────┘  └─────────┘      │   │
+│  └─────────────────────────────────┘   │
+│                                        │
+│  ┌─────────────────────────────────┐   │
+│  │       Private Subnet            │   │
+│  │      (10.0.2.0/24)             │   │
+│  │  ┌─────────┐  ┌─────────┐      │   │
+│  │  │   EC2   │  │   EC2   │      │   │
+│  │  └─────────┘  └─────────┘      │   │
+│  └─────────────────────────────────┘   │
+│                                        │
+│  ┌─────────────────────────────────┐   │
+│  │      Database Subnet            │   │
+│  │      (10.0.3.0/24)             │   │
+│  │  ┌─────────┐  ┌─────────┐      │   │
+│  │  │   RDS   │  │   RDS   │      │   │
+│  │  │ Primary │  │ Standby │      │   │
+│  │  └─────────┘  └─────────┘      │   │
+│  └─────────────────────────────────┘   │
+└────────────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div id="security" class="section fade-in">
+            <div class="section-header">
+                <h2>🔒 Security & Identity</h2>
+                <div class="description">Comprehensive security for your cloud infrastructure</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">👤</span>
+                        <div class="service-name">AWS IAM</div>
+                        <div class="service-description">Securely manage access to AWS services and resources.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🔐</span>
+                        <div class="service-name">AWS KMS</div>
+                        <div class="service-description">Create and manage cryptographic keys for your applications.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🛡️</span>
+                        <div class="service-name">AWS WAF</div>
+                        <div class="service-description">Protect web applications from common web exploits.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🕵️</span>
+                        <div class="service-name">GuardDuty</div>
+                        <div class="service-description">Intelligent threat detection for your AWS accounts.</div>
+                    </div>
+                </div>
+
+                <div class="best-practice">
+                    <h4>🔒 Security Best Practices</h4>
+                    <ul>
+                        <li><strong>Enable MFA:</strong> Multi-factor authentication for all users</li>
+                        <li><strong>Use IAM Roles:</strong> Instead of access keys for applications</li>
+                        <li><strong>Least Privilege:</strong> Grant minimum required permissions</li>
+                        <li><strong>Encrypt Everything:</strong> Data at rest and in transit</li>
+                        <li><strong>Monitor & Audit:</strong> Use CloudTrail and Config</li>
+                    </ul>
+                </div>
+
+                <div class="architecture-container">
+                    <div class="architecture-title">🔐 Shared Responsibility Model</div>
+                    <div class="architecture-diagram">
+<pre>
+┌────────────────────────────────────────┐
+│            CUSTOMER                    │
+│        "Security IN the Cloud"         │
+│                                        │
+│  • Customer Data                       │
+│  • Platform, Applications, IAM         │
+│  • Operating System, Network & Firewall│
+│  • Client-side Data Encryption         │
+│  • Server-side Encryption              │
+│  • Network Traffic Protection          │
+└────────────────────────────────────────┘
+┌────────────────────────────────────────┐
+│              AWS                       │
+│        "Security OF the Cloud"         │
+│                                        │
+│  • Software                            │
+│  • Compute, Storage, Database, Network │
+│  • Hardware/AWS Global Infrastructure  │
+│  • Regions, AZs, Edge Locations        │
+└────────────────────────────────────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div id="analytics" class="section fade-in">
+            <div class="section-header">
+                <h2>📈 Analytics & Big Data</h2>
+                <div class="description">Extract insights from your data at any scale</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🌊</span>
+                        <div class="service-name">Amazon Kinesis</div>
+                        <div class="service-description">Real-time data streaming and analytics platform.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🔬</span>
+                        <div class="service-name">Amazon EMR</div>
+                        <div class="service-description">Big data platform for processing vast amounts of data.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🏭</span>
+                        <div class="service-name">AWS Glue</div>
+                        <div class="service-description">Serverless data integration service for ETL jobs.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🔍</span>
+                        <div class="service-name">Amazon Athena</div>
+                        <div class="service-description">Interactive query service to analyze data in S3 using SQL.</div>
+                    </div>
+                </div>
+
+                <div class="architecture-container">
+                    <div class="architecture-title">📊 Modern Data Lake Architecture</div>
+                    <div class="architecture-diagram">
+<pre>
+Data Sources           Ingestion              Storage               Analytics
+     │                     │                    │                     │
+┌─────────┐           ┌──────────┐         ┌─────────┐          ┌─────────┐
+│   IoT   │──────────▶│ Kinesis  │────────▶│   S3    │─────────▶│ Athena  │
+│ Devices │           │ Streams  │         │Raw Data │          │Queries  │
+└─────────┘           └──────────┘         └─────────┘          └─────────┘
+                           │                    │                     │
+┌─────────┐           ┌──────────┐         ┌─────────┐          ┌─────────┐
+│Database │──────────▶│   Glue   │────────▶│   S3    │─────────▶│  EMR    │
+│  Logs   │           │   ETL    │         │Processed│          │Hadoop   │
+└─────────┘           └──────────┘         └─────────┘          └─────────┘
+                           │                    │                     │
+┌─────────┐           ┌──────────┐         ┌─────────┐          ┌─────────┐
+│   API   │──────────▶│ Lambda   │────────▶│   S3    │─────────▶│QuickSight│
+│  Data   │           │Processing│         │Curated  │          │Dashboard│
+└─────────┘           └──────────┘         └─────────┘          └─────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI/ML -->
+        <div id="ai-ml" class="section fade-in">
+            <div class="section-header">
+                <h2>🤖 Machine Learning & AI</h2>
+                <div class="description">Build, train, and deploy ML models at scale</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🧠</span>
+                        <div class="service-name">Amazon SageMaker</div>
+                        <div class="service-description">Fully managed service for building ML models quickly.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">👁️</span>
+                        <div class="service-name">Amazon Rekognition</div>
+                        <div class="service-description">Add image and video analysis to your applications.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">💬</span>
+                        <div class="service-name">Amazon Lex</div>
+                        <div class="service-description">Build conversational interfaces using voice and text.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">📖</span>
+                        <div class="service-name">Amazon Comprehend</div>
+                        <div class="service-description">Natural language processing service for text analysis.</div>
+                    </div>
+                </div>
+
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <div class="pricing-title">SageMaker Studio</div>
+                        </div>
+                        <div class="pricing-price">$0.05/hour</div>
+                        <p>Web-based IDE for ML development</p>
+                        <ul>
+                            <li>Jupyter notebooks</li>
+                            <li>Experiment tracking</li>
+                            <li>Model debugging</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <div class="pricing-title">SageMaker Training</div>
+                        </div>
+                        <div class="pricing-price">$0.269/hour</div>
+                        <p>ML.m5.large instance for training</p>
+                        <ul>
+                            <li>Distributed training</li>
+                            <li>Spot training (60% off)</li>
+                            <li>Automatic model tuning</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <div class="pricing-title">SageMaker Inference</div>
+                        </div>
+                        <div class="pricing-price">$0.048/hour</div>
+                        <p>ML.t3.medium for real-time inference</p>
+                        <ul>
+                            <li>Auto scaling</li>
+                            <li>Multi-model endpoints</li>
+                            <li>Batch transform</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Patterns -->
+        <div class="section fade-in">
+            <div class="section-header">
+                <h2>🏗️ Well-Architected Framework</h2>
+                <div class="description">Design principles for building secure, reliable, and efficient systems</div>
+            </div>
+            <div class="section-content">
+                <div class="service-grid">
+                    <div class="service-card">
+                        <span class="service-icon">🔒</span>
+                        <div class="service-name">Security</div>
+                        <div class="service-description">Protect information, systems, and assets while delivering business value.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🛡️</span>
+                        <div class="service-name">Reliability</div>
+                        <div class="service-description">Recover from failures and dynamically acquire computing resources.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">⚡</span>
+                        <div class="service-name">Performance</div>
+                        <div class="service-description">Use computing resources efficiently to meet requirements.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">💰</span>
+                        <div class="service-name">Cost Optimization</div>
+                        <div class="service-description">Avoid unnecessary costs and optimize spending.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🎯</span>
+                        <div class="service-name">Operational Excellence</div>
+                        <div class="service-description">Run and monitor systems to deliver business value.</div>
+                    </div>
+                    <div class="service-card">
+                        <span class="service-icon">🌱</span>
+                        <div class="service-name">Sustainability</div>
+                        <div class="service-description">Minimize environmental impact of cloud workloads.</div>
+                    </div>
+                </div>
+
+                <div class="architecture-container">
+                    <div class="architecture-title">🏗️ Serverless Web Application Architecture</div>
+                    <div class="architecture-diagram">
+<pre>
+┌─────────────┐    ┌──────────────┐    ┌─────────────┐
+│   User's    │───▶│  CloudFront  │───▶│     S3      │
+│   Browser   │    │     CDN      │    │Static Files │
+└─────────────┘    └──────────────┘    └─────────────┘
+        │                                      │
+        │          ┌──────────────┐           │
+        └─────────▶│ API Gateway  │           │
+                   └──────┬───────┘           │
+                          │                   │
+                   ┌──────▼───────┐           │
+                   │   Lambda     │           │
+                   │  Functions   │           │
+                   └──────┬───────┘           │
+                          │                   │
+                   ┌──────▼───────┐    ┌──────▼──────┐
+                   │  DynamoDB    │    │   Cognito   │
+                   │   Database   │    │    Auth     │
+                   └──────────────┘    └─────────────┘
+</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Questions -->
+        <div class="section fade-in">
+            <div class="section-header">
+                <h2>💼 Interview Questions & Answers</h2>
+                <div class="description">Master these questions to ace your AWS interviews</div>
+            </div>
+            <div class="section-content">
+                <div class="question-container">
+                    <div class="question-header" onclick="toggleQuestion('q1')">
+                        <h3>🎯 What's the difference between S3 and EBS?</h3>
+                    </div>
+                    <div class="question-content" id="q1">
+                        <p><strong>Amazon S3 (Simple Storage Service):</strong></p>
+                        <ul>
+                            <li>Object storage accessible via REST API</li>
+                            <li>Unlimited storage capacity</li>
+                            <li>99.999999999% (11 9's) durability</li>
+                            <li>Best for: Static websites, backups, data archiving</li>
+                        </ul>
+                        <p><strong>Amazon EBS (Elastic Block Store):</strong></p>
+                        <ul>
+                            <li>Block-level storage that attaches to EC2 instances</li>
+                            <li>Limited to single AZ (can be backed up to S3)</li>
+                            <li>High IOPS performance for databases</li>
+                            <li>Best for: Database storage, file systems, operating systems</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-header" onclick="toggleQuestion('q2')">
+                        <h3>🏗️ How would you design a highly available web application?</h3>
+                    </div>
+                    <div class="question-content" id="q2">
+                        <div class="architecture-diagram">
+<pre>
+┌─────────────────────────────────────────┐
+│              Route 53 DNS               │
+│          (Health checks + failover)     │
+└──────────────────┬──────────────────────┘
+                   │
+┌──────────────────▼──────────────────────┐
+│             CloudFront CDN              │
+│         (Global edge locations)         │
+└──────────────────┬──────────────────────┘
+                   │
+┌──────────────────▼──────────────────────┐
+│         Application Load Balancer       │
+│        (Multi-AZ distribution)          │
+└─────────┬──────────────────┬────────────┘
+          │                  │
+┌─────────▼────────┐ ┌───────▼────────┐
+│   Auto Scaling   │ │  Auto Scaling  │
+│    Group AZ-1    │ │   Group AZ-2   │
+│ ┌─────┐ ┌─────┐  │ │ ┌─────┐ ┌─────┐│
+│ │EC2-1│ │EC2-2│  │ │ │EC2-3│ │EC2-4││
+│ └─────┘ └─────┘  │ │ └─────┘ └─────┘│
+└──────────────────┘ └────────────────┘
+          │                  │
+          └─────────┬────────┘
+                    │
+┌───────────────────▼───────────────────┐
+│           RDS Multi-AZ                │
+│  ┌─────────────┐  ┌─────────────┐     │
+│  │   Primary   │  │   Standby   │     │
+│  │   (AZ-1)    │  │   (AZ-2)    │     │
+│  └─────────────┘  └─────────────┘     │
+└───────────────────────────────────────┘
+</pre>
+                        </div>
+                        <p><strong>Key Components:</strong></p>
+                        <ul>
+                            <li><strong>Route 53:</strong> DNS with health checks for failover</li>
+                            <li><strong>CloudFront:</strong> Global CDN for performance</li>
+                            <li><strong>ALB:</strong> Distributes traffic across multiple AZs</li>
+                            <li><strong>Auto Scaling:</strong> Automatically adjusts capacity</li>
+                            <li><strong>Multi-AZ RDS:</strong> Database high availability</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-header" onclick="toggleQuestion('q3')">
+                        <h3>💰 How would you optimize AWS costs?</h3>
+                    </div>
+                    <div class="question-content" id="q3">
+                        <div class="best-practice">
+                            <h4>💡 Cost Optimization Strategies</h4>
+                            <ol>
+                                <li><strong>Right-sizing:</strong> Use CloudWatch metrics to identify underutilized resources</li>
+                                <li><strong>Reserved Instances:</strong> Commit to 1-3 years for up to 75% savings</li>
+                                <li><strong>Spot Instances:</strong> Use for fault-tolerant workloads (up to 90% savings)</li>
+                                <li><strong>Auto Scaling:</strong> Match capacity to actual demand</li>
+                                <li><strong>S3 Intelligent Tiering:</strong> Automatic cost optimization for storage</li>
+                                <li><strong>Schedule Resources:</strong> Turn off dev/test environments when not in use</li>
+                                <li><strong>Use Savings Plans:</strong> Flexible pricing model for consistent usage</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-header" onclick="toggleQuestion('q4')">
+                        <h3>🔒 Explain the AWS Shared Responsibility Model</h3>
+                    </div>
+                    <div class="question-content" id="q4">
+                        <div class="warning">
+                            <h4>🔐 Security Responsibilities</h4>
+                            <p><strong>AWS Responsibility (Security OF the Cloud):</strong></p>
+                            <ul>
+                                <li>Physical security of data centers</li>
+                                <li>Hardware and software infrastructure</li>
+                                <li>Network controls and host operating system patching</li>
+                                <li>Service configuration and vulnerability patching</li>
+                            </ul>
+                            <p><strong>Customer Responsibility (Security IN the Cloud):</strong></p>
+                            <ul>
+                                <li>Customer data and encryption</li>
+                                <li>Identity and access management (IAM)</li>
+                                <li>Operating system updates and security patches</li>
+                                <li>Network and firewall configuration</li>
+                                <li>Application-level security</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cost Calculator -->
+        <div class="section fade-in">
+            <div class="section-header">
+                <h2>💰 AWS Pricing Examples</h2>
+                <div class="description">Understanding AWS pricing models</div>
+            </div>
+            <div class="section-content">
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <div class="pricing-title">EC2 On-Demand</div>
+                        </div>
+                        <div class="pricing-price">$0.096/hour</div>
+                        <p>t3.large instance (US East)</p>
+                        <ul>
+                            <li>2 vCPUs, 8 GB RAM</li>
+                            <li>No upfront costs</li>
+                            <li>Pay by the hour</li>
+                            <li>Perfect for: Development, testing</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card featured">
+                        <div class="pricing-header">
+                            <div class="pricing-title">EC2 Reserved</div>
+                        </div>
+                        <div class="pricing-price">$0.062/hour</div>
+                        <p>t3.large Reserved Instance (1 year)</p>
+                        <ul>
+                            <li>35% savings vs On-Demand</li>
+                            <li>$544 upfront payment</li>
+                            <li>Capacity reservation</li>
+                            <li>Perfect for: Production workloads</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card">
+                        <div class="pricing-header">
+                            <div class="pricing-title">EC2 Spot</div>
+                        </div>
+                        <div class="pricing-price">$0.029/hour</div>
+                        <p>t3.large Spot Instance</p>
+                        <ul>
+                            <li>70% savings vs On-Demand</li>
+                            <li>Can be interrupted</li>
+                            <li>2-minute warning</li>
+                            <li>Perfect for: Batch processing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="section fade-in">
+            <div class="section-header">
+                <h2>🎯 Next Steps</h2>
+                <div class="description">Continue your AWS journey</div>
+            </div>
+            <div class="section-content">
+                <div class="best-practice">
+                    <h4>🚀 Recommended Learning Path</h4>
+                    <ol>
+                        <li><strong>Get Hands-On:</strong> Create a free AWS account and explore the console</li>
+                        <li><strong>Build Projects:</strong> Deploy a simple web application using EC2, RDS, and S3</li>
+                        <li><strong>Pursue Certification:</strong> Start with AWS Cloud Practitioner certification</li>
+                        <li><strong>Join Communities:</strong> AWS User Groups, re:Invent, Stack Overflow</li>
+                        <li><strong>Stay Updated:</strong> Follow AWS blogs and announcements</li>
+                    </ol>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+                <p style="text-align: center; margin-top: 20px;">
+                    <strong>🎉 Congratulations! You've completed the AWS Complete Guide!</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <div class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </div>
+
+    <script>
+        // Question toggle functionality
+        function toggleQuestion(questionId) {
+            const content = document.getElementById(questionId);
+            content.classList.toggle('active');
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTop');
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Progress bar animation
+        window.addEventListener('load', function() {
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
