@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS for 5-Year-Olds - Complete Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #87CEEB, #98FB98);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 3px solid #FFD93D;
+        }
+        
+        h1 {
+            color: #FF6B6B;
+            text-align: center;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #2C3E50;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        .icon {
+            font-size: 3em;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .service-box {
+            background: #F8F9FA;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #E9ECEF;
+        }
+        
+        .service-name {
+            font-weight: bold;
+            color: #2C3E50;
+            margin-bottom: 5px;
+        }
+        
+        .highlight {
+            background: #FFF3CD;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #FFD93D;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #856404;
+        }
+        
+        .simple-list {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .category {
+            background: #4ECDC4;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Slide 1: Title -->
+        <div class="slide">
+            <h1>🌟 Complete AWS Guide 🌟</h1>
+            <div class="icon">☁️💻🚀</div>
+            <div style="text-align: center; font-size: 1.3em;">
+                <p><strong>Everything about AWS explained like you're 5!</strong></p>
+                <p>Perfect for Google interviews and beyond!</p>
+            </div>
+        </div>
+
+        <!-- What is AWS -->
+        <div class="slide">
+            <div class="category">BASICS</div>
+            <h2>☁️ What is AWS?</h2>
+            <div class="icon">🏗️</div>
+            <div class="simple-list">
+                • <strong>Amazon Web Services</strong> - like renting toys instead of buying them<br>
+                • <strong>200+ services</strong> - different toys for different games<br>
+                • <strong>Pay-as-you-go</strong> - only pay when you play<br>
+                • <strong>Global</strong> - playgrounds all over the world (33+ regions)
+            </div>
+            <div class="highlight">
+                Interview Key: AWS is the largest cloud provider (32% market share), launched in 2006
+            </div>
+        </div>
+
+        <!-- Compute Services -->
+        <div class="slide">
+            <div class="category">COMPUTE</div>
+            <h2>💻 Brain Power Services</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🖥️</div>
+                    <div class="service-name">EC2</div>
+                    <div>Virtual computers you can rent</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📦</div>
+                    <div class="service-name">Lambda</div>
+                    <div>Magic code that runs itself</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🚢</div>
+                    <div class="service-name">ECS/EKS</div>
+                    <div>Containers (shipping boxes for apps)</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🎈</div>
+                    <div class="service-name">Elastic Beanstalk</div>
+                    <div>Easy app launcher</div>
+                </div>
+            </div>
+            <div class="highlight">
+                Interview Key: EC2 = Infrastructure as a Service, Lambda = Function as a Service (serverless)
+            </div>
+        </div>
+
+        <!-- Storage Services -->
+        <div class="slide">
+            <div class="category">STORAGE</div>
+            <h2>🎒 Places to Keep Your Stuff</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🗂️</div>
+                    <div class="service-name">S3</div>
+                    <div>Giant warehouse for any files</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🎒</div>
+                    <div class="service-name">EBS</div>
+                    <div>Backpack that follows your computer</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🧸</div>
+                    <div class="service-name">EFS</div>
+                    <div>Shared toy box everyone can use</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🏎️</div>
+                    <div class="service-name">FSx</div>
+                    <div>Super-fast specialized storage</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">❄️</div>
+                    <div class="service-name">Glacier</div>
+                    <div>Cheap freezer for old stuff</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📸</div>
+                    <div class="service-name">AMI</div>
+                    <div>Photo of your computer</div>
+                </div>
+            </div>
+            <div class="highlight">
+                Interview Key: S3 = Object storage, EBS = Block storage, EFS = File storage
+            </div>
+        </div>
+
+        <!-- Database Services -->
+        <div class="slide">
+            <div class="category">DATABASE</div>
+            <h2>📚 Organized Libraries</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">📖</div>
+                    <div class="service-name">RDS</div>
+                    <div>Traditional organized library</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">⚡</div>
+                    <div class="service-name">DynamoDB</div>
+                    <div>Super-fast index cards</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🧠</div>
+                    <div class="service-name">ElastiCache</div>
+                    <div>Memory that remembers popular stuff</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔍</div>
+                    <div class="service-name">OpenSearch</div>
+                    <div>Super search engine for data</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📊</div>
+                    <div class="service-name">Redshift</div>
+                    <div>Huge calculator for big data</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🌐</div>
+                    <div class="service-name">Neptune</div>
+                    <div>Connects dots between things</div>
+                </div>
+            </div>
+            <div class="highlight">
+                Interview Key: RDS = Relational (SQL), DynamoDB = NoSQL, Redshift = Data Warehouse
+            </div>
+        </div>
+
+        <!-- Networking -->
+        <div class="slide">
+            <div class="category">NETWORKING</div>
+            <h2>🌐 How Things Talk</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🏠</div>
+                    <div class="service-name">VPC</div>
+                    <div>Your private house in the cloud</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🌍</div>
+                    <div class="service-name">CloudFront</div>
+                    <div>Fast delivery trucks worldwide</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">⚖️</div>
+                    <div class="service-name">Load Balancer</div>
+                    <div>Traffic cop who directs cars</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🌐</div>
+                    <div class="service-name">Route 53</div>
+                    <div>GPS for the internet</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🚪</div>
+                    <div class="service-name">API Gateway</div>
+                    <div>Doorman for your apps</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔗</div>
+                    <div class="service-name">Direct Connect</div>
+                    <div>Private highway to AWS</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security -->
+        <div class="slide">
+            <div class="category">SECURITY</div>
+            <h2>🔒 Keeping Everything Safe</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">👤</div>
+                    <div class="service-name">IAM</div>
+                    <div>ID cards and permission slips</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔐</div>
+                    <div class="service-name">KMS</div>
+                    <div>Secret key vault</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🛡️</div>
+                    <div class="service-name">WAF</div>
+                    <div>Web shield against bad guys</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🎭</div>
+                    <div class="service-name">Cognito</div>
+                    <div>Login system for apps</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🕵️</div>
+                    <div class="service-name">GuardDuty</div>
+                    <div>Security detective</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📋</div>
+                    <div class="service-name">CloudTrail</div>
+                    <div>Diary of who did what</div>
+                </div>
+            </div>
+            <div class="highlight">
+                Interview Key: Security is a shared responsibility model - AWS secures the cloud, you secure what's in the cloud
+            </div>
+        </div>
+
+        <!-- Monitoring -->
+        <div class="slide">
+            <div class="category">MONITORING</div>
+            <h2>👀 Watching Everything</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">📊</div>
+                    <div class="service-name">CloudWatch</div>
+                    <div>Health monitor for your apps</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🏗️</div>
+                    <div class="service-name">CloudFormation</div>
+                    <div>Blueprint builder for infrastructure</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🎛️</div>
+                    <div class="service-name">Systems Manager</div>
+                    <div>Remote control for your computers</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📈</div>
+                    <div class="service-name">X-Ray</div>
+                    <div>X-ray vision for app problems</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">💰</div>
+                    <div class="service-name">Cost Explorer</div>
+                    <div>Shows where your money goes</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🏷️</div>
+                    <div class="service-name">Config</div>
+                    <div>Keeps track of all your settings</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="slide">
+            <div class="category">ANALYTICS</div>
+            <h2>📊 Understanding Your Data</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🌊</div>
+                    <div class="service-name">Kinesis</div>
+                    <div>River of live data flowing</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔬</div>
+                    <div class="service-name">EMR</div>
+                    <div>Big data laboratory</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🏭</div>
+                    <div class="service-name">Glue</div>
+                    <div>Data preparation factory</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔍</div>
+                    <div class="service-name">Athena</div>
+                    <div>Ask questions about your data</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📊</div>
+                    <div class="service-name">QuickSight</div>
+                    <div>Pretty charts and graphs maker</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📡</div>
+                    <div class="service-name">Data Pipeline</div>
+                    <div>Moving data from place to place</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI/ML -->
+        <div class="slide">
+            <div class="category">AI/ML</div>
+            <h2>🤖 Smart Robot Helpers</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🧠</div>
+                    <div class="service-name">SageMaker</div>
+                    <div>Train smart robots</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">👁️</div>
+                    <div class="service-name">Rekognition</div>
+                    <div>Robot that sees pictures</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">💬</div>
+                    <div class="service-name">Lex</div>
+                    <div>Robot that talks to people</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔊</div>
+                    <div class="service-name">Polly</div>
+                    <div>Text-to-speech robot</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📝</div>
+                    <div class="service-name">Textract</div>
+                    <div>Robot that reads documents</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🌐</div>
+                    <div class="service-name">Translate</div>
+                    <div>Universal language translator</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Application Services -->
+        <div class="slide">
+            <div class="category">APPLICATION</div>
+            <h2>📱 App Helper Services</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">📮</div>
+                    <div class="service-name">SQS</div>
+                    <div>Message mailbox between apps</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📢</div>
+                    <div class="service-name">SNS</div>
+                    <div>Announcement speaker</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">✉️</div>
+                    <div class="service-name">SES</div>
+                    <div>Email sending service</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">⏰</div>
+                    <div class="service-name">EventBridge</div>
+                    <div>Event scheduler and connector</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔄</div>
+                    <div class="service-name">Step Functions</div>
+                    <div>Workflow choreographer</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🎯</div>
+                    <div class="service-name">AppSync</div>
+                    <div>Real-time app data sync</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DevOps -->
+        <div class="slide">
+            <div class="category">DEVOPS</div>
+            <h2>🛠️ Builder Helper Tools</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🏭</div>
+                    <div class="service-name">CodeBuild</div>
+                    <div>App building factory</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🚀</div>
+                    <div class="service-name">CodeDeploy</div>
+                    <div>App launcher service</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔄</div>
+                    <div class="service-name">CodePipeline</div>
+                    <div>Assembly line for apps</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📦</div>
+                    <div class="service-name">CodeCommit</div>
+                    <div>Code storage locker</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">☁️</div>
+                    <div class="service-name">Cloud9</div>
+                    <div>Online code playground</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📊</div>
+                    <div class="service-name">CodeGuru</div>
+                    <div>Code quality teacher</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Well-Architected Framework -->
+        <div class="slide">
+            <div class="category">BEST PRACTICES</div>
+            <h2>🏗️ Building Things the Right Way</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🔒</div>
+                    <div class="service-name">Security</div>
+                    <div>Keep everything safe</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🛡️</div>
+                    <div class="service-name">Reliability</div>
+                    <div>Never breaks down</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">⚡</div>
+                    <div class="service-name">Performance</div>
+                    <div>Super fast always</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">💰</div>
+                    <div class="service-name">Cost Optimization</div>
+                    <div>Don't waste money</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🌱</div>
+                    <div class="service-name">Sustainability</div>
+                    <div>Good for planet Earth</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🎯</div>
+                    <div class="service-name">Operational Excellence</div>
+                    <div>Run things smoothly</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="slide">
+            <div class="category">PRICING</div>
+            <h2>💰 How You Pay for AWS</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">⏱️</div>
+                    <div class="service-name">On-Demand</div>
+                    <div>Pay per hour like arcade games</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📅</div>
+                    <div class="service-name">Reserved</div>
+                    <div>Buy a membership for discounts</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔄</div>
+                    <div class="service-name">Spot</div>
+                    <div>Use leftover computers for cheap</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🏠</div>
+                    <div class="service-name">Dedicated</div>
+                    <div>Rent whole computer just for you</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">💡</div>
+                    <div class="service-name">Savings Plans</div>
+                    <div>Promise to spend = get discounts</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🆓</div>
+                    <div class="service-name">Free Tier</div>
+                    <div>Try before you buy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Patterns -->
+        <div class="slide">
+            <div class="category">PATTERNS</div>
+            <h2>🏗️ Common Building Patterns</h2>
+            <div class="service-grid">
+                <div class="service-box">
+                    <div class="icon">🌐</div>
+                    <div class="service-name">3-Tier Web App</div>
+                    <div>Web + App + Database layers</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔄</div>
+                    <div class="service-name">Microservices</div>
+                    <div>Lots of small apps working together</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📱</div>
+                    <div class="service-name">Serverless</div>
+                    <div>No servers to manage</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🏭</div>
+                    <div class="service-name">Data Lake</div>
+                    <div>Big pool for all your data</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">🔐</div>
+                    <div class="service-name">Multi-AZ</div>
+                    <div>Spread across multiple rooms</div>
+                </div>
+                <div class="service-box">
+                    <div class="icon">📈</div>
+                    <div class="service-name">Auto Scaling</div>
+                    <div>Grows and shrinks automatically</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Questions -->
+        <div class="slide">
+            <div class="category">INTERVIEW PREP</div>
+            <h2>❓ Common Interview Questions</h2>
+            <div class="simple-list">
+                • <strong>"Design a scalable web application"</strong><br>
+                → ELB + EC2 + RDS + Auto Scaling + CloudFront<br><br>
+                
+                • <strong>"How to reduce costs?"</strong><br>
+                → Reserved Instances, Spot Instances, Right-sizing<br><br>
+                
+                • <strong>"Disaster recovery strategy?"</strong><br>
+                → Multi-AZ deployment, Cross-region backups<br><br>
+                
+                • <strong>"Handle millions of users?"</strong><br>
+                → CloudFront + Auto Scaling + Load Balancers<br><br>
+                
+                • <strong>"Secure an application?"</strong><br>
+                → IAM + VPC + WAF + Encryption (KMS)<br><br>
+                
+                • <strong>"Database choice?"</strong><br>
+                → RDS (structured), DynamoDB (fast), Redshift (analytics)
+            </div>
+            <div class="highlight">
+                Pro Tip: Always ask about requirements first: budget, performance, compliance, scale
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="slide">
+            <h1>🎉 You're AWS Ready!</h1>
+            <div class="icon">🌟</div>
+            <div class="highlight">
+                Now you know AWS like a 5-year-old genius! 🧠
+            </div>
+            <div class="simple-list" style="text-align: center;">
+                <strong>Key Categories You Know:</strong><br>
+                💻 Compute (EC2, Lambda) • 🎒 Storage (S3, EBS) • 📚 Database (RDS, DynamoDB)<br>
+                🌐 Networking (VPC, CloudFront) • 🔒 Security (IAM, KMS) • 🤖 AI/ML (SageMaker)<br>
+                📊 Analytics (Kinesis) • 🛠️ DevOps (CodePipeline) • 💰 Cost Optimization
+            </div>
+            <div class="highlight">
+                Remember: AWS is just tools in a toolbox. Pick the right tool for each job!
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
