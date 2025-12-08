@@ -1,19 +1,62 @@
 # Python virtualenv
 venv/
 .venv/
+env/
 
 # Python cache
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/
 
 # Environment files
 .env
+.env.local
+.env.*.local
 
 # Editor configs
 *.swp
+*.swo
+*~
 .vscode/
+.idea/
 
 # Database / logs
 *.sqlite3
+*.sqlite
+*.db
 *.log
+logs/
 
+# Security - NEVER COMMIT THESE
+*.pem
+*.key
+*.enc
+*token*.txt
+*.p12
+*.pfx
+
+# Binary files - installers should not be in repo
+*.exe
+*.zip
+*.tar.gz
+*.dmg
+*.pkg
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large data files
+all_objects.txt
+all_sizes.txt
+big_blobs.txt

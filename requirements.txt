@@ -35,5 +35,14 @@ neo4j
 # Optional: GPT Engineer (commented out due to version conflicts)
 # gpt-engineer==0.2.6
 
+# Testing & Development Tools
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=23.0.0
+pylint>=2.17.0
+mypy>=1.0.0
+bandit>=1.7.5
+safety>=2.3.0
+
 # Note: sqlite3 and uuid are included with Python standard library
 # Note: No need to specify them in requirements.txt
