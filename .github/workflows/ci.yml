@@ -28,5 +28,13 @@ jobs:
           pip install pytest flask flask-limiter flask-caching flask-cors sentry-sdk flask-swagger-ui healthcheck
 
       - name: Run tests & coverage
- 	run: |
-         pytest --cov=FridayAI --cov-report=term --cov-report=html
+        run: |
+          pytest --cov=FridayAI --cov-report=term --cov-report=html
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: htmlcov/
+          retention-days: 30
