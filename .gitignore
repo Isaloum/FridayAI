@@ -17,3 +17,13 @@ __pycache__/
 *.sqlite3
 *.log
 
+# Security: Sensitive files
+*.pem
+*.key
+*.enc
+*token*.txt
+
+# Executables and archives
+*.exe
+*.zip
+
