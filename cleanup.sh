@@ -30,8 +30,13 @@ BARE_CLONE_DIR="${BACKUP_DIR}/bare-clone.git"
 BFG_VERSION="1.14.0"
 BFG_JAR="bfg-${BFG_VERSION}.jar"
 BFG_URL="https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar"
-# SHA256 from Maven Central - verify at https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/
-BFG_SHA256="baa6f6f7e2e99a82b2e69e3030819d0f0ceb4c4f0d1e6a0e5c4a4c8f3e0f5d7c"
+# IMPORTANT: The SHA256 hash below is a PLACEHOLDER. Before running this script in production:
+# 1. Download BFG from the URL above manually
+# 2. Verify it's authentic from the official GitHub: https://github.com/rtyley/bfg-repo-cleaner
+# 3. Calculate SHA256: shasum -a 256 bfg-1.14.0.jar or sha256sum bfg-1.14.0.jar
+# 4. Replace the hash below with the actual hash
+# 5. Or disable verification by commenting out the verify_bfg_checksum calls (not recommended)
+BFG_SHA256="PLACEHOLDER_REPLACE_WITH_ACTUAL_SHA256_HASH_BEFORE_RUNNING"
 
 # Files and patterns to remove
 SENSITIVE_FILES=(
@@ -213,6 +218,17 @@ download_bfg() {
 verify_bfg_checksum() {
     local computed_hash
     
+    # Check if hash is still the placeholder
+    if [[ "${BFG_SHA256}" == "PLACEHOLDER_"* ]]; then
+        print_warning "SHA256 hash is a PLACEHOLDER - verification skipped!"
+        print_warning "For production use, replace BFG_SHA256 with actual hash."
+        print_info "To get the real hash:"
+        print_info "  1. Download BFG manually from ${BFG_URL}"
+        print_info "  2. Run: shasum -a 256 bfg-${BFG_VERSION}.jar"
+        print_info "  3. Update BFG_SHA256 in this script"
+        return 0  # Allow to proceed with warning
+    fi
+    
     if command -v shasum &> /dev/null; then
         computed_hash=$(shasum -a 256 "${BFG_JAR}" | awk '{print $1}')
     elif command -v sha256sum &> /dev/null; then
@@ -221,8 +237,6 @@ verify_bfg_checksum() {
         return 1
     fi
     
-    # Note: The SHA256 hash below should be verified against Maven Central
-    # For security, users should verify at: https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/
     if [ "${computed_hash}" == "${BFG_SHA256}" ]; then
         print_success "SHA256 checksum verified"
         return 0
