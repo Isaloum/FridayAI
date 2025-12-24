@@ -17,3 +17,58 @@ __pycache__/
 *.sqlite3
 *.log
 
+# =====================================
+# Security - NEVER commit these files
+# =====================================
+# SSH and encryption keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+*.crt
+
+# Encrypted files
+*.enc
+
+# Token and credential files
+*token*.txt
+*secret*.txt
+*credentials*.txt
+*password*.txt
+
+# AWS credentials
+.aws/
+*.aws
+
+# =====================================
+# Large Binary Files
+# =====================================
+# Installers and executables
+*.exe
+*.msi
+*.dmg
+*.pkg
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Compiled binaries
+*.so
+*.dll
+*.dylib
+
+# =====================================
+# Backup and cleanup files
+# =====================================
+# Cleanup script backups
+backup-*/
+*.backup
+cleanup-backup-*/
+
+# BFG Repo-Cleaner files
+*.bfg-report/
+
