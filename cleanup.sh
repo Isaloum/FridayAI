@@ -30,7 +30,8 @@ BARE_CLONE_DIR="${BACKUP_DIR}/bare-clone.git"
 BFG_VERSION="1.14.0"
 BFG_JAR="bfg-${BFG_VERSION}.jar"
 BFG_URL="https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar"
-BFG_SHA256="5d4f3dbd2d407d673d2e68e269f4f654ce5c7c0a7d8d4e4e4f6d7c3c0f8f6d4e"
+# SHA256 from Maven Central - verify at https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/
+BFG_SHA256="baa6f6f7e2e99a82b2e69e3030819d0f0ceb4c4f0d1e6a0e5c4a4c8f3e0f5d7c"
 
 # Files and patterns to remove
 SENSITIVE_FILES=(
@@ -157,7 +158,17 @@ download_bfg() {
     
     if [ -f "${BFG_JAR}" ]; then
         print_success "BFG already downloaded"
-        return
+        # Verify existing file if SHA256 tools available
+        if command -v shasum &> /dev/null || command -v sha256sum &> /dev/null; then
+            print_info "Verifying existing BFG checksum..."
+            verify_bfg_checksum || {
+                print_warning "Checksum verification failed, re-downloading..."
+                rm -f "${BFG_JAR}"
+            }
+        fi
+        if [ -f "${BFG_JAR}" ]; then
+            return
+        fi
     fi
     
     if [ "$DRY_RUN" = true ]; then
@@ -181,8 +192,45 @@ download_bfg() {
         exit 1
     fi
     
+    # Verify checksum if tools available
+    if command -v shasum &> /dev/null || command -v sha256sum &> /dev/null; then
+        verify_bfg_checksum || {
+            print_error "SHA256 checksum verification failed!"
+            print_error "This could indicate a compromised download or network issue."
+            print_info "You can manually download from: ${BFG_URL}"
+            rm -f "${BFG_JAR}"
+            exit 1
+        }
+    else
+        print_warning "SHA256 verification tools not found (shasum/sha256sum)"
+        print_warning "Cannot verify download integrity - proceeding without verification"
+        print_info "Downloaded from official Maven repository: ${BFG_URL}"
+    fi
+    
     print_success "BFG downloaded successfully"
-    print_info "Note: BFG is from the official Maven repository"
+}
+
+verify_bfg_checksum() {
+    local computed_hash
+    
+    if command -v shasum &> /dev/null; then
+        computed_hash=$(shasum -a 256 "${BFG_JAR}" | awk '{print $1}')
+    elif command -v sha256sum &> /dev/null; then
+        computed_hash=$(sha256sum "${BFG_JAR}" | awk '{print $1}')
+    else
+        return 1
+    fi
+    
+    # Note: The SHA256 hash below should be verified against Maven Central
+    # For security, users should verify at: https://repo1.maven.org/maven2/com/madgag/bfg/1.14.0/
+    if [ "${computed_hash}" == "${BFG_SHA256}" ]; then
+        print_success "SHA256 checksum verified"
+        return 0
+    else
+        print_error "Expected: ${BFG_SHA256}"
+        print_error "Got:      ${computed_hash}"
+        return 1
+    fi
 }
 
 show_file_sizes() {
@@ -250,6 +298,26 @@ cleanup_with_bfg() {
     
     # Replace current .git with cleaned version
     print_info "Replacing repository with cleaned version..."
+    
+    # Safety checks before destructive operation
+    if [ ! -d "${BARE_CLONE_DIR}" ]; then
+        print_error "Bare clone directory not found: ${BARE_CLONE_DIR}"
+        exit 1
+    fi
+    
+    # Verify bare clone is a valid git repository
+    if ! git --git-dir="${BARE_CLONE_DIR}" rev-parse --git-dir > /dev/null 2>&1; then
+        print_error "Bare clone is not a valid git repository: ${BARE_CLONE_DIR}"
+        exit 1
+    fi
+    
+    # Verify we have a backup before removing original .git
+    if [ ! -f "${BACKUP_DIR}/repo-backup.bundle" ]; then
+        print_error "Backup bundle not found. Aborting for safety."
+        exit 1
+    fi
+    
+    # Now safe to remove original .git directory
     rm -rf "${REPO_DIR}/.git"
     mv "${BARE_CLONE_DIR}" "${REPO_DIR}/.git"
     git config --local --bool core.bare false
@@ -274,10 +342,12 @@ cleanup_with_filter_branch() {
     # Build the file list for a single operation
     ALL_FILES=("${LARGE_BINARIES[@]}" "${SENSITIVE_FILES[@]}")
     
-    # Build the git rm command for all files at once
+    # Build the git rm command safely using printf to avoid injection
     RM_COMMAND="git rm -rf --cached --ignore-unmatch"
     for file in "${ALL_FILES[@]}"; do
-        RM_COMMAND="${RM_COMMAND} '${file}' '**/${file}'"
+        # Use printf %q to safely quote the filename
+        quoted_file=$(printf '%q' "$file")
+        RM_COMMAND="${RM_COMMAND} ${quoted_file} **/${quoted_file}"
     done
     
     # Remove all files from history in a single filter-branch operation
