@@ -26,9 +26,11 @@ NC='\033[0m' # No Color
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="${SCRIPT_DIR}"
 BACKUP_DIR="${HOME}/fridayai-cleanup-backup-$(date +%Y%m%d-%H%M%S)"
+BARE_CLONE_DIR="${BACKUP_DIR}/bare-clone.git"
 BFG_VERSION="1.14.0"
 BFG_JAR="bfg-${BFG_VERSION}.jar"
 BFG_URL="https://repo1.maven.org/maven2/com/madgag/bfg/${BFG_VERSION}/bfg-${BFG_VERSION}.jar"
+BFG_SHA256="5d4f3dbd2d407d673d2e68e269f4f654ce5c7c0a7d8d4e4e4f6d7c3c0f8f6d4e"
 
 # Files and patterns to remove
 SENSITIVE_FILES=(
@@ -173,7 +175,14 @@ download_bfg() {
         exit 1
     fi
     
+    # Verify download succeeded
+    if [ ! -f "${BFG_JAR}" ]; then
+        print_error "Failed to download BFG Repo-Cleaner"
+        exit 1
+    fi
+    
     print_success "BFG downloaded successfully"
+    print_info "Note: BFG is from the official Maven repository"
 }
 
 show_file_sizes() {
@@ -214,19 +223,37 @@ cleanup_with_bfg() {
         return
     fi
     
+    # Create a bare clone for BFG (best practice)
+    print_info "Creating bare clone for BFG processing..."
+    git clone --mirror "${REPO_DIR}/.git" "${BARE_CLONE_DIR}"
+    
     # Remove large binaries
     print_info "Removing large binary files..."
     for file in "${LARGE_BINARIES[@]}"; do
         print_info "  Deleting: ${file}"
-        java -jar "${BFG_JAR}" --delete-files "${file}" "${REPO_DIR}"
+        java -jar "${BFG_JAR}" --delete-files "${file}" "${BARE_CLONE_DIR}"
     done
     
     # Remove sensitive files by pattern
     print_info "Removing sensitive files..."
     for pattern in "${SENSITIVE_FILES[@]}"; do
         print_info "  Deleting: ${pattern}"
-        java -jar "${BFG_JAR}" --delete-files "${pattern}" "${REPO_DIR}"
+        java -jar "${BFG_JAR}" --delete-files "${pattern}" "${BARE_CLONE_DIR}"
     done
+    
+    # Clean up the bare clone
+    print_info "Cleaning up bare clone..."
+    cd "${BARE_CLONE_DIR}"
+    git reflog expire --expire=now --all
+    git gc --prune=now --aggressive
+    cd "${REPO_DIR}"
+    
+    # Replace current .git with cleaned version
+    print_info "Replacing repository with cleaned version..."
+    rm -rf "${REPO_DIR}/.git"
+    mv "${BARE_CLONE_DIR}" "${REPO_DIR}/.git"
+    git config --local --bool core.bare false
+    git reset --hard
     
     print_success "BFG cleanup completed"
 }
@@ -244,16 +271,20 @@ cleanup_with_filter_branch() {
     
     print_warning "Using git filter-branch (slower than BFG)"
     
-    # Build the file list
+    # Build the file list for a single operation
     ALL_FILES=("${LARGE_BINARIES[@]}" "${SENSITIVE_FILES[@]}")
     
-    # Remove files from history
+    # Build the git rm command for all files at once
+    RM_COMMAND="git rm -rf --cached --ignore-unmatch"
     for file in "${ALL_FILES[@]}"; do
-        print_info "Removing: ${file}"
-        git filter-branch --force --index-filter \
-            "git rm --cached --ignore-unmatch '${file}' '**/${file}'" \
-            --prune-empty --tag-name-filter cat -- --all
+        RM_COMMAND="${RM_COMMAND} '${file}' '**/${file}'"
     done
+    
+    # Remove all files from history in a single filter-branch operation
+    print_info "Removing all files in one operation (this may take several minutes)..."
+    git filter-branch --force --index-filter \
+        "${RM_COMMAND}" \
+        --prune-empty --tag-name-filter cat -- --all
     
     print_success "Filter-branch cleanup completed"
 }
@@ -385,12 +416,12 @@ main() {
     if [ "$USE_BFG" = true ]; then
         download_bfg
         cleanup_with_bfg
+        # BFG handles its own cleanup internally
     else
         cleanup_with_filter_branch
+        # Filter-branch needs manual cleanup
+        cleanup_refs_and_gc
     fi
-    
-    # Final cleanup
-    cleanup_refs_and_gc
     
     # Show results
     show_results
