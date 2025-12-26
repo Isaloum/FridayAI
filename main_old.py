@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
-from MemoryCore import MemoryCore
-from NLUProcessor import NLUProcessor
+from core.MemoryCore import MemoryCore
+from core.NLUProcessor import NLUProcessor
 import groq
 
 load_dotenv()
