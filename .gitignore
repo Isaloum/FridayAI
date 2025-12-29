@@ -1,7 +1,13 @@
 # Environment variables and secrets
 .env
-*.env
-.env.*
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+
+# Keep .env.example as a template (negation pattern)
+!.env.example
 
 # Python cache files
 __pycache__/
