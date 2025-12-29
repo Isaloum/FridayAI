@@ -6,9 +6,6 @@
 .env.production
 .env.test
 
-# Keep .env.example as a template (negation pattern)
-!.env.example
-
 # Python cache files
 __pycache__/
 *.py[cod]
