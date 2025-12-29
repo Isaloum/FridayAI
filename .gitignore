@@ -35,6 +35,3 @@ Thumbs.db
 # Logs
 *.log
 logs/
-
-# Data files that might contain sensitive information
-data/*.key
