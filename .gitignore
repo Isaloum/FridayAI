@@ -1,0 +1,35 @@
+# Environment variables and secrets
+.env
+*.env
+.env.*
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Token and key files
+*token*.txt
+*key*.txt
+*.key
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Data files that might contain sensitive information
+data/memory.key
+data/*.key
